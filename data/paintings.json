@@ -43,11 +43,22 @@
       "description": "Depictions of Hindu deities and spiritual subjects, rendered in vivid pigment"
     }
   },
+  "collections": {
+    "superb-fairy-wren": {
+      "name": "Superb Fairy-wren",
+      "description": "A series of paintings exploring the superb fairy-wren in different styles — from classical observation to mixed-media experiments."
+    },
+    "waterfalls": {
+      "name": "Waterfalls",
+      "description": "A collection of waterfall studies painted across different locations and moods."
+    }
+  },
   "paintings": [
     {
       "id": 1,
       "title": "Forest Cascade",
       "series": "landscape",
+      "collection": "waterfalls",
       "description": "A cascading waterfall framed by lush green forest canopy. Light filters through the trees, catching the cool blue-white rush of water as it tumbles over warm rocky ledges into a still pool below.",
       "technique": "Wet-on-wet washes for foliage, dry brush for rock textures, lifted highlights for waterfall spray",
       "frame": { "width": 13, "height": 18.5, "unit": "cm" },
@@ -102,6 +113,7 @@
       "id": 4,
       "title": "Superb Fairy-wren I",
       "series": "birds",
+      "collection": "superb-fairy-wren",
       "description": "A male superb fairy-wren perches on a bare twig against a soft textured grey background. The iridescent cobalt blue of his crown and cheeks is rendered in layers of Phthalo Blue and French Ultramarine, the granulation of the background paper left visible.",
       "technique": "Controlled wet-on-dry layering, granulation effects in background wash",
       "frame": { "width": 18.5, "height": 13, "unit": "cm" },
@@ -120,6 +132,7 @@
       "id": 5,
       "title": "Superb Fairy-wren II",
       "series": "birds",
+      "collection": "superb-fairy-wren",
       "description": "A superb fairy-wren stands alert on a weathered post, facing left. The granulated violet-grey background has a crystalline frost-like quality, while the bird's blue crown anchors the composition with vivid colour.",
       "technique": "Wet-on-wet background with salt texture, detailed dry-brush feather work",
       "frame": { "width": 18.5, "height": 13, "unit": "cm" },
@@ -156,6 +169,7 @@
       "id": 11,
       "title": "Superb Fairy-wren III",
       "series": "mixed-media",
+      "collection": "superb-fairy-wren",
       "description": "A superb fairy-wren stands on dark ground, surrounded by radiating white lines and geometric dot patterns — like a signal emanating from the bird's small, electric body. The dark background makes the cobalt crown blaze.",
       "technique": "Dark watercolour background, white gel pen geometric overlay, masking fluid highlights",
       "frame": { "width": 13, "height": 18.5, "unit": "cm" },
@@ -210,6 +224,7 @@
       "id": 26,
       "title": "Veiled Falls",
       "series": "landscape",
+      "collection": "waterfalls",
       "description": "A wide waterfall drops into dark void, flanked by silhouetted trees and birds cutting across a pale sky. Green and yellow canopy presses in from all sides, dappled and alive.",
       "technique": "Wet-on-wet canopy washes, dry brush waterfall, negative painting for birds",
       "frame": { "width": 13, "height": 18.5, "unit": "cm" },
@@ -246,6 +261,7 @@
       "id": 28,
       "title": "Rock Pool",
       "series": "landscape",
+      "collection": "waterfalls",
       "description": "A forest stream breaks over flat stones into a quiet pool below. Trees frame the scene from above, their canopy letting in shafts of pale light that catch the foam. Dark rocks anchor the foreground.",
       "technique": "Wet-on-wet foliage, dry brush for rock texture, lifted highlights for water flow",
       "frame": { "width": 13, "height": 18.5, "unit": "cm" },
@@ -282,6 +298,7 @@
       "id": 35,
       "title": "Fairy-wren in the Vortex",
       "series": "mixed-media",
+      "collection": "superb-fairy-wren",
       "description": "A fairy-wren stands against a swirling white vortex, electric blue splatter marks scattered around it like sparks. The composition is dramatic — a small creature at the centre of its own storm.",
       "technique": "Dark watercolour ground, wet-on-wet swirl blending, blue ink splatter, masking fluid highlights",
       "frame": { "width": 13, "height": 18.5, "unit": "cm" },

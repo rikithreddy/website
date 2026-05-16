@@ -54,9 +54,11 @@
   let paintings = [];
   let defaults = {};
   let seriesMap = {};
+  let collectionsMap = {};
 
   let state = {
     series: 'all',
+    collection: null,
     availableOnly: false,
     sort: 'newest',
   };
@@ -89,6 +91,7 @@
     paintings = data.paintings || [];
     defaults = data.defaults || {};
     seriesMap = data.series || {};
+    collectionsMap = data.collections || {};
 
     populateArtistInfo();
     buildSeriesFilters();
@@ -197,7 +200,9 @@
   function applyFilterSort() {
     let result = [...paintings];
 
-    if (state.series !== 'all') {
+    if (state.collection) {
+      result = result.filter(p => p.collection === state.collection);
+    } else if (state.series !== 'all') {
       result = result.filter(p => p.series === state.series);
     }
 
@@ -224,9 +229,22 @@
     if (!el) return;
     const total = paintings.length;
     const shown = filtered.length;
-    el.textContent = shown === total
-      ? `${total} painting${total !== 1 ? 's' : ''}`
-      : `Showing ${shown} of ${total} paintings`;
+    if (state.collection && collectionsMap[state.collection]) {
+      el.innerHTML = `<span>${collectionsMap[state.collection].name} Series &mdash; ${shown} painting${shown !== 1 ? 's' : ''}</span>
+        <button class="clear-collection-btn" id="clear-collection-btn" aria-label="Clear series filter">✕ Clear</button>`;
+      const btn = document.getElementById('clear-collection-btn');
+      if (btn) btn.addEventListener('click', () => {
+        state.collection = null;
+        document.querySelectorAll('.filter-pill').forEach(p =>
+          p.classList.toggle('active', p.dataset.series === state.series)
+        );
+        renderGallery(true);
+      });
+    } else {
+      el.textContent = shown === total
+        ? `${total} painting${total !== 1 ? 's' : ''}`
+        : `Showing ${shown} of ${total} paintings`;
+    }
   }
 
   // ============================================================
@@ -295,12 +313,18 @@
             decoding="async"
           >
           <div class="card-overlay" aria-hidden="true">
+            ${painting.collection && collectionsMap[painting.collection]
+              ? `<span class="overlay-collection">${escHtml(collectionsMap[painting.collection].name)}</span>`
+              : ''}
             <p class="overlay-title">${escHtml(painting.title)}</p>
             <p class="overlay-price${painting.sold ? ' is-sold-price' : ''}">${priceStr}</p>
           </div>
         </div>
       </div>
       <div class="card-info-mobile">
+        ${painting.collection && collectionsMap[painting.collection]
+          ? `<span class="card-collection-tag">${escHtml(collectionsMap[painting.collection].name)}</span>`
+          : ''}
         <p class="card-title">${escHtml(painting.title)}</p>
         <p class="card-price${painting.sold ? ' is-sold-price' : ''}">${priceStr}</p>
         ${painting.sold ? '<span class="card-sold-label">Sold</span>' : ''}
@@ -413,9 +437,34 @@
     const badge = document.getElementById('modal-sold-badge');
     badge.classList.toggle('visible', !!painting.sold);
 
-    // Series
+    // Genre series tag
     const seriesEl = document.getElementById('modal-series-tag');
     seriesEl.textContent = (seriesMap[painting.series] || {}).name || painting.series || '';
+
+    // Named collection
+    const collectionEl = document.getElementById('modal-collection');
+    if (collectionEl) {
+      const col = painting.collection && collectionsMap[painting.collection];
+      if (col) {
+        collectionEl.innerHTML = `
+          <div class="modal-collection-info">
+            <span class="modal-collection-label">Series</span>
+            <span class="modal-collection-name">${escHtml(col.name)}</span>
+            <button class="btn-view-series" data-collection="${escHtml(painting.collection)}">View series →</button>
+          </div>`;
+        collectionEl.querySelector('.btn-view-series').addEventListener('click', () => {
+          state.collection = painting.collection;
+          state.series = 'all';
+          document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+          document.querySelector('.filter-pill[data-series="all"]').classList.add('active');
+          renderGallery(false);
+          closeModal();
+          document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
+        });
+      } else {
+        collectionEl.innerHTML = '';
+      }
+    }
 
     // Description
     document.getElementById('modal-description').textContent = painting.description || '';

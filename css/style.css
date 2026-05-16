@@ -1162,6 +1162,90 @@ ul, ol {
   color: var(--color-accent);
 }
 
+/* Named collection / series info in modal */
+#modal-collection { margin-top: 0.5rem; }
+
+.modal-collection-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.modal-collection-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+.modal-collection-name {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+.btn-view-series {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  padding: 0.2rem 0.6rem;
+  border: 1px solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-view-series:hover {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+/* Collection tag on gallery card hover overlay */
+.overlay-collection {
+  display: block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.25rem;
+}
+
+/* Collection tag on mobile card info */
+.card-collection-tag {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 2px;
+}
+
+/* Clear collection filter button in gallery count */
+.clear-collection-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.clear-collection-btn:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
 .modal-description {
   font-size: 0.9375rem;
   line-height: 1.75;
