@@ -1,0 +1,318 @@
+{
+  "artist": {
+    "name": "Rikith Reddy",
+    "tagline": "Watercolour Art by Rikith Reddy",
+    "bio": "I'm Rikith Reddy — a data scientist by day and a watercolour artist by conviction. Painting is where I process the world: the stillness of a bird on a branch, the chaos of water over rock, the sacred geometry of mythology. Every piece starts with observation and ends somewhere I didn't expect. I work primarily in Daniel Smith watercolours on Brusto 300GSM cold pressed paper, often layering ink linework and masking techniques to push the medium into new territory.",
+    "photo": "images/artist/photo.jpg",
+    "instagram": "@rikith_reddy_art",
+    "email": "your@email.com",
+    "location": "India"
+  },
+  "defaults": {
+    "medium": "Watercolour & Ink on Paper",
+    "paper": "Brusto 300GSM Cold Pressed Watercolour Paper",
+    "currency": "INR",
+    "currencySymbol": "₹",
+    "colorBrand": "Daniel Smith",
+    "colors": [
+      "Hansa Yellow Light",
+      "Phthalo Blue",
+      "Carbazole Violet",
+      "Burnt Sienna",
+      "New Gamboge",
+      "French Ultramarine"
+    ],
+    "framed": true,
+    "original": true
+  },
+  "series": {
+    "landscape": {
+      "name": "Landscapes",
+      "description": "Waterfalls, mountains, and natural vistas painted with expressive wet-on-wet washes"
+    },
+    "birds": {
+      "name": "Birds",
+      "description": "Intimate studies of birds — each one a meditation on colour, feather, and stillness"
+    },
+    "mixed-media": {
+      "name": "Mixed Media",
+      "description": "Watercolour combined with ink linework, scratching, and geometric overlays"
+    },
+    "mythology": {
+      "name": "Mythology",
+      "description": "Depictions of Hindu deities and spiritual subjects, rendered in vivid pigment"
+    }
+  },
+  "paintings": [
+    {
+      "id": 1,
+      "title": "Forest Cascade",
+      "series": "landscape",
+      "description": "A cascading waterfall framed by lush green forest canopy. Light filters through the trees, catching the cool blue-white rush of water as it tumbles over warm rocky ledges into a still pool below.",
+      "technique": "Wet-on-wet washes for foliage, dry brush for rock textures, lifted highlights for waterfall spray",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.616,
+      "images": {
+        "raw": "images/paintings/1_raw.jpg",
+        "full": "images/paintings/1.jpg"
+      },
+      "order": 1
+    },
+    {
+      "id": 2,
+      "title": "Coastal Ridgeline",
+      "series": "landscape",
+      "description": "A dramatic mountain ridgeline plunges to meet a coastal inlet, its slopes vivid with lime-green moss against dark volcanic rock. Storm clouds gather overhead, parting just enough to let a pale light catch the still water.",
+      "technique": "Bold wet-on-wet sky washes, negative painting for mountain silhouettes",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.606,
+      "images": {
+        "raw": "images/paintings/2_raw.jpg",
+        "full": "images/paintings/2.jpg"
+      },
+      "order": 2
+    },
+    {
+      "id": 3,
+      "title": "European Robin",
+      "series": "mixed-media",
+      "description": "A European robin confronts the viewer head-on, its orange-red breast glowing against a dark tangle of branches. White ink linework radiates outward in dense hatch marks — part scientific illustration, part controlled chaos.",
+      "technique": "Watercolour base, white gel pen and ink linework overlay, masking fluid for highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.686,
+      "images": {
+        "raw": "images/paintings/3_raw.jpg",
+        "full": "images/paintings/3.jpg"
+      },
+      "order": 3
+    },
+    {
+      "id": 4,
+      "title": "Superb Fairy-wren I",
+      "series": "birds",
+      "description": "A male superb fairy-wren perches on a bare twig against a soft textured grey background. The iridescent cobalt blue of his crown and cheeks is rendered in layers of Phthalo Blue and French Ultramarine, the granulation of the background paper left visible.",
+      "technique": "Controlled wet-on-dry layering, granulation effects in background wash",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.508,
+      "images": {
+        "raw": "images/paintings/4_raw.jpg",
+        "full": "images/paintings/4.jpg"
+      },
+      "order": 4
+    },
+    {
+      "id": 5,
+      "title": "Superb Fairy-wren II",
+      "series": "birds",
+      "description": "A superb fairy-wren stands alert on a weathered post, facing left. The granulated violet-grey background has a crystalline frost-like quality, while the bird's blue crown anchors the composition with vivid colour.",
+      "technique": "Wet-on-wet background with salt texture, detailed dry-brush feather work",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.521,
+      "images": {
+        "raw": "images/paintings/5_raw.jpg",
+        "full": "images/paintings/5.jpg"
+      },
+      "order": 5
+    },
+    {
+      "id": 6,
+      "title": "Summit Lines",
+      "series": "mixed-media",
+      "description": "A snow-dusted mountain peak rendered in deep Phthalo Blue and Hansa Yellow, overlaid with topographic contour lines in white ink. The result sits somewhere between landscape painting and cartographic diagram.",
+      "technique": "Watercolour base, white ink contour line overlay, wax resist for snow highlights",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.440,
+      "images": {
+        "raw": "images/paintings/6_raw.jpg",
+        "full": "images/paintings/6.jpg"
+      },
+      "order": 6
+    },
+    {
+      "id": 11,
+      "title": "Superb Fairy-wren III",
+      "series": "mixed-media",
+      "description": "A superb fairy-wren stands on dark ground, surrounded by radiating white lines and geometric dot patterns — like a signal emanating from the bird's small, electric body. The dark background makes the cobalt crown blaze.",
+      "technique": "Dark watercolour background, white gel pen geometric overlay, masking fluid highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.659,
+      "images": {
+        "raw": "images/paintings/11_raw.jpg",
+        "full": "images/paintings/11.jpg"
+      },
+      "order": 7
+    },
+    {
+      "id": 23,
+      "title": "Above the Cloud Line",
+      "series": "landscape",
+      "description": "A high-altitude peak rises above a sea of cloud, its snow fields catching the first pink light of dawn. The sky burns in bands of rose, gold, and cerulean — the kind of light that exists for about four minutes and then is gone.",
+      "technique": "Wet-on-wet gradients, granulation medium in clouds, lifted highlights on snow",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.339,
+      "images": {
+        "raw": "images/paintings/23_raw.jpg",
+        "full": "images/paintings/23.jpg"
+      },
+      "order": 8
+    },
+    {
+      "id": 25,
+      "title": "Red-crowned Cranes",
+      "series": "birds",
+      "description": "Two red-crowned cranes wade in golden-hour water, their grey and white plumage glowing against the warm orange reflections. A yellow sun hangs behind a tree line of dark brushstrokes — simple, direct, joyful.",
+      "technique": "Loose wet-on-wet washes, minimal linework for bird detail",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.666,
+      "images": {
+        "raw": "images/paintings/25_raw.jpg",
+        "full": "images/paintings/25.jpg"
+      },
+      "order": 9
+    },
+    {
+      "id": 26,
+      "title": "Veiled Falls",
+      "series": "landscape",
+      "description": "A wide waterfall drops into dark void, flanked by silhouetted trees and birds cutting across a pale sky. Green and yellow canopy presses in from all sides, dappled and alive.",
+      "technique": "Wet-on-wet canopy washes, dry brush waterfall, negative painting for birds",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.746,
+      "images": {
+        "raw": "images/paintings/26_raw.jpg",
+        "full": "images/paintings/26.jpg"
+      },
+      "order": 10
+    },
+    {
+      "id": 27,
+      "title": "Spectral Owl",
+      "series": "birds",
+      "description": "A young owl rendered in full spectral colour — blues, pinks, yellows, greens bleeding and blooming across its feathers. The watercolour is pushed to the edge of abstraction while the form stays intact. Pure joy in pigment.",
+      "technique": "Wet-on-wet colour blooms, salt texture on background, controlled lifting",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.662,
+      "images": {
+        "raw": "images/paintings/27_raw.jpg",
+        "full": "images/paintings/27.jpg"
+      },
+      "order": 11
+    },
+    {
+      "id": 28,
+      "title": "Rock Pool",
+      "series": "landscape",
+      "description": "A forest stream breaks over flat stones into a quiet pool below. Trees frame the scene from above, their canopy letting in shafts of pale light that catch the foam. Dark rocks anchor the foreground.",
+      "technique": "Wet-on-wet foliage, dry brush for rock texture, lifted highlights for water flow",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.684,
+      "images": {
+        "raw": "images/paintings/28_raw.jpg",
+        "full": "images/paintings/28.jpg"
+      },
+      "order": 12
+    },
+    {
+      "id": 33,
+      "title": "Sun Conure",
+      "series": "mixed-media",
+      "description": "A sun conure perches on a branch against a deep emerald background, its plumage a riot of orange, yellow, and green. White ink lines radiate outward like light from a source, and star-like dots scatter through the darkness around it.",
+      "technique": "Deep wet-on-wet background, detailed feather layering, white gel pen starburst overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 2000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.709,
+      "images": {
+        "raw": "images/paintings/33_raw.jpg",
+        "full": "images/paintings/33.jpg"
+      },
+      "order": 13
+    },
+    {
+      "id": 35,
+      "title": "Fairy-wren in the Vortex",
+      "series": "mixed-media",
+      "description": "A fairy-wren stands against a swirling white vortex, electric blue splatter marks scattered around it like sparks. The composition is dramatic — a small creature at the centre of its own storm.",
+      "technique": "Dark watercolour ground, wet-on-wet swirl blending, blue ink splatter, masking fluid highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.707,
+      "images": {
+        "raw": "images/paintings/35_raw.jpg",
+        "full": "images/paintings/35.jpg"
+      },
+      "order": 14
+    },
+    {
+      "id": 123,
+      "title": "Ganesha",
+      "series": "mythology",
+      "description": "Lord Ganesha, the remover of obstacles, rendered in a deep crimson and violet palette with grey-white form. His hands meet in namaste, a tilak on his forehead, a jewelled crown above. Painted with reverence and precision.",
+      "technique": "Wet-on-wet background with dark tones, controlled layering for the figure, white ink detail work",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 2500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.661,
+      "images": {
+        "raw": "images/paintings/123_raw.jpg",
+        "full": "images/paintings/123.jpg"
+      },
+      "order": 15
+    }
+  ]
+}

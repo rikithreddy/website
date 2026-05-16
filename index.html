@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art by Rikith Reddy | Original Watercolour Paintings</title>
+  <meta name="description" content="Original watercolour paintings by Rikith Reddy. Landscapes, birds, and mixed media art available for purchase. Each piece is one-of-a-kind.">
+  <meta name="author" content="Rikith Reddy">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Art by Rikith Reddy | Watercolour Paintings">
+  <meta property="og:description" content="Original watercolour paintings — landscapes, birds, and mixed media. Each piece is one-of-a-kind.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="images/paintings/33_raw.jpg">
+  <meta property="og:image:alt" content="Sun Conure — watercolour painting by Rikith Reddy">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Art by Rikith Reddy | Watercolour Paintings">
+  <meta name="twitter:description" content="Original watercolour paintings available for purchase.">
+  <meta name="twitter:image" content="images/paintings/33_raw.jpg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Rikith Reddy",
+    "url": "",
+    "jobTitle": "Watercolour Artist",
+    "description": "Original watercolour paintings — landscapes, birds, mythology, and mixed media.",
+    "knowsAbout": ["Watercolour painting", "Wildlife art", "Landscape painting"]
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="#hero" class="navbar-brand" aria-label="Art by Rikith Reddy — home">Art by Rikith</a>
+      <nav class="navbar-nav" aria-label="Main navigation">
+        <a href="#gallery" class="nav-link">Gallery</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <a href="#" class="nav-link nav-instagram" id="nav-instagram-link" aria-label="Instagram" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Original Watercolour Art</p>
+        <h1 class="hero-title" id="hero-title">Rikith Reddy</h1>
+        <p class="hero-subtitle">Watercolour Artist</p>
+        <a href="#gallery" class="hero-cta">View the Collection</a>
+      </div>
+      <a href="#gallery" class="hero-scroll" aria-label="Scroll to gallery">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </a>
+    </section>
+
+    <!-- Gallery -->
+    <section class="gallery-section" id="gallery" aria-labelledby="gallery-title">
+      <div class="section-header">
+        <h2 class="section-title" id="gallery-title">Works</h2>
+        <p class="section-subtitle">Original paintings — each one of a kind</p>
+      </div>
+
+      <!-- Controls -->
+      <div class="gallery-controls" role="group" aria-label="Gallery filters and sort">
+        <div class="filter-bar" role="group" aria-label="Filter by series">
+          <button class="filter-pill active" data-series="all">All</button>
+          <!-- Series pills injected by JS -->
+        </div>
+        <div class="gallery-controls-right">
+          <button class="availability-toggle" id="availability-toggle" aria-pressed="false">
+            Available only
+          </button>
+          <div class="sort-wrapper">
+            <label for="sort-select" class="sr-only">Sort paintings</label>
+            <select class="sort-select" id="sort-select" aria-label="Sort paintings">
+              <option value="newest">Newest first</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
+
+      <!-- Grid -->
+      <div class="gallery-grid" id="gallery-grid" role="list" aria-label="Paintings gallery">
+        <!-- Cards injected by JS -->
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="about-section" id="about" aria-labelledby="about-title">
+      <div class="about-inner">
+        <div class="about-photo-col">
+          <div class="about-photo-wrap" id="about-photo-wrap">
+            <img src="images/artist/photo.jpg" alt="Rikith Reddy — watercolour artist" class="about-photo" id="about-photo" loading="lazy" onerror="this.closest('.about-photo-wrap').classList.add('photo-missing')">
+            <div class="about-photo-placeholder" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+              <span>Add your photo to<br>images/artist/photo.jpg</span>
+            </div>
+          </div>
+          <div class="about-social" id="about-social">
+            <a href="#" class="social-link instagram-link" id="about-instagram-link" target="_blank" rel="noopener" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+              <span id="about-instagram-handle">@your_instagram</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="about-text-col">
+          <h2 class="section-title" id="about-title">About</h2>
+          <p class="about-name" id="about-name">Rikith Reddy</p>
+          <div class="about-bio" id="about-bio"></div>
+
+          <div class="about-materials">
+            <h3 class="materials-heading">Materials</h3>
+            <dl class="materials-list" id="materials-list">
+              <!-- Injected by JS -->
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="contact-section" id="contact" aria-labelledby="contact-title">
+      <div class="contact-inner">
+        <h2 class="section-title" id="contact-title">Inquire</h2>
+        <p class="contact-lead">Interested in a painting or a custom commission? I'd love to hear from you.</p>
+
+        <div class="contact-options">
+          <a href="#" class="contact-card" id="whatsapp-link" target="_blank" rel="noopener">
+            <span class="contact-card-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
+              </svg>
+            </span>
+            <span class="contact-card-label">WhatsApp</span>
+            <span class="contact-card-desc">Chat directly about a painting</span>
+          </a>
+
+          <a href="#" class="contact-card" id="email-link">
+            <span class="contact-card-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                <polyline points="22,6 12,13 2,6"/>
+              </svg>
+            </span>
+            <span class="contact-card-label">Email</span>
+            <span class="contact-card-desc">Send a message at your own pace</span>
+          </a>
+
+          <a href="#" class="contact-card" id="contact-instagram-link" target="_blank" rel="noopener">
+            <span class="contact-card-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </span>
+            <span class="contact-card-label">Instagram</span>
+            <span class="contact-card-desc">DM on Instagram</span>
+          </a>
+        </div>
+
+        <p class="commissions-note">
+          <strong>Commissions open.</strong> Interested in a custom painting? Send me a reference and we'll discuss size, subject, and timeline.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p class="footer-brand">Art by Rikith Reddy</p>
+      <p class="footer-tagline" id="footer-tagline">Watercolour Art by Rikith Reddy</p>
+      <div class="footer-links">
+        <a href="#" class="footer-link" id="footer-instagram-link" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a href="#" class="footer-link" id="footer-email-link" aria-label="Email">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+            <polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+      </div>
+      <p class="footer-note">All paintings are original, one-of-a-kind works.</p>
+      <p class="footer-copy">© <span id="footer-year"></span> Rikith Reddy. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Painting Detail Modal -->
+  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
+    <div class="modal-container" id="modal-container">
+      <button class="modal-close" id="modal-close" aria-label="Close painting detail">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div class="modal-body">
+        <!-- Image column -->
+        <div class="modal-image-col">
+          <div class="modal-image-wrap">
+            <img src="" alt="" class="modal-image" id="modal-image" decoding="async">
+            <div class="modal-image-skeleton" id="modal-image-skeleton" aria-hidden="true"></div>
+          </div>
+          <div class="modal-image-controls">
+            <button class="frame-toggle" id="frame-toggle" aria-pressed="false">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                <rect x="7" y="7" width="10" height="10" rx="1"/>
+              </svg>
+              View in frame
+            </button>
+          </div>
+          <div class="modal-palette" id="modal-palette" aria-label="Pigments used"></div>
+        </div>
+
+        <!-- Info column -->
+        <div class="modal-info-col">
+          <div class="modal-header">
+            <div class="modal-title-row">
+              <h2 class="modal-title" id="modal-title"></h2>
+              <span class="modal-sold-badge" id="modal-sold-badge" aria-label="Sold">Sold</span>
+            </div>
+            <span class="modal-series-tag" id="modal-series-tag"></span>
+          </div>
+
+          <p class="modal-description" id="modal-description"></p>
+
+          <div class="modal-divider"></div>
+
+          <dl class="modal-specs" id="modal-specs">
+            <!-- Injected by JS -->
+          </dl>
+
+          <div class="modal-divider"></div>
+
+          <div class="modal-pricing" id="modal-pricing">
+            <div class="modal-price-row">
+              <span class="modal-price" id="modal-price"></span>
+              <span class="modal-price-note" id="modal-price-note"></span>
+            </div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" id="modal-inquire">Inquire about this piece</button>
+              <button class="btn btn-ghost" id="modal-share" aria-label="Share this painting">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                </svg>
+                Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="modal-nav" aria-label="Navigate between paintings">
+        <button class="modal-nav-btn" id="modal-prev" aria-label="Previous painting">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Prev
+        </button>
+        <span class="modal-nav-count" id="modal-nav-count"></span>
+        <button class="modal-nav-btn" id="modal-next" aria-label="Next painting">
+          Next
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="9 18 15 12 9 6"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
