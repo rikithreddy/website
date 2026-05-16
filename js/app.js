@@ -476,10 +476,11 @@
     const swatches = colors.map(name => {
       const hex = PIGMENT_HEX[name.toLowerCase()] || '#C0BAB0';
       const shortName = name.replace(/\(.*?\)/, '').trim().split(' ').slice(-2).join(' ');
-      return `<div class="swatch" title="${escHtml(name)}">
+      const searchUrl = `https://danielsmith.com/search?q=${encodeURIComponent(name)}`;
+      return `<a class="swatch" href="${searchUrl}" target="_blank" rel="noopener" title="${escHtml(name)} — Daniel Smith">
         <div class="swatch-color" style="background:${hex}"></div>
         <span class="swatch-name">${escHtml(shortName)}</span>
-      </div>`;
+      </a>`;
     }).join('');
 
     el.innerHTML = `
