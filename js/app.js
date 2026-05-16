@@ -192,6 +192,25 @@
       btn.textContent = seriesMap[key].name;
       bar.appendChild(btn);
     });
+
+    // Add collection (named series) pills if any
+    const usedCollections = [...new Set(paintings.map(p => p.collection).filter(Boolean))];
+    if (usedCollections.length > 0) {
+      const sep = document.createElement('span');
+      sep.className = 'filter-sep';
+      sep.setAttribute('aria-hidden', 'true');
+      sep.textContent = '·';
+      bar.appendChild(sep);
+
+      usedCollections.forEach(key => {
+        if (!collectionsMap[key]) return;
+        const btn = document.createElement('button');
+        btn.className = 'filter-pill filter-pill-collection';
+        btn.dataset.collection = key;
+        btn.textContent = collectionsMap[key].name;
+        bar.appendChild(btn);
+      });
+    }
   }
 
   // ============================================================
@@ -236,7 +255,7 @@
       if (btn) btn.addEventListener('click', () => {
         state.collection = null;
         document.querySelectorAll('.filter-pill').forEach(p =>
-          p.classList.toggle('active', p.dataset.series === state.series)
+          p.classList.toggle('active', !p.dataset.collection && p.dataset.series === state.series)
         );
         renderGallery(true);
       });
@@ -456,7 +475,8 @@
           state.collection = painting.collection;
           state.series = 'all';
           document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-          document.querySelector('.filter-pill[data-series="all"]').classList.add('active');
+          const colPill = document.querySelector(`.filter-pill[data-collection="${painting.collection}"]`);
+          if (colPill) colPill.classList.add('active');
           renderGallery(false);
           closeModal();
           document.getElementById('gallery').scrollIntoView({ behavior: 'smooth' });
@@ -659,13 +679,19 @@
   //  Event Listeners
   // ============================================================
   function setupEventListeners() {
-    // Filter pills
+    // Filter pills (genre + collection)
     document.querySelector('.filter-bar').addEventListener('click', e => {
       const pill = e.target.closest('.filter-pill');
       if (!pill) return;
       document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
       pill.classList.add('active');
-      state.series = pill.dataset.series;
+      if (pill.dataset.collection) {
+        state.collection = pill.dataset.collection;
+        state.series = 'all';
+      } else {
+        state.series = pill.dataset.series;
+        state.collection = null;
+      }
       renderGallery(true);
     });
 
