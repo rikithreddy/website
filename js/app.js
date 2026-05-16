@@ -94,6 +94,8 @@
     collectionsMap = data.collections || {};
 
     populateArtistInfo();
+    buildHeroStats();
+    buildHeroStrip();
     buildSeriesFilters();
     applyFilterSort();
     renderGallery();
@@ -172,6 +174,39 @@
   function setTextContent(id, text) {
     const el = document.getElementById(id);
     if (el && text) el.textContent = text;
+  }
+
+  // ============================================================
+  //  Hero Enhancements
+  // ============================================================
+  function buildHeroStats() {
+    const el = document.getElementById('hero-stats');
+    if (!el) return;
+    const total = paintings.length;
+    const seriesCount = Object.keys(seriesMap).length;
+    el.textContent = `${total} original paintings · ${seriesCount} series`;
+  }
+
+  function buildHeroStrip() {
+    const container = document.getElementById('hero-strip');
+    if (!container || !paintings.length) return;
+
+    // Duplicate for seamless infinite loop
+    const all = [...paintings, ...paintings];
+
+    const inner = document.createElement('div');
+    inner.className = 'hero-strip-inner';
+    inner.innerHTML = all.map(p => `
+      <div class="hero-strip-thumb" data-id="${p.id}">
+        <img src="${p.images.raw}" alt="" loading="lazy" decoding="async">
+      </div>`).join('');
+
+    container.appendChild(inner);
+
+    inner.addEventListener('click', e => {
+      const thumb = e.target.closest('[data-id]');
+      if (thumb) openModal(parseInt(thumb.dataset.id, 10));
+    });
   }
 
   // ============================================================
