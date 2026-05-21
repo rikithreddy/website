@@ -7,47 +7,6 @@
   const DATA_URL = 'data/paintings.json';
 
   // ============================================================
-  //  Pigment → approximate hex colour map (Daniel Smith + common)
-  // ============================================================
-  const PIGMENT_HEX = {
-    'hansa yellow light':        '#F5E32A',
-    'hansa yellow':              '#F5C800',
-    'hansa yellow deep':         '#E8A800',
-    'new gamboge':               '#E09010',
-    'raw sienna':                '#C07830',
-    'burnt sienna':              '#B84E1A',
-    'burnt umber':               '#6E3020',
-    'raw umber':                 '#7A5428',
-    'yellow ochre':              '#C89820',
-    'phthalo blue':              '#00446A',
-    'phthalo blue (green shade)':'#00587A',
-    'phthalo blue (red shade)':  '#003470',
-    'french ultramarine':        '#2040A8',
-    'ultramarine blue':          '#2040A8',
-    'cerulean blue':             '#4090C0',
-    'prussian blue':             '#00304A',
-    'indigo':                    '#2A3460',
-    'carbazole violet':          '#4A1060',
-    'quinacridone violet':       '#8A1860',
-    'dioxazine purple':          '#4A0060',
-    'quinacridone magenta':      '#C0186A',
-    'quinacridone rose':         '#D03070',
-    'pyrrol red':                '#CC2010',
-    'cadmium red':               '#D03020',
-    'phthalo green':             '#006848',
-    'viridian':                  '#3A7060',
-    'sap green':                 '#4A6020',
-    'olive green':               '#5A6020',
-    'titanium white':            '#F5F5F5',
-    'chinese white':             '#F0F0F0',
-    'ivory black':               '#222018',
-    'lamp black':                '#201E1A',
-    'payne\'s gray':             '#3A4050',
-    'sepia':                     '#705030',
-    'neutral tint':              '#484848',
-  };
-
-  // ============================================================
   //  State
   // ============================================================
   let data = null;
@@ -61,6 +20,7 @@
     collection: null,
     availableOnly: false,
     sort: 'newest',
+    viewMode: localStorage.getItem('viewMode') || 'grid',
   };
 
   let filtered = [];
@@ -100,6 +60,7 @@
     applyFilterSort();
     renderGallery();
     setupEventListeners();
+    setupViewToggle();
     setupLazyLoader();
     setupNavbarScroll();
     handleHash();
@@ -133,17 +94,6 @@
     setLinkHref('about-instagram-link', instagramUrl(handle));
     setLinkHref('contact-instagram-link', instagramUrl(handle));
     setLinkHref('footer-instagram-link', instagramUrl(handle));
-
-    // Email
-    const email = artist.email || 'your@email.com';
-    setLinkHref('email-link', `mailto:${email}?subject=Inquiry about your paintings`);
-    setLinkHref('footer-email-link', `mailto:${email}?subject=Inquiry`);
-
-    // WhatsApp (if phone provided, else fallback to wa.me with blank number)
-    const waNumber = artist.whatsapp || '';
-    setLinkHref('whatsapp-link', waNumber
-      ? `https://wa.me/${waNumber.replace(/\D/g, '')}?text=Hi%2C+I%27m+interested+in+your+paintings.`
-      : 'https://wa.me/');
 
     // Materials list
     const matList = document.getElementById('materials-list');
@@ -228,24 +178,6 @@
       bar.appendChild(btn);
     });
 
-    // Add collection (named series) pills if any
-    const usedCollections = [...new Set(paintings.map(p => p.collection).filter(Boolean))];
-    if (usedCollections.length > 0) {
-      const sep = document.createElement('span');
-      sep.className = 'filter-sep';
-      sep.setAttribute('aria-hidden', 'true');
-      sep.textContent = '·';
-      bar.appendChild(sep);
-
-      usedCollections.forEach(key => {
-        if (!collectionsMap[key]) return;
-        const btn = document.createElement('button');
-        btn.className = 'filter-pill filter-pill-collection';
-        btn.dataset.collection = key;
-        btn.textContent = collectionsMap[key].name;
-        bar.appendChild(btn);
-      });
-    }
   }
 
   // ============================================================
@@ -458,8 +390,6 @@
   function renderModal(painting) {
     const artist = data.artist || {};
     const sym = resolve(painting, 'currencySymbol');
-    const colors = resolve(painting, 'colors') || [];
-    const brand = resolve(painting, 'colorBrand') || '';
     const medium = resolve(painting, 'medium') || '';
     const paper = resolve(painting, 'paper') || '';
     const framed = resolve(painting, 'framed');
@@ -536,7 +466,6 @@
     specsEl.innerHTML = [
       ['Medium', medium],
       ['Paper', paper],
-      ['Colors', brand ? `${brand} — ${colors.join(', ')}` : colors.join(', ')],
       ['Frame', frameStr],
       ['Paint area', areaStr],
       ['Type', [original && 'Original', framed && 'Framed'].filter(Boolean).join(' · ') || '—'],
@@ -561,36 +490,8 @@
       inquireBtn.textContent = 'Inquire about this piece';
     }
 
-    // Colour swatches
-    renderPalette(painting);
-
     // Nav counter
     updateModalNav();
-  }
-
-  function renderPalette(painting) {
-    const el = document.getElementById('modal-palette');
-    if (!el) return;
-
-    const colors = resolve(painting, 'colors') || [];
-    const brand = resolve(painting, 'colorBrand') || '';
-
-    if (!colors.length) { el.innerHTML = ''; return; }
-
-    const swatches = colors.map(name => {
-      const hex = PIGMENT_HEX[name.toLowerCase()] || '#C0BAB0';
-      const shortName = name.replace(/\(.*?\)/, '').trim().split(' ').slice(-2).join(' ');
-      const searchUrl = `https://danielsmith.com/search?q=${encodeURIComponent(name)}`;
-      return `<a class="swatch" href="${searchUrl}" target="_blank" rel="noopener" title="${escHtml(name)} — Daniel Smith">
-        <div class="swatch-color" style="background:${hex}"></div>
-        <span class="swatch-name">${escHtml(shortName)}</span>
-      </a>`;
-    }).join('');
-
-    el.innerHTML = `
-      <p class="palette-label">${brand ? `${brand} pigments` : 'Pigments used'}</p>
-      <div class="palette-swatches" role="list" aria-label="Pigments used">${swatches}</div>
-    `;
   }
 
   function updateModalNav() {
@@ -654,21 +555,8 @@
   //  Inquire & Share
   // ============================================================
   function handleInquire() {
-    const painting = filtered[modalIndex];
-    if (!painting) return;
     const artist = data.artist || {};
-    const sym = resolve(painting, 'currencySymbol');
-
-    const subject = painting.sold
-      ? `Inquiry: Similar work to "${painting.title}"`
-      : `Inquiry: "${painting.title}" (${sym}${formatPrice(painting.price)})`;
-
-    const body = painting.sold
-      ? `Hi Rikith,\n\nI'm interested in a piece similar to "${painting.title}". Could you let me know if you have something available or if you take commissions?\n\nThank you!`
-      : `Hi Rikith,\n\nI'm interested in "${painting.title}" (${sym}${formatPrice(painting.price)}). Is it still available?\n\nThank you!`;
-
-    const email = artist.email || '';
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open('https://instagram.com/' + (artist.instagram || '').replace('@', ''), '_blank');
   }
 
   async function handleShare() {
@@ -897,6 +785,27 @@
     const w = Math.round((ratio || 0.7) * 400);
     const h = 400;
     return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${h}'%3E%3C/svg%3E`;
+  }
+
+  // ============================================================
+  //  View Toggle (list / grid)
+  // ============================================================
+  function setupViewToggle() {
+    const btn = document.getElementById('view-toggle');
+    const grid = document.getElementById('gallery-grid');
+    if (!btn || !grid) return;
+
+    if (state.viewMode === 'list') {
+      grid.classList.add('gallery--list');
+      btn.setAttribute('aria-pressed', 'true');
+    }
+
+    btn.addEventListener('click', () => {
+      state.viewMode = state.viewMode === 'list' ? 'grid' : 'list';
+      grid.classList.toggle('gallery--list', state.viewMode === 'list');
+      btn.setAttribute('aria-pressed', String(state.viewMode === 'list'));
+      localStorage.setItem('viewMode', state.viewMode);
+    });
   }
 
   // ============================================================
