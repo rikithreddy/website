@@ -330,6 +330,388 @@
         "full": "images/paintings/123.jpg"
       },
       "order": 15
+    },
+    {
+      "id": 7,
+      "title": "Blue Flycatcher",
+      "series": "birds",
+      "description": "A Tickell's blue flycatcher clings to a slender branch, its cobalt-blue head and back contrasting sharply with the warm rufous-orange of its breast. The background is a soft wash of muted grey-green, letting the bird's jewel-like colours do all the talking.",
+      "technique": "Wet-on-dry layering for bird detail, loose wet-on-wet background wash",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/7_raw.jpg",
+        "full": "images/paintings/7.jpg"
+      },
+      "order": 16
+    },
+    {
+      "id": 8,
+      "title": "Alpine Dawn",
+      "series": "landscape",
+      "description": "Mountain peaks catch the first light of dawn, glowing gold and amber above a sea of soft violet cloud. The sky overhead melts from deep indigo into warm rose — a moment of impossible colour that lasts only minutes before the ordinary day begins.",
+      "technique": "Wet-on-wet sky gradients, dry brush for rock textures, lifted highlights on snow",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/8_raw.jpg",
+        "full": "images/paintings/8.jpg"
+      },
+      "order": 17
+    },
+    {
+      "id": 9,
+      "title": "Fighting Fish I",
+      "series": "mixed-media",
+      "description": "A teal Siamese fighting fish fans its elaborate fins against a deep dark background, white ink lines radiating outward like a signal or an aura — equal parts biological specimen and electric dream.",
+      "technique": "Dark watercolour background, wet-on-wet fish washes, white gel pen radiating line overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/9_raw.jpg",
+        "full": "images/paintings/9.jpg"
+      },
+      "order": 18
+    },
+    {
+      "id": 10,
+      "title": "Fighting Fish II",
+      "series": "mixed-media",
+      "description": "A fire-red Betta splendens spreads its fins in full display, its crimson and orange plumage burning against the darkness. White ink lines radiate outward as if the fish itself is a source of heat and light.",
+      "technique": "Dark watercolour background, wet-on-wet fish washes, white gel pen radiating line overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/10_raw.jpg",
+        "full": "images/paintings/10.jpg"
+      },
+      "order": 19
+    },
+    {
+      "id": 12,
+      "title": "Amber Falls",
+      "series": "landscape",
+      "collection": "waterfalls",
+      "description": "A wide waterfall crashes through an autumnal canopy of lime-green and golden-yellow foliage. Birds cut across the pale sky above the mist. The warm and cool tones push against each other — the forest alive with the particular energy of a season in transition.",
+      "technique": "Wet-on-wet canopy washes, negative painting for birds, dry brush waterfall, lifted mist highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/12_raw.jpg",
+        "full": "images/paintings/12.jpg"
+      },
+      "order": 20
+    },
+    {
+      "id": 13,
+      "title": "Jungle Plunge",
+      "series": "landscape",
+      "collection": "waterfalls",
+      "description": "A tall jungle waterfall drops straight through a cathedral of dense green rainforest. Birds wade at the shallow base. The foliage presses in from every side — abundant, layered, alive — the water the only vertical break in all that growth.",
+      "technique": "Wet-on-wet layered foliage, controlled dry brush for the water column, negative painting for birds",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/13_raw.jpg",
+        "full": "images/paintings/13.jpg"
+      },
+      "order": 21
+    },
+    {
+      "id": 14,
+      "title": "Robin on a Post",
+      "series": "birds",
+      "description": "A European robin perches on a weathered post, tilting its head to the right with an alert, watchful expression. The background is a loose, freely painted wash of blue-green and ochre — unfussy and immediate, all attention on the bird.",
+      "technique": "Loose wet-on-wet background, controlled wet-on-dry for bird plumage, ink detail for eye and beak",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/14_raw.jpg",
+        "full": "images/paintings/14.jpg"
+      },
+      "order": 22
+    },
+    {
+      "id": 15,
+      "title": "The Spine",
+      "series": "landscape",
+      "description": "A dramatic ridge of snow-dusted peaks cuts across the composition like a spine. Deep blue shadows fill the crevices; bright sunlight catches the high edges. The sky behind is washed clean and cold — altitude, silence, scale.",
+      "technique": "Wet-on-wet sky wash, dry brush for rock texture, masking fluid for snow highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/15_raw.jpg",
+        "full": "images/paintings/15.jpg"
+      },
+      "order": 23
+    },
+    {
+      "id": 16,
+      "title": "Ganesha II",
+      "series": "mythology",
+      "description": "Lord Ganesha rendered in celestial blue, his crown and robes worked in warm gold against a dark, smoky background. The blue skin — a mark of divinity — gives this Ganesha a quality at once grounded and otherworldly. Painted with reverence and precision.",
+      "technique": "Wet-on-wet dark background, layered wet-on-dry for figure detail, gold ink highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 2500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/16_raw.jpg",
+        "full": "images/paintings/16.jpg"
+      },
+      "order": 24
+    },
+    {
+      "id": 17,
+      "title": "The Colony",
+      "series": "mixed-media",
+      "collection": "superb-fairy-wren",
+      "description": "A group of superb fairy-wrens clusters on a branch — one cobalt male blazing among the browns and greys of females and juveniles. White ink lines stream across the dark background like falling rain or static discharge, giving the scene an electric, charged quality.",
+      "technique": "Dark wet-on-wet background, detailed dry-brush bird work, white gel pen rain-line overlay",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.778,
+      "images": {
+        "raw": "images/paintings/17_raw.jpg",
+        "full": "images/paintings/17.jpg"
+      },
+      "order": 25
+    },
+    {
+      "id": 18,
+      "title": "The Gorge",
+      "series": "landscape",
+      "description": "A deep canyon drops away to reveal a river threading through a lush green valley floor far below. Sheer walls rise on either side, their dark stone faces streaked with mineral colour. The scale is vertiginous — the kind of place that makes you feel the deep time of the earth.",
+      "technique": "Wet-on-wet foliage and river, dry brush for rock faces, negative painting for canyon depth",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/18_raw.jpg",
+        "full": "images/paintings/18.jpg"
+      },
+      "order": 26
+    },
+    {
+      "id": 19,
+      "title": "Sacred Lotus",
+      "series": "mixed-media",
+      "description": "A red lotus floats in darkness, its petals precisely detailed, white ink lines radiating outward from the bloom like light from a spiritual source. The lotus as symbol — purity rising from murk — rendered in deep pigment and fine line.",
+      "technique": "Dark watercolour background, layered wet-on-dry petal work, white gel pen radiating line overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/19_raw.jpg",
+        "full": "images/paintings/19.jpg"
+      },
+      "order": 27
+    },
+    {
+      "id": 20,
+      "title": "Betta Vortex",
+      "series": "mixed-media",
+      "description": "Two Betta fish — one fire-orange, one deep violet — spiral around each other in a dark vortex. Their fins trail through the water in long, silk-like ribbons. The composition hovers between fight and dance; it's impossible to tell which it is.",
+      "technique": "Dark wet-on-wet background, swirl blending for vortex, layered fish detail, white gel pen highlights",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/20_raw.jpg",
+        "full": "images/paintings/20.jpg"
+      },
+      "order": 28
+    },
+    {
+      "id": 21,
+      "title": "Macaw in Flight",
+      "series": "mixed-media",
+      "description": "A blue-and-gold macaw spreads its wings in full flight against a dark background, its vivid yellow underside and cobalt blue back caught mid-stroke. White ink lines radiate outward — the bird at the centre of its own force field.",
+      "technique": "Dark watercolour background, detailed wet-on-dry feather layering, white gel pen radiating line overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/21_raw.jpg",
+        "full": "images/paintings/21.jpg"
+      },
+      "order": 29
+    },
+    {
+      "id": 22,
+      "title": "Cat in the Garden",
+      "series": "mixed-media",
+      "description": "A black-and-white cat peers through a screen of green foliage, its pale face and wide eyes emerging from the leaves. The watercolour has a softness that the cat's direct gaze immediately cuts through — cool, composed, a little unsettling.",
+      "technique": "Loose wet-on-wet foliage, controlled dry-brush for cat fur detail, ink linework for face and eyes",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/22_raw.jpg",
+        "full": "images/paintings/22.jpg"
+      },
+      "order": 30
+    },
+    {
+      "id": 29,
+      "title": "Bumblebee",
+      "series": "mixed-media",
+      "description": "A bumblebee hangs in the air against a soft lavender background, its fuzzy body a study in black and amber. Honeycomb patterns float in the upper corners in white ink — a nod to the unseen architecture of the hive the bee is always returning to.",
+      "technique": "Wet-on-wet lavender background, detailed dry-brush fur texture, white gel pen honeycomb overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/29_raw.jpg",
+        "full": "images/paintings/29.jpg"
+      },
+      "order": 31
+    },
+    {
+      "id": 34,
+      "title": "Robin in the Garden",
+      "series": "birds",
+      "description": "A European robin stands front-on, plump and alert, its orange-red breast vivid against a freely painted wash of green and teal. The brush marks are loose and visible — less illustration, more impression of a bird caught in a moment of stillness.",
+      "technique": "Loose wet-on-wet background, wet-on-dry breast layering, ink linework for eye and beak detail",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/34_raw.jpg",
+        "full": "images/paintings/34.jpg"
+      },
+      "order": 32
+    },
+    {
+      "id": 36,
+      "title": "Valley of the Spire",
+      "series": "landscape",
+      "description": "A lone rocky pinnacle rises above a sweeping green valley floor, the landscape around it vivid with summer colour — bright meadows, a winding river, a small waterfall spilling over a dark ledge in the foreground. The scale is epic; the light is clear and direct.",
+      "technique": "Bold wet-on-wet sky and mountain washes, dry brush for rock and meadow detail, controlled waterfall rendering",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/36_raw.jpg",
+        "full": "images/paintings/36.jpg"
+      },
+      "order": 33
+    },
+    {
+      "id": 37,
+      "title": "Robin in the Rain",
+      "series": "mixed-media",
+      "description": "A European robin perches on a bare branch in the rain, its orange breast glowing against a cold blue-grey background. White ink lines streak diagonally across the composition — the rain made visible, the bird holding its ground in the middle of it.",
+      "technique": "Wet-on-wet dark background, detailed bird layering, white gel pen rain-line overlay",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/37_raw.jpg",
+        "full": "images/paintings/37.jpg"
+      },
+      "order": 34
+    },
+    {
+      "id": 38,
+      "title": "Dance in the Rain",
+      "series": "mixed-media",
+      "description": "A woman in a flowing coral-red dress spins alone in the rain, her arms outstretched, dress billowing. The background is deep violet — storm colour — and white ink lines streak down like rain caught mid-fall. Joy and abandon in the middle of a downpour.",
+      "technique": "Wet-on-wet violet background, loose figure rendering, white gel pen rain-line overlay, lifted reflections in puddle",
+      "frame": { "width": 13, "height": 18.5, "unit": "cm" },
+      "paintArea": { "width": 7.5, "height": 12.5, "unit": "cm" },
+      "price": 1500,
+      "sold": false,
+      "orientation": "portrait",
+      "aspectRatio": 0.562,
+      "images": {
+        "raw": "images/paintings/38_raw.jpg",
+        "full": "images/paintings/38.jpg"
+      },
+      "order": 35
+    },
+    {
+      "id": 39,
+      "title": "Highland Cascade",
+      "series": "landscape",
+      "collection": "waterfalls",
+      "description": "A river winds across a wide highland plateau before dropping over a dark ledge as a bright waterfall. Beyond, green hills rise in gentle ridges against an open blue sky with drifting cloud. The light is generous; the landscape is open and unhurried.",
+      "technique": "Bold wet-on-wet sky and hill washes, dry brush for plateau and rock texture, controlled waterfall rendering",
+      "frame": { "width": 18.5, "height": 13, "unit": "cm" },
+      "paintArea": { "width": 12.5, "height": 7.5, "unit": "cm" },
+      "price": 1000,
+      "sold": false,
+      "orientation": "landscape",
+      "aspectRatio": 1.778,
+      "images": {
+        "raw": "images/paintings/39_raw.jpg",
+        "full": "images/paintings/39.jpg"
+      },
+      "order": 36
     }
   ]
 }
