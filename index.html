@@ -106,6 +106,9 @@
               <option value="newest">Newest first</option>
               <option value="price-asc">Price: Low to High</option>
               <option value="price-desc">Price: High to Low</option>
+              <option value="title-asc">Title: A to Z</option>
+              <option value="size-asc">Size: Small first</option>
+              <option value="size-desc">Size: Large first</option>
             </select>
           </div>
           <button class="view-toggle" id="view-toggle" aria-pressed="false" aria-label="Toggle list view">
@@ -120,6 +123,30 @@
           </button>
         </div>
       </div>
+      <!-- Secondary Filters -->
+      <div class="gallery-filters-secondary" id="gallery-filters-secondary">
+        <div class="filter-group">
+          <span class="filter-group-label">Medium</span>
+          <button class="filter-chip active" data-group="medium" data-value="all">All</button>
+          <button class="filter-chip" data-group="medium" data-value="watercolour">Watercolour</button>
+          <button class="filter-chip" data-group="medium" data-value="acrylic">Acrylic</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-group-label">Shape</span>
+          <button class="filter-chip active" data-group="orientation" data-value="all">All</button>
+          <button class="filter-chip" data-group="orientation" data-value="portrait">Portrait</button>
+          <button class="filter-chip" data-group="orientation" data-value="landscape">Landscape</button>
+          <button class="filter-chip" data-group="orientation" data-value="square">Square</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-group-label">Price</span>
+          <button class="filter-chip active" data-group="priceRange" data-value="all">All</button>
+          <button class="filter-chip" data-group="priceRange" data-value="budget">Under &#8377;1,500</button>
+          <button class="filter-chip" data-group="priceRange" data-value="mid">&#8377;1,500&#8211;2,800</button>
+          <button class="filter-chip" data-group="priceRange" data-value="premium">Above &#8377;2,800</button>
+        </div>
+      </div>
+
       <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
 
       <!-- Grid -->

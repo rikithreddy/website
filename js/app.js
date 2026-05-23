@@ -21,6 +21,9 @@
     availableOnly: false,
     sort: 'newest',
     viewMode: localStorage.getItem('viewMode') || 'grid',
+    medium: 'all',
+    orientation: 'all',
+    priceRange: 'all',
   };
 
   let filtered = [];
@@ -196,12 +199,46 @@
       result = result.filter(p => !p.sold);
     }
 
+    if (state.medium !== 'all') {
+      result = result.filter(p => {
+        const med = (resolve(p, 'medium') || '').toLowerCase();
+        return state.medium === 'acrylic' ? med.includes('acrylic') : !med.includes('acrylic');
+      });
+    }
+
+    if (state.orientation !== 'all') {
+      result = result.filter(p => p.orientation === state.orientation);
+    }
+
+    if (state.priceRange !== 'all') {
+      const ranges = { budget: [0, 1500], mid: [1501, 2800], premium: [2801, Infinity] };
+      const [min, max] = ranges[state.priceRange] || [0, Infinity];
+      result = result.filter(p => p.price >= min && p.price <= max);
+    }
+
     switch (state.sort) {
       case 'price-asc':
         result.sort((a, b) => a.price - b.price);
         break;
       case 'price-desc':
         result.sort((a, b) => b.price - a.price);
+        break;
+      case 'title-asc':
+        result.sort((a, b) => a.title.localeCompare(b.title));
+        break;
+      case 'size-asc':
+        result.sort((a, b) => {
+          const aA = a.paintArea ? a.paintArea.width * a.paintArea.height : 0;
+          const bA = b.paintArea ? b.paintArea.width * b.paintArea.height : 0;
+          return aA - bA;
+        });
+        break;
+      case 'size-desc':
+        result.sort((a, b) => {
+          const aA = a.paintArea ? a.paintArea.width * a.paintArea.height : 0;
+          const bA = b.paintArea ? b.paintArea.width * b.paintArea.height : 0;
+          return bA - aA;
+        });
         break;
       default: // newest
         result.sort((a, b) => b.order - a.order);
@@ -285,6 +322,18 @@
     const sym = resolve(painting, 'currencySymbol');
     const priceStr = `${sym}${formatPrice(painting.price)}`;
 
+    const seriesName = painting.series && seriesMap[painting.series] ? seriesMap[painting.series].name : null;
+    const mediumRaw = resolve(painting, 'medium') || '';
+    const mediumShort = mediumRaw.toLowerCase().includes('acrylic') ? 'Acrylic' : 'Watercolour';
+    const orient = painting.orientation ? painting.orientation.charAt(0).toUpperCase() + painting.orientation.slice(1) : '';
+    const fw = painting.frame ? painting.frame.width : null;
+    const fh = painting.frame ? painting.frame.height : null;
+    const fu = painting.frame ? (painting.frame.unit || 'cm') : 'cm';
+    const pw = painting.paintArea ? painting.paintArea.width : null;
+    const ph = painting.paintArea ? painting.paintArea.height : null;
+    const descFull = painting.description || '';
+    const descExcerpt = descFull.length > 130 ? descFull.slice(0, 130).trimEnd() + '…' : descFull;
+
     card.innerHTML = `
       <div class="card-frame">
         ${painting.sold ? '<div class="sold-ribbon" aria-hidden="true">Sold</div>' : ''}
@@ -299,21 +348,28 @@
             decoding="async"
           >
           <div class="card-overlay" aria-hidden="true">
-            ${painting.collection && collectionsMap[painting.collection]
-              ? `<span class="overlay-collection">${escHtml(collectionsMap[painting.collection].name)}</span>`
-              : ''}
             <p class="overlay-title">${escHtml(painting.title)}</p>
             <p class="overlay-price${painting.sold ? ' is-sold-price' : ''}">${priceStr}</p>
           </div>
         </div>
       </div>
       <div class="card-info-mobile">
-        ${painting.collection && collectionsMap[painting.collection]
-          ? `<span class="card-collection-tag">${escHtml(collectionsMap[painting.collection].name)}</span>`
-          : ''}
         <p class="card-title">${escHtml(painting.title)}</p>
-        <p class="card-price${painting.sold ? ' is-sold-price' : ''}">${priceStr}</p>
-        ${painting.sold ? '<span class="card-sold-label">Sold</span>' : ''}
+        <p class="card-price card-price-top${painting.sold ? ' is-sold-price' : ''}">${priceStr}</p>
+        ${painting.sold ? '<span class="card-sold-label card-sold-top">Sold</span>' : ''}
+        <div class="card-list-extra">
+          <div class="card-list-tags">
+            ${seriesName ? `<span class="card-series-tag">${escHtml(seriesName)}</span>` : ''}
+            ${orient ? `<span class="card-orient-tag">${orient}</span>` : ''}
+            <span class="card-medium-tag">${mediumShort}</span>
+          </div>
+          ${fw && fh ? `<p class="card-list-dims">${fw}&times;${fh}&thinsp;${fu} frame${pw && ph ? ` &mdash; ${pw}&times;${ph}&thinsp;${fu} paint area` : ''}</p>` : ''}
+          ${descExcerpt ? `<p class="card-list-desc">${escHtml(descExcerpt)}</p>` : ''}
+          <div class="card-list-bottom">
+            <span class="card-price card-price-bottom${painting.sold ? ' is-sold-price' : ''}">${priceStr}</span>
+            ${painting.sold ? '<span class="card-sold-label">Sold</span>' : ''}
+          </div>
+        </div>
       </div>
     `;
 
@@ -637,6 +693,18 @@
         renderGallery(true);
       });
     }
+
+    // Secondary filter chips (medium, orientation, priceRange)
+    document.querySelectorAll('.filter-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const group = chip.dataset.group;
+        const value = chip.dataset.value;
+        document.querySelectorAll(`.filter-chip[data-group="${group}"]`).forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        state[group] = value;
+        renderGallery(true);
+      });
+    });
 
     // Modal close
     document.getElementById('modal-close').addEventListener('click', closeModal);
