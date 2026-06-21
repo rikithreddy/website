@@ -278,44 +278,37 @@
 
     const sorted = [...milestones].sort((a, b) => new Date(b.date) - new Date(a.date));
 
-    list.innerHTML = sorted.map(m => `
-      <div class="milestone-card">
-        <div class="milestone-icon">&#10003;</div>
-        <div class="milestone-body">
-          <div class="milestone-meta">
-            <span class="badge">${m.type}</span>
-            <span class="milestone-num">Rep #${m.milestone}</span>
-            <span class="milestone-date">${formatDateDisplay(m.date)}</span>
-          </div>
-          ${m.note ? `<p class="milestone-note">&ldquo;${m.note}&rdquo;</p>` : ''}
+    const achievedHTML = sorted.map(m => `
+      <div class="milestone-item">
+        <div class="milestone-item__left">
+          <span class="milestone-item__type">${m.type}</span>
+          <span class="milestone-item__rep">Rep #${m.milestone}</span>
         </div>
+        <span class="milestone-item__date">${formatDateDisplay(m.date)}</span>
+        ${m.note ? `<p class="milestone-item__note">&ldquo;${m.note}&rdquo;</p>` : ''}
       </div>
     `).join('');
 
-    // Append upcoming ghost milestones
+    // Upcoming milestones
     const thresholds = [10, 25, 50, 100, 150, 200, 250, 300, 350, 400, 500];
     const achieved = new Set(milestones.map(m => `${m.type}:${m.milestone}`));
 
-    summary.forEach(row => {
+    const upcomingHTML = summary.map(row => {
       const count = parseInt(row.Count);
       const next = thresholds.find(t => t > count);
-      if (!next) return;
-      if (achieved.has(`${row.Name}:${next}`)) return;
-      const ghost = document.createElement('div');
-      ghost.className = 'milestone-card';
-      ghost.style.opacity = '0.4';
-      ghost.innerHTML = `
-        <div class="milestone-icon" style="background:#F7F4F0;color:#C0B8B0">&#9679;</div>
-        <div class="milestone-body">
-          <div class="milestone-meta">
-            <span class="badge">${row.Name}</span>
-            <span class="milestone-num">Rep #${next}</span>
-            <span class="milestone-date">${count} / ${next} &mdash; ${next - count} to go</span>
+      if (!next || achieved.has(`${row.Name}:${next}`)) return '';
+      return `
+        <div class="milestone-item milestone-item--upcoming">
+          <div class="milestone-item__left">
+            <span class="milestone-item__type">${row.Name}</span>
+            <span class="milestone-item__rep">Rep #${next}</span>
           </div>
+          <span class="milestone-item__date">${next - count} to go</span>
         </div>
       `;
-      list.appendChild(ghost);
-    });
+    }).join('');
+
+    list.innerHTML = achievedHTML + upcomingHTML;
   }
 
   // ============================================================
@@ -514,23 +507,58 @@
   }
 
   // ============================================================
-  //  Init
+  //  Init — page-aware rendering
   // ============================================================
 
   async function init() {
-    try {
-      const { summary, milestones, notes, affiliates, newsletters, allLogs } = await loadAllData();
+    initNav();
 
-      renderHero(summary);
-      renderSummaryCards(summary);
-      renderHeatmap(allLogs);
-      renderBarChart(summary);
-      renderMilestones(milestones, summary);
-      renderNotes(notes);
-      renderAboutStats(summary);
-      renderResources(affiliates);
-      renderLetters(newsletters);
-      initNav();
+    const page = document.body.dataset.page;
+
+    try {
+      if (page === 'dashboard') {
+        const [summaryText, logTexts] = await Promise.all([
+          fetch('data/practice-summary.csv').then(r => r.text()),
+          Promise.all(LOG_FILES.map(f =>
+            fetch(`data/logs/${f}.csv`).then(r => r.text()).catch(() => '')
+          ))
+        ]);
+        const summary = parseCSV(summaryText);
+        const allLogs = logTexts.map(t => t ? parseCSV(t) : []).flat().filter(r => r.Date && r.NumberOfReps);
+        renderHero(summary);
+        renderSummaryCards(summary);
+        renderHeatmap(allLogs);
+        renderBarChart(summary);
+      }
+
+      if (page === 'milestones') {
+        const [summaryText, milestones] = await Promise.all([
+          fetch('data/practice-summary.csv').then(r => r.text()),
+          fetch('data/milestones.json').then(r => r.json()),
+        ]);
+        renderMilestones(milestones, parseCSV(summaryText));
+      }
+
+      if (page === 'notes') {
+        const notes = await fetch('data/notes.json').then(r => r.json());
+        renderNotes(notes);
+      }
+
+      if (page === 'about') {
+        const summary = await fetch('data/practice-summary.csv').then(r => r.text()).then(parseCSV);
+        renderAboutStats(summary);
+      }
+
+      if (page === 'resources') {
+        const affiliates = await fetch('data/affiliates.csv').then(r => r.text()).then(parseCSV);
+        renderResources(affiliates);
+      }
+
+      if (page === 'letters') {
+        const newsletters = await fetch('data/newsletters.json').then(r => r.json());
+        renderLetters(newsletters);
+      }
+
     } catch (err) {
       console.error('Failed to load data:', err);
     }

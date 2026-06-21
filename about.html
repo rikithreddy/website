@@ -3,16 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rikith Reddy — Practice Dashboard</title>
-  <meta name="description" content="Data scientist. Artist. I make art every single day and track every rep." />
+  <title>About — Rikith Reddy</title>
+  <meta name="description" content="Data scientist. Artist. I make art every single day." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body data-page="dashboard">
+<body data-page="about">
 
   <header class="nav" id="nav">
     <nav class="nav__inner container">
@@ -21,10 +20,10 @@
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
-        <li><a href="index.html" class="active">Dashboard</a></li>
+        <li><a href="index.html">Dashboard</a></li>
         <li><a href="milestones.html">Milestones</a></li>
         <li><a href="notes.html">Notes</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="about.html" class="active">About</a></li>
         <li><a href="resources.html">Resources</a></li>
         <li><a href="letters.html">Letters</a></li>
       </ul>
@@ -39,55 +38,26 @@
     </nav>
   </header>
 
-  <section class="hero">
-    <div class="container hero__inner">
-      <p class="hero__eyebrow">Practice Dashboard</p>
-      <h1 class="hero__name">Rikith Reddy</h1>
-      <p class="hero__tagline">data scientist &nbsp;&middot;&nbsp; sketchbook builder &nbsp;&middot;&nbsp; <span id="totalReps">—</span> reps and counting</p>
-      <div class="hero__actions">
-        <a href="https://substack.com" target="_blank" rel="noopener" class="btn btn--primary">Subscribe on Substack</a>
-        <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener" class="btn btn--ghost">Instagram</a>
-      </div>
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero__title">About</h1>
     </div>
   </section>
 
-  <section class="section" id="dashboard">
+  <section class="section">
     <div class="container">
-      <h2 class="section__title">Dashboard</h2>
-      <p class="section__sub">Every rep logged. Every type tracked.</p>
-
-      <div class="cards-grid" id="summaryCards"></div>
-
-      <div class="heatmap-wrap">
-        <div class="heatmap-header">
-          <span class="heatmap-label">Last 52 weeks of practice</span>
-          <div class="heatmap-legend">
-            <span class="legend-label">less</span>
-            <div class="legend-cell" data-level="0"></div>
-            <div class="legend-cell" data-level="1"></div>
-            <div class="legend-cell" data-level="2"></div>
-            <div class="legend-cell" data-level="3"></div>
-            <div class="legend-cell" data-level="4"></div>
-            <span class="legend-label">more</span>
+      <div class="about-layout">
+        <div class="about-text">
+          <p>I am a data scientist who makes art every single day. I count everything — every gesture, every notan, every portrait. Not because the numbers are the point, but because they are proof that the practice is real.</p>
+          <p>I started numbering my reps in 2024. It removed the pressure to make every session meaningful. A rep is just a rep. The meaning compounds over hundreds of them.</p>
+          <p>This site is the live record of that practice. The heatmap shows where the work actually happened. The notes show what I was thinking when it did.</p>
+          <p>I also write a weekly newsletter about building a creative practice inside a full life. If you have ever told yourself you do not have time to make art, that one is for you.</p>
+          <div class="about-links">
+            <a href="https://substack.com" target="_blank" rel="noopener" class="btn btn--primary">Read the newsletter</a>
+            <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener" class="btn btn--ghost">Instagram</a>
           </div>
         </div>
-        <div class="heatmap-scroll">
-          <div class="heatmap-months" id="heatmapMonths"></div>
-          <div class="heatmap-days-wrap">
-            <div class="heatmap-day-labels">
-              <span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span>
-            </div>
-            <div class="heatmap-grid" id="heatmapGrid"></div>
-          </div>
-        </div>
-        <div class="heatmap-tooltip" id="heatmapTooltip"></div>
-      </div>
-
-      <div class="chart-wrap">
-        <h3 class="chart-title">Reps by type</h3>
-        <div class="chart-canvas-wrap">
-          <canvas id="barChart"></canvas>
-        </div>
+        <div class="about-stats" id="aboutStats"></div>
       </div>
     </div>
   </section>

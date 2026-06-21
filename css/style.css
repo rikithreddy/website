@@ -380,57 +380,73 @@ input { font-family: inherit; }
   max-height: 280px;
 }
 
+/* --- PAGE HERO -------------------------------------------- */
+.page-hero {
+  padding: 64px 0 40px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0;
+}
+.page-hero__title {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 6px;
+}
+.page-hero__sub {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+/* --- NAV ACTIVE ------------------------------------------- */
+.nav__links a.active {
+  color: var(--text);
+  font-weight: 600;
+}
+
 /* --- MILESTONES ------------------------------------------- */
 .milestones-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
 }
-.milestone-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 20px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 20px 24px;
-  transition: box-shadow var(--trans);
+.milestone-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  column-gap: 24px;
+  row-gap: 4px;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border);
 }
-.milestone-card:hover { box-shadow: var(--shadow-sm); }
-.milestone-icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: var(--green-bg);
-  color: var(--green);
+.milestone-item:first-child { border-top: 1px solid var(--border); }
+.milestone-item--upcoming { opacity: 0.38; }
+.milestone-item__left {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 1rem;
-}
-.milestone-body { flex: 1; min-width: 0; }
-.milestone-meta {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
+  align-items: baseline;
+  gap: 12px;
   flex-wrap: wrap;
 }
-.milestone-num {
+.milestone-item__type {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.milestone-item__rep {
   font-family: var(--font-serif);
   font-size: 1.125rem;
   color: var(--text);
 }
-.milestone-date {
-  font-size: 0.75rem;
+.milestone-item__date {
+  font-size: 0.8125rem;
   color: var(--text-muted);
+  white-space: nowrap;
 }
-.milestone-note {
-  font-size: 0.875rem;
+.milestone-item__note {
+  grid-column: 1 / -1;
+  font-size: 0.8125rem;
   color: var(--text-muted);
   font-style: italic;
-  margin-top: 2px;
+  padding-top: 2px;
 }
 
 /* --- TYPE BADGE ------------------------------------------- */
