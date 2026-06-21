@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "type": "Gesture",
+    "reps": "320–327",
+    "date": "2026-06-13",
+    "title": "Finding the automatic line",
+    "content": "Something shifted around rep 323. Stopped deciding where to start, just started. The pen went to the longest axis first every time without me choosing it. Not sure if this is muscle memory or just fatigue making me faster. Will test again next session."
+  },
+  {
+    "id": 2,
+    "type": "Notan",
+    "reps": "58–63",
+    "date": "2026-06-14",
+    "title": "Size doesn't change the problem",
+    "content": "Did three small thumbnail notans and three larger ones. Same compositions. The small ones were sharper decisions — less room to second-guess. Bigger notans let me be vague and I took that option every time. Keep doing small ones first, big ones after the value decision is already made."
+  },
+  {
+    "id": 3,
+    "type": "Portraits",
+    "reps": "55–61",
+    "date": "2026-03-07",
+    "title": "Eyes are just shapes",
+    "content": "Spent three sessions fighting the eye socket. Finally just covered it with a neutral value and built from there. The likeness improved immediately. Was drawing what I thought an eye looked like, not what was there. Classic. The moment you stop naming the part, the drawing gets better."
+  },
+  {
+    "id": 4,
+    "type": "Live Sketching",
+    "reps": "30–37",
+    "date": "2026-06-08",
+    "title": "Observation before marks",
+    "content": "Cafe sketching. Started timing myself: 30 seconds of watching before the pen touches paper. It feels absurdly slow but the sketches from these sessions have the subject's weight in them. The ones where I start drawing immediately are technically faster but miss the feeling completely."
+  },
+  {
+    "id": 5,
+    "type": "One Line Art",
+    "reps": "150–158",
+    "date": "2026-02-08",
+    "title": "Speed is the constraint, not style",
+    "content": "When I slow down on a one-liner I start correcting. The speed is the point — it forces you to commit. Did 8 fast and 8 slow. The fast ones had personality. The slow ones looked like I was afraid of the line. One-liners are the only place where hesitation shows up as a visible artifact."
+  },
+  {
+    "id": 6,
+    "type": "Imaginative",
+    "reps": "1–6",
+    "date": "2026-06-02",
+    "title": "Drawing from nothing is different",
+    "content": "First time sitting down to draw with zero reference. Tried a figure in a doorway — something I've drawn from reference many times. Completely different problem. The hand doesn't know where to start. Realised I've been borrowing confidence from reference. This is the actual skill. Going to make this a weekly session."
+  }
+]

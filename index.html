@@ -1,331 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Art by Rikith Reddy | Original Watercolour Paintings</title>
-  <meta name="description" content="Original watercolour paintings by Rikith Reddy. Landscapes, birds, and mixed media art available for purchase. Each piece is one-of-a-kind.">
-  <meta name="author" content="Rikith Reddy">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Art by Rikith Reddy | Watercolour Paintings">
-  <meta property="og:description" content="Original watercolour paintings — landscapes, birds, and mixed media. Each piece is one-of-a-kind.">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="images/paintings/33_raw.jpg">
-  <meta property="og:image:alt" content="Sun Conure — watercolour painting by Rikith Reddy">
-
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Art by Rikith Reddy | Watercolour Paintings">
-  <meta name="twitter:description" content="Original watercolour paintings available for purchase.">
-  <meta name="twitter:image" content="images/paintings/33_raw.jpg">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-
-  <link rel="stylesheet" href="css/style.css">
-
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Rikith Reddy",
-    "url": "",
-    "jobTitle": "Watercolour Artist",
-    "description": "Original watercolour paintings — landscapes, birds, mythology, and mixed media.",
-    "knowsAbout": ["Watercolour painting", "Wildlife art", "Landscape painting"]
-  }
-  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rikith Reddy — Practice Dashboard</title>
+  <meta name="description" content="Data scientist. Artist. I make art every single day and track every rep." />
+  <meta property="og:title" content="Rikith Reddy — Practice Dashboard" />
+  <meta property="og:description" content="Live record of a daily art practice — gesture, notan, portraits, and more." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- Navigation -->
-  <header class="navbar" id="navbar">
-    <div class="navbar-inner">
-      <a href="#hero" class="navbar-brand" aria-label="Art by Rikith Reddy — home">Art by Rikith</a>
-      <nav class="navbar-nav" aria-label="Main navigation">
-        <a href="#gallery" class="nav-link">Gallery</a>
-        <a href="#about" class="nav-link">About</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <a href="#" class="nav-link nav-instagram" id="nav-instagram-link" aria-label="Instagram" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
+  <!-- NAV -->
+  <header class="nav" id="nav">
+    <nav class="nav__inner container">
+      <a href="#" class="nav__brand">Rikith Reddy</a>
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav__links" id="navLinks">
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#milestones">Milestones</a></li>
+        <li><a href="#notes">Notes</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#letters">Letters</a></li>
+      </ul>
+      <div class="nav__social">
+        <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener" aria-label="Instagram" class="nav__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
         </a>
-      </nav>
-    </div>
+        <a href="https://substack.com" target="_blank" rel="noopener" aria-label="Substack" class="nav__icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+        </a>
+      </div>
+    </nav>
   </header>
 
-  <main>
-
-    <!-- Hero -->
-    <section class="hero" id="hero" aria-labelledby="hero-title">
-      <div class="hero-content">
-        <p class="hero-eyebrow">Original Watercolour Art</p>
-        <h1 class="hero-title" id="hero-title">Rikith Reddy</h1>
-        <p class="hero-subtitle">Watercolour Artist</p>
-        <p class="hero-stats" id="hero-stats"></p>
-        <a href="#gallery" class="hero-cta">View the Collection</a>
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="container hero__inner">
+      <p class="hero__eyebrow">Practice Dashboard</p>
+      <h1 class="hero__name">Rikith Reddy</h1>
+      <p class="hero__tagline">data scientist &nbsp;&middot;&nbsp; sketchbook builder &nbsp;&middot;&nbsp; <span id="totalReps">—</span> reps and counting</p>
+      <div class="hero__actions">
+        <a href="https://substack.com" target="_blank" rel="noopener" class="btn btn--primary">Subscribe on Substack</a>
+        <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener" class="btn btn--ghost">Instagram</a>
       </div>
-      <div class="hero-strip" id="hero-strip" aria-hidden="true"></div>
-      <a href="#gallery" class="hero-scroll" aria-label="Scroll to gallery">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M6 9l6 6 6-6"/>
-        </svg>
-      </a>
-    </section>
+    </div>
+  </section>
 
-    <!-- Gallery -->
-    <section class="gallery-section" id="gallery" aria-labelledby="gallery-title">
-      <div class="section-header">
-        <h2 class="section-title" id="gallery-title">Works</h2>
-        <p class="section-subtitle">Original paintings — each one of a kind</p>
-      </div>
+  <!-- DASHBOARD -->
+  <section class="section" id="dashboard">
+    <div class="container">
+      <h2 class="section__title">Dashboard</h2>
+      <p class="section__sub">Every rep logged. Every type tracked.</p>
 
-      <!-- Controls -->
-      <div class="gallery-controls" role="group" aria-label="Gallery filters and sort">
-        <div class="filter-bar" role="group" aria-label="Filter by series">
-          <button class="filter-pill active" data-series="all">All</button>
-          <!-- Series pills injected by JS -->
-        </div>
-        <div class="gallery-controls-right">
-          <button class="availability-toggle" id="availability-toggle" aria-pressed="false">
-            Available only
-          </button>
-          <div class="sort-wrapper">
-            <label for="sort-select" class="sr-only">Sort paintings</label>
-            <select class="sort-select" id="sort-select" aria-label="Sort paintings">
-              <option value="newest">Newest first</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
-              <option value="title-asc">Title: A to Z</option>
-              <option value="size-asc">Size: Small first</option>
-              <option value="size-desc">Size: Large first</option>
-            </select>
+      <div class="cards-grid" id="summaryCards"></div>
+
+      <div class="heatmap-wrap">
+        <div class="heatmap-header">
+          <span class="heatmap-label">Last 52 weeks of practice</span>
+          <div class="heatmap-legend">
+            <span class="legend-label">less</span>
+            <div class="legend-cell" data-level="0"></div>
+            <div class="legend-cell" data-level="1"></div>
+            <div class="legend-cell" data-level="2"></div>
+            <div class="legend-cell" data-level="3"></div>
+            <div class="legend-cell" data-level="4"></div>
+            <span class="legend-label">more</span>
           </div>
-          <button class="view-toggle" id="view-toggle" aria-pressed="false" aria-label="Toggle list view">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="icon-list">
-              <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
-              <line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" class="icon-grid">
-              <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-              <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
-            </svg>
-          </button>
         </div>
-      </div>
-      <!-- Secondary Filters -->
-      <div class="gallery-filters-secondary" id="gallery-filters-secondary">
-        <div class="filter-group">
-          <span class="filter-group-label">Medium</span>
-          <button class="filter-chip active" data-group="medium" data-value="all">All</button>
-          <button class="filter-chip" data-group="medium" data-value="watercolour">Watercolour</button>
-          <button class="filter-chip" data-group="medium" data-value="acrylic">Acrylic</button>
-        </div>
-        <div class="filter-group">
-          <span class="filter-group-label">Shape</span>
-          <button class="filter-chip active" data-group="orientation" data-value="all">All</button>
-          <button class="filter-chip" data-group="orientation" data-value="portrait">Portrait</button>
-          <button class="filter-chip" data-group="orientation" data-value="landscape">Landscape</button>
-          <button class="filter-chip" data-group="orientation" data-value="square">Square</button>
-        </div>
-        <div class="filter-group">
-          <span class="filter-group-label">Price</span>
-          <button class="filter-chip active" data-group="priceRange" data-value="all">All</button>
-          <button class="filter-chip" data-group="priceRange" data-value="budget">Under &#8377;1,500</button>
-          <button class="filter-chip" data-group="priceRange" data-value="mid">&#8377;1,500&#8211;2,800</button>
-          <button class="filter-chip" data-group="priceRange" data-value="premium">Above &#8377;2,800</button>
-        </div>
-      </div>
-
-      <p class="gallery-count" id="gallery-count" aria-live="polite"></p>
-
-      <!-- Grid -->
-      <div class="gallery-grid" id="gallery-grid" role="list" aria-label="Paintings gallery">
-        <!-- Cards injected by JS -->
-      </div>
-    </section>
-
-    <!-- About -->
-    <section class="about-section" id="about" aria-labelledby="about-title">
-      <div class="about-inner">
-        <div class="about-photo-col">
-          <div class="about-photo-wrap" id="about-photo-wrap">
-            <img src="images/artist/photo.jpg" alt="Rikith Reddy — watercolour artist" class="about-photo" id="about-photo" loading="lazy" onerror="this.closest('.about-photo-wrap').classList.add('photo-missing')">
-            <div class="about-photo-placeholder" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-              <span>Add your photo to<br>images/artist/photo.jpg</span>
+        <div class="heatmap-scroll">
+          <div class="heatmap-months" id="heatmapMonths"></div>
+          <div class="heatmap-days-wrap">
+            <div class="heatmap-day-labels">
+              <span>Mon</span><span></span><span>Wed</span><span></span><span>Fri</span><span></span><span>Sun</span>
             </div>
-          </div>
-          <div class="about-social" id="about-social">
-            <a href="#" class="social-link instagram-link" id="about-instagram-link" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-                <circle cx="12" cy="12" r="4"/>
-                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-              </svg>
-              <span id="about-instagram-handle">@your_instagram</span>
-            </a>
+            <div class="heatmap-grid" id="heatmapGrid"></div>
           </div>
         </div>
+        <div class="heatmap-tooltip" id="heatmapTooltip"></div>
+      </div>
 
-        <div class="about-text-col">
-          <h2 class="section-title" id="about-title">About</h2>
-          <p class="about-name" id="about-name">Rikith Reddy</p>
-          <div class="about-bio" id="about-bio"></div>
-
-          <div class="about-materials">
-            <h3 class="materials-heading">Materials</h3>
-            <dl class="materials-list" id="materials-list">
-              <!-- Injected by JS -->
-            </dl>
-          </div>
+      <div class="chart-wrap">
+        <h3 class="chart-title">Reps by type</h3>
+        <div class="chart-canvas-wrap">
+          <canvas id="barChart"></canvas>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Contact -->
-    <section class="contact-section" id="contact" aria-labelledby="contact-title">
-      <div class="contact-inner">
-        <h2 class="section-title" id="contact-title">Inquire</h2>
-        <p class="contact-lead">Interested in a painting or a custom commission? I'd love to hear from you.</p>
+  <!-- MILESTONES -->
+  <section class="section section--alt" id="milestones">
+    <div class="container">
+      <h2 class="section__title">Milestones</h2>
+      <p class="section__sub">The moments worth marking.</p>
+      <div class="milestones-list" id="milestonesList"></div>
+    </div>
+  </section>
 
-        <div class="contact-instagram-card">
-          <div class="contact-ig-icon" aria-hidden="true">
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-              <circle cx="12" cy="12" r="4"/>
-              <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
-            </svg>
+  <!-- NOTES -->
+  <section class="section" id="notes">
+    <div class="container">
+      <h2 class="section__title">Notes</h2>
+      <p class="section__sub">Running commentary. What I noticed, what changed.</p>
+      <div class="filter-pills" id="notesFilter"></div>
+      <div class="notes-grid" id="notesGrid"></div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section section--alt" id="about">
+    <div class="container">
+      <h2 class="section__title">About</h2>
+      <div class="about-layout">
+        <div class="about-text">
+          <p>I am a data scientist who makes art every single day. I count everything — every gesture, every notan, every portrait. Not because the numbers are the point, but because they are proof that the practice is real.</p>
+          <p>I started numbering my reps in 2024. It removed the pressure to make every session meaningful. A rep is just a rep. The meaning compounds over hundreds of them.</p>
+          <p>This site is the live record of that practice. The heatmap shows where the work actually happened. The notes show what I was thinking when it did.</p>
+          <p>I also write a weekly newsletter about building a creative practice inside a full life. If you have ever told yourself you do not have time to make art, that one is for you.</p>
+          <div class="about-links">
+            <a href="https://substack.com" target="_blank" rel="noopener" class="btn btn--primary">Read the newsletter</a>
+            <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener" class="btn btn--ghost">Instagram</a>
           </div>
-          <a href="#" class="btn btn-primary contact-ig-btn" id="contact-instagram-link" target="_blank" rel="noopener">Follow on Instagram</a>
-          <p class="contact-dm-note">Send me a DM — I reply to every message.</p>
         </div>
+        <div class="about-stats" id="aboutStats"></div>
       </div>
-    </section>
+    </div>
+  </section>
 
-  </main>
+  <!-- RESOURCES -->
+  <section class="section" id="resources">
+    <div class="container">
+      <h2 class="section__title">Resources</h2>
+      <p class="section__sub">What I actually use. Affiliate links — I only list things I have bought myself.</p>
+      <div class="resources-controls">
+        <input type="text" class="search-input" id="affiliateSearch" placeholder="Search resources&#8230;" />
+        <div class="filter-pills" id="affiliateFilter"></div>
+      </div>
+      <div class="resources-grid" id="resourcesGrid"></div>
+    </div>
+  </section>
 
-  <!-- Footer -->
+  <!-- LETTERS -->
+  <section class="section section--alt" id="letters">
+    <div class="container">
+      <h2 class="section__title">Letters</h2>
+      <p class="section__sub">Every issue, in one place.</p>
+      <div class="letters-grid" id="lettersGrid"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
   <footer class="footer">
-    <div class="footer-inner">
-      <p class="footer-brand">Art by Rikith Reddy</p>
-      <p class="footer-tagline" id="footer-tagline">Watercolour Art by Rikith Reddy</p>
-      <div class="footer-links">
-        <a href="#" class="footer-link" id="footer-instagram-link" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <circle cx="12" cy="12" r="4"/>
-            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
-          </svg>
-        </a>
+    <div class="container footer__inner">
+      <p class="footer__brand">Rikith Reddy</p>
+      <p class="footer__sub">data scientist &nbsp;&middot;&nbsp; artist &nbsp;&middot;&nbsp; India</p>
+      <div class="footer__social">
+        <a href="https://instagram.com/rikith_reddy_art" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://substack.com" target="_blank" rel="noopener">Substack</a>
       </div>
-      <p class="footer-note">All paintings are original, one-of-a-kind works.</p>
-      <p class="footer-copy">© <span id="footer-year"></span> Rikith Reddy. All rights reserved.</p>
     </div>
   </footer>
-
-  <!-- Painting Detail Modal -->
-  <div class="modal-backdrop" id="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" aria-hidden="true">
-    <div class="modal-container" id="modal-container">
-      <button class="modal-close" id="modal-close" aria-label="Close painting detail">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </button>
-
-      <div class="modal-body">
-        <!-- Image column -->
-        <div class="modal-image-col">
-          <div class="modal-image-wrap">
-            <img src="" alt="" class="modal-image" id="modal-image" decoding="async">
-            <div class="modal-image-skeleton" id="modal-image-skeleton" aria-hidden="true"></div>
-          </div>
-          <div class="modal-image-controls">
-            <button class="frame-toggle" id="frame-toggle" aria-pressed="false">
-              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2"/>
-                <rect x="7" y="7" width="10" height="10" rx="1"/>
-              </svg>
-              View in frame
-            </button>
-          </div>
-        </div>
-
-        <!-- Info column -->
-        <div class="modal-info-col">
-          <div class="modal-header">
-            <div class="modal-title-row">
-              <h2 class="modal-title" id="modal-title"></h2>
-              <span class="modal-sold-badge" id="modal-sold-badge" aria-label="Sold">Sold</span>
-            </div>
-            <span class="modal-series-tag" id="modal-series-tag"></span>
-            <div id="modal-collection"></div>
-          </div>
-
-          <p class="modal-description" id="modal-description"></p>
-
-          <div class="modal-divider"></div>
-
-          <dl class="modal-specs" id="modal-specs">
-            <!-- Injected by JS -->
-          </dl>
-
-          <div class="modal-divider"></div>
-
-          <div class="modal-pricing" id="modal-pricing">
-            <div class="modal-price-row">
-              <span class="modal-price" id="modal-price"></span>
-              <span class="modal-price-note" id="modal-price-note"></span>
-            </div>
-            <div class="modal-actions">
-              <button class="btn btn-primary" id="modal-inquire">Inquire about this piece</button>
-              <button class="btn btn-ghost" id="modal-share" aria-label="Share this painting">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                  <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                </svg>
-                Share
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Navigation -->
-      <div class="modal-nav" aria-label="Navigate between paintings">
-        <button class="modal-nav-btn" id="modal-prev" aria-label="Previous painting">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-          Prev
-        </button>
-        <span class="modal-nav-count" id="modal-nav-count"></span>
-        <button class="modal-nav-btn" id="modal-next" aria-label="Next painting">
-          Next
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast notification -->
-  <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script src="js/app.js"></script>
 </body>
