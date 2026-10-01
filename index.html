@@ -105,6 +105,7 @@
   tbody td {
     padding: 13px 16px; border-bottom: 1px solid var(--border);
     background: rgba(255, 250, 240, .55); color: var(--text); vertical-align: top;
+    overflow-wrap: break-word; word-break: break-word;
   }
   tbody tr:last-child td { border-bottom: 0; }
 
@@ -188,32 +189,30 @@
     tbody tr {
       border: 1px solid var(--border); border-radius: var(--radius-lg);
       background: var(--field); box-shadow: 0 1px 2px var(--shadow);
-      padding: 2px 14px 4px; margin-bottom: 12px; overflow: hidden;
+      padding: 6px 16px 8px; margin-bottom: 12px; overflow: hidden;
     }
     tbody tr.lost { background: rgba(222, 208, 175, .38); }
     tbody td {
-      display: flex; align-items: flex-start; gap: 12px;
       padding: 10px 0; border: 0; border-bottom: 1px solid var(--border);
       background: transparent;
     }
     tbody tr td:last-child { border-bottom: 0; }
     tbody td::before {
       content: attr(data-label);
-      flex: 0 0 118px; min-width: 118px;
+      display: block;
       font-family: var(--serif); font-weight: 600;
       font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--muted); padding-top: 3px;
+      color: var(--muted); margin-bottom: 3px;
     }
-    tbody td > * { min-width: 0; }
     td.ref { white-space: normal; }
-    td.empty { display: block; text-align: center; padding: 22px 14px; }
+    td.md, td.pass, td.link, td.na, td.ref { overflow-wrap: break-word; word-break: break-word; }
+    td.empty { text-align: center; padding: 22px 14px; }
     td.empty::before { display: none; }
     .empty button { display: inline-block; }
   }
   @media (max-width: 400px) {
     .wordmark { font-size: 20px; }
     main { padding: 10px; }
-    tbody td::before { flex-basis: 100px; min-width: 100px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .sk-cell, .sk-head { animation-duration: .001ms; }
