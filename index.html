@@ -115,10 +115,20 @@
   /* procedural burnt edge overlay */
   #burn { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; mix-blend-mode: multiply; }
 
-  @media (max-width: 640px) {
-    main { padding: 14px; }
+  @media (max-width: 720px) {
+    header { height: 52px; padding: 0 14px; gap: 8px; }
+    .wordmark { font-size: 22px; }
+    .devaMark { font-size: 16px; }
+    .headNote { display: none; }
+    main { padding: 12px; }
+    table { min-width: 560px; }
     thead th, tbody td { padding: 9px 12px; }
-    .wordmark { font-size: 25px; }
+    td.ref { font-size: 15px; }
+    .mark { opacity: .5; }
+  }
+  @media (max-width: 400px) {
+    .wordmark { font-size: 20px; }
+    main { padding: 10px; }
   }
 </style>
 </head>
