@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=Noto+Sans+Bengali&family=Noto+Sans+Oriya&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Nastaliq+Urdu&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
     --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
@@ -16,7 +16,6 @@
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --deva: "Noto Sans Devanagari", serif;
-    --indic: "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans Oriya", "Noto Sans Gujarati", "Noto Sans Gurmukhi", "Noto Sans Kannada", "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Nastaliq Urdu", serif;
     --radius: 9px;
     --radius-lg: 13px;
     --bg: #f4ecda;
@@ -43,13 +42,7 @@
     font: 13px/1.5 var(--sans);
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     display: flex; flex-direction: column;
-    background: linear-gradient(135deg, #f0e6cc 0%, #e7d9b8 48%, #d6c096 100%);
-  }
-
-  /* page vignette */
-  body::after {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background: radial-gradient(120% 90% at 50% 40%, rgba(90,62,30,0) 60%, rgba(90,62,30,.10) 86%, rgba(70,45,20,.34) 100%);
+    background: var(--bg);
   }
 
   header, main, footer { position: relative; z-index: 1; }
@@ -68,16 +61,10 @@
   main { flex: 1; padding: 26px; display: flex; min-height: 0; }
   .card {
     flex: 1; display: flex; flex-direction: column; min-width: 0;
-    background: linear-gradient(180deg, #f2e8d0, #e7d9b8);
+    background: var(--panel);
     border: 1px solid var(--border); border-radius: var(--radius-lg);
     overflow: hidden; box-shadow: 0 1px 2px var(--shadow), 0 20px 55px var(--shadow-lg);
     position: relative;
-  }
-  /* real paper texture (same as the rendered notes: crumple.jpg, soft-light) */
-  .card::before {
-    content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background: url("assets/crumple.jpg") center / cover no-repeat;
-    opacity: .5; mix-blend-mode: soft-light;
   }
 
   .toolbar {
@@ -164,14 +151,6 @@
   .empty { color: var(--muted); padding: 44px 20px; text-align: center; font-family: var(--serif); font-size: 14px; }
   .empty button { margin-top: 10px; }
 
-  /* faint cryptic marks — kept to the gutters, like the margins of a rendered note */
-  .mark {
-    position: absolute; z-index: 2; pointer-events: none; font-family: var(--indic);
-    color: rgba(51, 38, 26, .08); line-height: 1; user-select: none;
-  }
-  #marks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
-  #burn { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: multiply; }
-
   /* loading skeleton */
   .sk-cell, .sk-head {
     border-radius: 6px;
@@ -190,7 +169,7 @@
     background: linear-gradient(180deg, rgba(236,225,200,.55), rgba(222,208,175,.35));
     color: var(--muted); font-size: 11px;
   }
-  footer .fm { font-family: var(--indic); color: rgba(51, 38, 26, .34); font-size: 14px; }
+  footer .fm { font-family: var(--deva); color: rgba(51, 38, 26, .34); font-size: 14px; }
   footer .ft { letter-spacing: .05em; }
 
   @media (max-width: 720px) {
@@ -238,8 +217,6 @@
         <tbody></tbody>
       </table>
     </div>
-    <div id="marks"></div>
-    <canvas id="burn"></canvas>
   </div>
 </main>
 
@@ -249,114 +226,6 @@
 </footer>
 
 <script>
-/* ---------- procedural burn (mirrors tools/grid_record.html applyDamage) ---------- */
-function mulberry32(a) {
-  return function () {
-    a |= 0; a = (a + 0x6D2B79F5) | 0;
-    var t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-function valueNoise(seed, n) {
-  var rnd = mulberry32(seed), g = new Float32Array(n * n);
-  for (var i = 0; i < g.length; i++) g[i] = rnd();
-  return function (x, y) {
-    var fx = x * (n - 1), fy = y * (n - 1);
-    var x0 = Math.floor(fx), y0 = Math.floor(fy);
-    var tx = fx - x0, ty = fy - y0;
-    var sx = tx * tx * (3 - 2 * tx), sy = ty * ty * (3 - 2 * ty);
-    var x1 = Math.min(x0 + 1, n - 1), y1 = Math.min(y0 + 1, n - 1);
-    var v00 = g[y0 * n + x0], v10 = g[y0 * n + x1], v01 = g[y1 * n + x0], v11 = g[y1 * n + x1];
-    return (v00 * (1 - sx) + v10 * sx) * (1 - sy) + (v01 * (1 - sx) + v11 * sx) * sy;
-  };
-}
-function drawBurn() {
-  var card = document.getElementById('card');
-  var cv = document.getElementById('burn');
-  var W = cv.width = card.clientWidth;
-  var H = cv.height = card.clientHeight;
-  if (!W || !H) return;
-  var ctx = cv.getContext('2d');
-
-  var seed = 0x5EEDBA11;
-  var rnd = mulberry32(seed ^ 0xDA3A);
-  var nz1 = valueNoise(seed ^ 0x777, 9);
-  var nz2 = valueNoise(seed ^ 0x999, 26);
-  var nz3 = valueNoise(seed ^ 0xBBB, 64);
-  var side = ['right', 'left', 'top', 'bottom'][Math.floor(rnd() * 4)];
-  var depth = 0.18 + rnd() * 0.1;
-
-  var img = ctx.createImageData(W, H);
-  var d = img.data;
-  for (var y = 0; y < H; y++) {
-    for (var x = 0; x < W; x++) {
-      var p = (y * W + x) * 4;
-      var nx = x / W, ny = y / H;
-      var edgeDist;
-      if (side === 'right') edgeDist = (W - 1 - x) / W;
-      else if (side === 'left') edgeDist = x / W;
-      else if (side === 'top') edgeDist = y / H;
-      else edgeDist = (H - 1 - y) / H;
-      var jit = (nz1(nx, ny) - 0.5) * 0.6 + (nz2(nx, ny) - 0.5) * 0.3 + (nz3(nx, ny) - 0.5) * 0.14;
-      var thr = depth * (1 + jit * 1.4);
-      if (thr < 0.04) thr = 0.04; else if (thr > 0.85) thr = 0.85;
-      var e = 1 - edgeDist / thr;
-      if (e < 0) e = 0; else if (e > 1) e = 1;
-      e = Math.pow(e, 1.7);
-      var burn = Math.min(1, e * 0.4);
-      var t = Math.min(1, burn * 1.1);
-      var r = Math.round(233 + (26 - 233) * t);
-      var g = Math.round(219 + (15 - 219) * t);
-      var b = Math.round(187 + (6 - 187) * t);
-      d[p] = r; d[p + 1] = g; d[p + 2] = b; d[p + 3] = 255;
-    }
-  }
-  ctx.putImageData(img, 0, 0);
-}
-drawBurn();
-window.addEventListener('resize', drawBurn);
-if ('ResizeObserver' in window) {
-  new ResizeObserver(function () { drawBurn(); }).observe(document.getElementById('card'));
-}
-
-/* ---------- cryptic marks (multi-script, in the gutters) ---------- */
-var CRYPTIC_TEXTS = [
-  'छाया', 'विस्मृति', 'खो गया', 'हरवले', 'हरायो',
-  'ছায়া', 'স্মৃতি', 'হেৰাই গৈছে',
-  'ଛାୟା',
-  'છાયા', 'સ્મૃતિ',
-  'ਛਾਂ', 'ਯਾਦ',
-  'سایہ', 'یاد',
-  'நிழல்', 'மறதி',
-  'నీడ', 'ನೆರಳು', 'നിഴൽ',
-];
-(function () {
-  var host = document.getElementById('marks');
-  var marks = [
-    { left: '1.2%', top: '14%', s: 22, i: 0 },
-    { left: '1.2%', top: '42%', s: 18, i: 5 },
-    { left: '1.2%', top: '70%', s: 24, i: 15 },
-    { right: '1.2%', top: '20%', s: 18, i: 9 },
-    { right: '1.2%', top: '50%', s: 22, i: 11 },
-    { right: '1.2%', top: '76%', s: 18, i: 19 },
-    { left: '4%', bottom: '7%', s: 26, i: 2 },
-    { right: '4%', bottom: '7%', s: 24, i: 13 },
-  ];
-  marks.forEach(function (m) {
-    var el = document.createElement('span');
-    el.className = 'mark';
-    el.textContent = CRYPTIC_TEXTS[m.i % CRYPTIC_TEXTS.length];
-    if (m.left) el.style.left = m.left;
-    if (m.right) el.style.right = m.right;
-    if (m.top) el.style.top = m.top;
-    if (m.bottom) el.style.bottom = m.bottom;
-    el.style.fontSize = m.s + 'px';
-    el.style.transform = 'rotate(' + ((m.i % 2 ? 1 : -1) * 22) + 'deg)';
-    host.appendChild(el);
-  });
-})();
-
 /* ---------- CSV -> table ---------- */
 function parseCSV(text) {
   var rows = [], row = [], field = '', inQ = false, c;
@@ -580,7 +449,6 @@ fetch('archive.csv')
     headers = rows[0];
     dataRows = rows.slice(1);
     render();
-    drawBurn();
   })
   .catch(function (err) {
     document.querySelector('#archive thead').innerHTML = '';
