@@ -6,7 +6,7 @@
 <title>LostArchives</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=Noto+Sans+Bengali&family=Noto+Sans+Oriya&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Nastaliq+Urdu&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
     --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
@@ -14,6 +14,7 @@
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --deva: "Noto Sans Devanagari", serif;
+    --indic: "Noto Sans Devanagari", "Noto Sans Bengali", "Noto Sans Oriya", "Noto Sans Gujarati", "Noto Sans Gurmukhi", "Noto Sans Kannada", "Noto Sans Malayalam", "Noto Sans Tamil", "Noto Sans Telugu", "Noto Nastaliq Urdu", serif;
     --radius: 9px;
     --radius-lg: 13px;
     --bg: #f4ecda;
@@ -79,6 +80,12 @@
     overflow: hidden; box-shadow: 0 1px 2px var(--shadow), 0 20px 55px var(--shadow-lg);
     position: relative;
   }
+  .card::before {
+    content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: .07; mix-blend-mode: soft-light;
+  }
   .scroll { flex: 1; overflow: auto; }
   .toolbar {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
@@ -141,14 +148,15 @@
   tr.lost td.pass code { color: var(--muted); }
   .empty { color: var(--muted); padding: 40px; text-align: center; font-family: var(--serif); }
 
-  /* faint scattered Sanskrit marks (like the rendered notes) */
+  /* faint scattered Indic marks (like the rendered notes) */
   .mark {
-    position: fixed; z-index: 0; pointer-events: none; font-family: var(--deva);
-    color: rgba(51,38,26,.09); line-height: 1; user-select: none;
+    position: absolute; z-index: 2; pointer-events: none; font-family: var(--indic);
+    color: rgba(51,38,26,.10); line-height: 1; user-select: none;
   }
 
-  /* procedural burnt edge overlay */
-  #burn { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; mix-blend-mode: multiply; }
+  /* procedural burnt edge overlay (on the table card) */
+  #burn { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: multiply; }
+  #marks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
 
   @media (max-width: 720px) {
     header { height: 52px; padding: 0 14px; gap: 8px; }
@@ -175,17 +183,17 @@
 </header>
 
 <main>
-  <div class="card">
+  <div class="card" id="card">
     <div class="scroll">
       <table id="archive">
         <thead></thead>
         <tbody></tbody>
       </table>
     </div>
+    <div id="marks"></div>
+    <canvas id="burn"></canvas>
   </div>
 </main>
-
-<canvas id="burn"></canvas>
 
 <script>
 /* ---------- procedural burn (mirrors tools/grid_record.html applyDamage) ---------- */
@@ -211,9 +219,11 @@ function valueNoise(seed, n) {
   };
 }
 function drawBurn() {
+  var card = document.getElementById('card');
   var cv = document.getElementById('burn');
-  var W = cv.width = window.innerWidth;
-  var H = cv.height = window.innerHeight;
+  var W = cv.width = card.clientWidth;
+  var H = cv.height = card.clientHeight;
+  if (!W || !H) return;
   var ctx = cv.getContext('2d');
 
   var seed = 0x5EEDBA11;
@@ -222,9 +232,8 @@ function drawBurn() {
   var nz2 = valueNoise(seed ^ 0x999, 26);
   var nz3 = valueNoise(seed ^ 0xBBB, 64);
   var side = ['right', 'left', 'top', 'bottom'][Math.floor(rnd() * 4)];
-  var depth = 0.16 + rnd() * 0.1, charA = 0.8, edgeAmt = 1.0;
+  var depth = 0.2 + rnd() * 0.12, charA = 0.9, edgeAmt = 1.0;
 
-  var N = 220;
   var img = ctx.createImageData(W, H);
   var d = img.data;
   for (var y = 0; y < H; y++) {
@@ -255,24 +264,39 @@ function drawBurn() {
 }
 drawBurn();
 window.addEventListener('resize', drawBurn);
+if ('ResizeObserver' in window) {
+  new ResizeObserver(function () { drawBurn(); }).observe(document.getElementById('card'));
+}
 
-/* ---------- scattered Sanskrit marks ---------- */
+/* ---------- scattered cryptic marks (multi-script, like tools/cryptic.js) ---------- */
+var CRYPTIC_TEXTS = [
+  'छाया', 'विस्मृति', 'खो गया', 'हरवले', 'हरायो',
+  'ছায়া', 'স্মৃতি', 'হেৰাই গৈছে',
+  'ଛାୟା',
+  'છાયા', 'સ્મૃતિ',
+  'ਛਾਂ', 'ਯਾਦ',
+  'سایہ', 'یاد',
+  'நிழல்', 'மறதி',
+  'నీడ', 'ನೆರಳು', 'നിഴൽ',
+];
 (function () {
-  var marks = ['श्री', 'ॐ', 'छाया', 'विस्मृति', 'खो गया', 'क्ष', 'हरवले', 'स्व'];
   var rnd = mulberry32(0x9e3779b9);
-  var positions = [];
-  for (var i = 0; i < 7; i++) {
-    positions.push({ x: 2 + rnd() * 92, y: 4 + rnd() * 90, s: 15 + rnd() * 44 });
-  }
+  var host = document.getElementById('marks');
+  var positions = [
+    { x: 2, y: 10, s: 30 }, { x: 78, y: 6, s: 22 }, { x: 30, y: 40, s: 40 },
+    { x: 62, y: 62, s: 26 }, { x: 8, y: 72, s: 34 }, { x: 88, y: 38, s: 28 },
+    { x: 45, y: 16, s: 24 }, { x: 18, y: 30, s: 20 }, { x: 70, y: 84, s: 30 },
+    { x: 52, y: 90, s: 22 }, { x: 92, y: 80, s: 26 },
+  ];
   positions.forEach(function (p, i) {
     var el = document.createElement('span');
     el.className = 'mark';
-    el.textContent = marks[i % marks.length];
+    el.textContent = CRYPTIC_TEXTS[i % CRYPTIC_TEXTS.length];
     el.style.left = p.x + '%';
     el.style.top = p.y + '%';
     el.style.fontSize = p.s + 'px';
-    el.style.transform = 'rotate(' + ((rnd() * 2 - 1) * 40).toFixed(1) + 'deg)';
-    document.body.appendChild(el);
+    el.style.transform = 'rotate(' + ((rnd() * 2 - 1) * 35).toFixed(1) + 'deg)';
+    host.appendChild(el);
   });
 })();
 
