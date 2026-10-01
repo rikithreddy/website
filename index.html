@@ -4,10 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LostArchives</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
     --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --hand: "Caveat", cursive;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --deva: "Noto Sans Devanagari", serif;
     --radius: 9px;
     --radius-lg: 13px;
     --bg: #f4ecda;
@@ -21,6 +27,7 @@
     --muted: #7a6a55;
     --accent: #b4552d;
     --accent-ink: #fff7ee;
+    --danger: #b23b2e;
     --shadow: rgba(51, 38, 26, .16);
     --shadow-lg: rgba(51, 38, 26, .28);
   }
@@ -28,70 +35,102 @@
   * { box-sizing: border-box; }
   html, body { height: 100%; }
   body {
-    margin: 0; background: var(--bg); color: var(--text);
+    margin: 0; color: var(--text);
     font: 13px/1.5 var(--sans);
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
-    background-image:
-      radial-gradient(rgba(120, 90, 50, .04) 1px, transparent 1px),
-      radial-gradient(rgba(120, 90, 50, .03) 1px, transparent 1px);
-    background-size: 22px 22px, 13px 13px;
-    background-position: 0 0, 7px 7px;
     display: flex; flex-direction: column;
+    background:
+      linear-gradient(135deg, #f0e6cc 0%, #e7d9b8 48%, #d6c096 100%);
+    position: relative;
   }
+
+  /* aged-paper grain + faint fiber */
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    opacity: .06; mix-blend-mode: multiply;
+  }
+  /* vignette */
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(120% 90% at 50% 42%, rgba(90,62,30,0) 55%, rgba(90,62,30,.13) 82%, rgba(70,45,20,.42) 100%);
+  }
+
+  header, main { position: relative; z-index: 1; }
 
   header {
-    display: flex; align-items: center; gap: 14px; height: 56px; padding: 0 18px;
-    background: var(--panel); border-bottom: 1px solid var(--border);
-    box-shadow: 0 1px 2px var(--shadow);
+    display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 22px;
+    background: linear-gradient(180deg, rgba(236,225,200,.85), rgba(222,208,175,.72));
+    border-bottom: 1px solid var(--border); box-shadow: 0 1px 3px var(--shadow);
+    backdrop-filter: blur(2px);
   }
-  .wordmark { font-family: var(--serif); font-size: 17px; letter-spacing: .02em; }
-  .wordmark b { color: var(--accent); font-weight: 700; }
+  .wordmark { font-family: var(--hand); font-weight: 700; font-size: 30px; line-height: 1; color: var(--text); letter-spacing: .5px; }
+  .wordmark .accent { color: var(--accent); }
+  .devaMark { font-family: var(--deva); font-size: 19px; color: var(--accent); opacity: .75; line-height: 1; }
   .spacer { flex: 1; }
+  .headNote { font-family: var(--hand); font-size: 16px; color: var(--muted); opacity: .8; }
 
-  main { flex: 1; padding: 26px; display: flex; min-height: 0; }
+  main { flex: 1; padding: 28px; display: flex; min-height: 0; }
   .card {
     flex: 1; display: flex; flex-direction: column; min-width: 0;
-    background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-lg);
-    overflow: hidden; box-shadow: 0 1px 2px var(--shadow), 0 18px 48px var(--shadow-lg);
+    background: linear-gradient(180deg, #f2e8d0, #e7d9b8);
+    border: 1px solid var(--border); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: 0 1px 2px var(--shadow), 0 20px 55px var(--shadow-lg);
+    position: relative;
   }
   .scroll { flex: 1; overflow: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   thead th {
     position: sticky; top: 0; z-index: 1;
     font-family: var(--serif); font-weight: 600; text-align: left;
-    font-size: 11px; letter-spacing: .13em; text-transform: uppercase;
-    color: var(--muted); background: var(--panel-2);
-    border-bottom: 1px solid var(--border-strong); padding: 11px 16px; white-space: nowrap;
+    font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); background: rgba(230,218,189,.96);
+    border-bottom: 1px solid var(--border-strong); padding: 12px 16px; white-space: nowrap;
   }
   tbody td {
-    padding: 11px 16px; border-bottom: 1px solid var(--border);
-    background: var(--field); color: var(--text); vertical-align: top;
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    background: rgba(255,250,240,.62); color: var(--text); vertical-align: top;
   }
   tbody tr:last-child td { border-bottom: 0; }
-  td.ref { font-family: var(--serif); font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  td.ref { font-family: var(--hand); font-weight: 700; font-size: 16px; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
   td.lock { color: var(--muted); font-style: italic; white-space: nowrap; }
   td.link a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
   td.link a:hover { border-bottom-color: var(--accent); }
   td.na { color: var(--muted); }
   td.pass { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: pre-wrap; line-height: 1.55; }
-  td.pass code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 11.5px; color: var(--accent); }
-  tr.lost td { background: var(--panel); }
-  tr.lost td.ref { color: var(--muted); font-weight: 600; }
+  td.pass code { font-family: var(--mono); font-size: 11px; color: var(--accent); }
+  tr.lost td { background: rgba(222,208,175,.4); }
+  tr.lost td.ref { color: var(--muted); }
   tr.lost td.lock { color: var(--danger); }
   tr.lost td.pass code { color: var(--muted); }
   .empty { color: var(--muted); padding: 40px; text-align: center; font-family: var(--serif); }
 
+  /* faint scattered Sanskrit marks (like the rendered notes) */
+  .mark {
+    position: fixed; z-index: 0; pointer-events: none; font-family: var(--deva);
+    color: rgba(51,38,26,.09); line-height: 1; user-select: none;
+  }
+
+  /* procedural burnt edge overlay */
+  #burn { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; mix-blend-mode: multiply; }
+
   @media (max-width: 640px) {
     main { padding: 14px; }
     thead th, tbody td { padding: 9px 12px; }
+    .wordmark { font-size: 25px; }
   }
 </style>
 </head>
 <body>
+
 <header>
-  <span class="wordmark"><b>LostArchives</b></span>
+  <span class="wordmark">Lost<span class="accent">Archives</span></span>
+  <span class="devaMark">छाया</span>
   <span class="spacer"></span>
+  <span class="headNote">field record · संकलन</span>
 </header>
+
 <main>
   <div class="card">
     <div class="scroll">
@@ -102,7 +141,99 @@
     </div>
   </div>
 </main>
+
+<canvas id="burn"></canvas>
+
 <script>
+/* ---------- procedural burn (mirrors tools/grid_record.html applyDamage) ---------- */
+function mulberry32(a) {
+  return function () {
+    a |= 0; a = (a + 0x6D2B79F5) | 0;
+    var t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+function valueNoise(seed, n) {
+  var rnd = mulberry32(seed), g = new Float32Array(n * n);
+  for (var i = 0; i < g.length; i++) g[i] = rnd();
+  return function (x, y) {
+    var fx = x * (n - 1), fy = y * (n - 1);
+    var x0 = Math.floor(fx), y0 = Math.floor(fy);
+    var tx = fx - x0, ty = fy - y0;
+    var sx = tx * tx * (3 - 2 * tx), sy = ty * ty * (3 - 2 * ty);
+    var x1 = Math.min(x0 + 1, n - 1), y1 = Math.min(y0 + 1, n - 1);
+    var v00 = g[y0 * n + x0], v10 = g[y0 * n + x1], v01 = g[y1 * n + x0], v11 = g[y1 * n + x1];
+    return (v00 * (1 - sx) + v10 * sx) * (1 - sy) + (v01 * (1 - sx) + v11 * sx) * sy;
+  };
+}
+function drawBurn() {
+  var cv = document.getElementById('burn');
+  var W = cv.width = window.innerWidth;
+  var H = cv.height = window.innerHeight;
+  var ctx = cv.getContext('2d');
+
+  var seed = 0x5EEDBA11;
+  var rnd = mulberry32(seed ^ 0xDA3A);
+  var nz1 = valueNoise(seed ^ 0x777, 9);
+  var nz2 = valueNoise(seed ^ 0x999, 26);
+  var nz3 = valueNoise(seed ^ 0xBBB, 64);
+  var side = ['right', 'left', 'top', 'bottom'][Math.floor(rnd() * 4)];
+  var depth = 0.16 + rnd() * 0.1, charA = 0.8, edgeAmt = 1.0;
+
+  var N = 220;
+  var img = ctx.createImageData(W, H);
+  var d = img.data;
+  for (var y = 0; y < H; y++) {
+    for (var x = 0; x < W; x++) {
+      var p = (y * W + x) * 4;
+      var nx = x / W, ny = y / H;
+      var edgeDist;
+      if (side === 'right') edgeDist = (W - 1 - x) / W;
+      else if (side === 'left') edgeDist = x / W;
+      else if (side === 'top') edgeDist = y / H;
+      else edgeDist = (H - 1 - y) / H;
+      var jit = (nz1(nx, ny) - 0.5) * 0.6 + (nz2(nx, ny) - 0.5) * 0.3 + (nz3(nx, ny) - 0.5) * 0.14;
+      var thr = depth * (1 + jit * 1.4);
+      if (thr < 0.04) thr = 0.04; else if (thr > 0.85) thr = 0.85;
+      var e = 1 - edgeDist / thr;
+      if (e < 0) e = 0; else if (e > 1) e = 1;
+      e = Math.pow(e, 1.7) * edgeAmt;
+      var burn = Math.min(1, e * 0.55);
+      var t = Math.min(1, burn * 1.15);
+      // mix charred edge brown toward pale paper (page stays light, edges multiply dark)
+      var r = Math.round(230 + (26 - 230) * t);
+      var g = Math.round(217 + (15 - 217) * t);
+      var b = Math.round(184 + (6 - 184) * t);
+      d[p] = r; d[p + 1] = g; d[p + 2] = b; d[p + 3] = 255;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+}
+drawBurn();
+window.addEventListener('resize', drawBurn);
+
+/* ---------- scattered Sanskrit marks ---------- */
+(function () {
+  var marks = ['श्री', 'ॐ', 'छाया', 'विस्मृति', 'खो गया', 'क्ष', 'हरवले', 'स्व'];
+  var rnd = mulberry32(0x9e3779b9);
+  var positions = [];
+  for (var i = 0; i < 7; i++) {
+    positions.push({ x: 2 + rnd() * 92, y: 4 + rnd() * 90, s: 15 + rnd() * 44 });
+  }
+  positions.forEach(function (p, i) {
+    var el = document.createElement('span');
+    el.className = 'mark';
+    el.textContent = marks[i % marks.length];
+    el.style.left = p.x + '%';
+    el.style.top = p.y + '%';
+    el.style.fontSize = p.s + 'px';
+    el.style.transform = 'rotate(' + ((rnd() * 2 - 1) * 40).toFixed(1) + 'deg)';
+    document.body.appendChild(el);
+  });
+})();
+
+/* ---------- CSV -> table ---------- */
 function parseCSV(text) {
   var rows = [], row = [], field = '', inQ = false, c;
   for (var i = 0; i < text.length; i++) {
@@ -117,7 +248,7 @@ function parseCSV(text) {
     else if (c === '\n' || c === '\r') {
       if (c === '\r' && text[i + 1] === '\n') i++;
       row.push(field); field = '';
-      if (row.length > 1 || row[0] !== '') { rows.push(row); }
+      if (row.length > 1 || row[0] !== '') rows.push(row);
       row = [];
     } else field += c;
   }
@@ -125,7 +256,6 @@ function parseCSV(text) {
   if (row.length > 1 || row[0] !== '') rows.push(row);
   return rows;
 }
-
 function cell(tag, cls, html) {
   var el = document.createElement(tag);
   if (cls) el.className = cls;
@@ -135,7 +265,6 @@ function cell(tag, cls, html) {
 function esc(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-
 function linkCell(url) {
   var td = cell('td', 'link');
   if (/^https?:\/\//i.test(url)) {
@@ -143,24 +272,18 @@ function linkCell(url) {
     a.href = url; a.target = '_blank'; a.rel = 'noopener';
     a.textContent = url;
     td.appendChild(a);
-  } else {
-    td.textContent = url;
-  }
+  } else td.textContent = url;
   return td;
 }
-
 function passCell(v) {
   var td = cell('td', 'pass');
   if (/^\[0x[0-9a-fA-F]+\] not found$/.test(v.trim())) {
     var code = document.createElement('code');
     code.textContent = v.trim();
     td.appendChild(code);
-  } else {
-    td.textContent = v;
-  }
+  } else td.textContent = v;
   return td;
 }
-
 function locked(v) { return v.trim() === '[[LOCKED]]'; }
 
 fetch('archive.csv')
@@ -168,13 +291,9 @@ fetch('archive.csv')
   .then(function (text) {
     var rows = parseCSV(text);
     if (!rows.length) return;
-    var header = rows[0];
     var thead = document.querySelector('#archive thead');
     var tr = document.createElement('tr');
-    header.forEach(function (h) {
-      var th = cell('th', '', esc(h));
-      tr.appendChild(th);
-    });
+    rows[0].forEach(function (h) { tr.appendChild(cell('th', '', esc(h))); });
     thead.appendChild(tr);
 
     var tbody = document.querySelector('#archive tbody');
@@ -183,11 +302,11 @@ fetch('archive.csv')
       var rowEl = document.createElement('tr');
       if (r[0] && r[0].toUpperCase() === 'LOST') rowEl.className = 'lost';
       r.forEach(function (v, j) {
-        if (j === 0) { rowEl.appendChild(cell('td', 'ref', esc(v))); }
-        else if (j === 1) { rowEl.appendChild(linkCell(v)); }
-        else if (j === 2) { rowEl.appendChild(cell('td', locked(v) ? 'lock' : '', locked(v) ? esc(v) : esc(v))); }
-        else if (j === 3) { rowEl.appendChild(cell('td', v.trim() === 'NA' ? 'na' : '', esc(v))); }
-        else { rowEl.appendChild(passCell(v)); }
+        if (j === 0) rowEl.appendChild(cell('td', 'ref', esc(v)));
+        else if (j === 1) rowEl.appendChild(linkCell(v));
+        else if (j === 2) rowEl.appendChild(cell('td', locked(v) ? 'lock' : '', esc(v)));
+        else if (j === 3) rowEl.appendChild(cell('td', v.trim() === 'NA' ? 'na' : '', esc(v)));
+        else rowEl.appendChild(passCell(v));
       });
       tbody.appendChild(rowEl);
     }
