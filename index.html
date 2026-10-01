@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>LostArchives</title>
+<title>LostArchives · Field Records</title>
+<meta name="description" content="LostArchives — a recovered shadow archive. Reference codes, document links, ciphers and passkeys.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=Noto+Sans+Bengali&family=Noto+Sans+Oriya&family=Noto+Sans+Gujarati&family=Noto+Sans+Gurmukhi&family=Noto+Sans+Kannada&family=Noto+Sans+Malayalam&family=Noto+Sans+Tamil&family=Noto+Sans+Telugu&family=Noto+Nastaliq+Urdu&family=JetBrains+Mono&display=swap" rel="stylesheet">
@@ -41,29 +43,20 @@
     font: 13px/1.5 var(--sans);
     -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
     display: flex; flex-direction: column;
-    background:
-      linear-gradient(135deg, #f0e6cc 0%, #e7d9b8 48%, #d6c096 100%);
-    position: relative;
+    background: linear-gradient(135deg, #f0e6cc 0%, #e7d9b8 48%, #d6c096 100%);
   }
 
-  /* aged-paper grain + faint fiber */
-  body::before {
-    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-    opacity: .06; mix-blend-mode: multiply;
-  }
-  /* vignette */
+  /* page vignette */
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    background: radial-gradient(120% 90% at 50% 42%, rgba(90,62,30,0) 55%, rgba(90,62,30,.13) 82%, rgba(70,45,20,.42) 100%);
+    background: radial-gradient(120% 90% at 50% 40%, rgba(90,62,30,0) 60%, rgba(90,62,30,.10) 86%, rgba(70,45,20,.34) 100%);
   }
 
-  header, main { position: relative; z-index: 1; }
+  header, main, footer { position: relative; z-index: 1; }
 
   header {
     display: flex; align-items: center; gap: 12px; height: 60px; padding: 0 22px;
-    background: linear-gradient(180deg, rgba(236,225,200,.85), rgba(222,208,175,.72));
+    background: linear-gradient(180deg, rgba(236,225,200,.85), rgba(222,208,175,.7));
     border-bottom: 1px solid var(--border); box-shadow: 0 1px 3px var(--shadow);
     backdrop-filter: blur(2px);
   }
@@ -72,7 +65,7 @@
   .devaMark { font-family: var(--deva); font-size: 19px; color: var(--accent); opacity: .75; line-height: 1; }
   .spacer { flex: 1; }
 
-  main { flex: 1; padding: 28px; display: flex; min-height: 0; }
+  main { flex: 1; padding: 26px; display: flex; min-height: 0; }
   .card {
     flex: 1; display: flex; flex-direction: column; min-width: 0;
     background: linear-gradient(180deg, #f2e8d0, #e7d9b8);
@@ -80,24 +73,25 @@
     overflow: hidden; box-shadow: 0 1px 2px var(--shadow), 0 20px 55px var(--shadow-lg);
     position: relative;
   }
+  /* real paper texture (same as the rendered notes: crumple.jpg, soft-light) */
   .card::before {
     content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
-    background-image:
-      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-    opacity: .07; mix-blend-mode: soft-light;
+    background: url("assets/crumple.jpg") center / cover no-repeat;
+    opacity: .5; mix-blend-mode: soft-light;
   }
-  .scroll { flex: 1; overflow: auto; }
+
   .toolbar {
     display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
     padding: 12px 16px; border-bottom: 1px solid var(--border);
-    background: rgba(230, 218, 189, .5);
+    background: rgba(232, 221, 193, .55);
   }
   .toolbar input[type=search] {
     width: auto; min-width: 180px; flex: 1 1 180px;
     background: var(--field); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 7px 11px; color: var(--text); outline: none;
+    padding: 8px 12px; color: var(--text); outline: none;
     font: 12.5px/1.5 var(--sans);
   }
+  .toolbar input[type=search]::placeholder { color: var(--muted); opacity: .7; }
   .toolbar input[type=search]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
   .chips { display: flex; gap: 6px; }
   .chip {
@@ -107,27 +101,48 @@
   }
   .chip:hover { border-color: var(--border-strong); color: var(--text); }
   .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
-  .count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  .scroll { flex: 1; overflow: auto; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   thead th {
     position: sticky; top: 0; z-index: 1;
     font-family: var(--serif); font-weight: 600; text-align: left;
-    font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
-    color: var(--muted); background: rgba(230,218,189,.96);
+    font-size: 10.5px; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--muted); background: rgba(232, 221, 193, .97);
     border-bottom: 1px solid var(--border-strong); padding: 12px 16px; white-space: nowrap;
-    cursor: pointer; user-select: none;
+    cursor: pointer; user-select: none; transition: color .12s;
   }
   thead th:hover { color: var(--text); }
   .sort-arrow { font-size: 9px; margin-left: 6px; color: var(--accent); }
   tbody td {
-    padding: 12px 16px; border-bottom: 1px solid var(--border);
-    background: rgba(255,250,240,.62); color: var(--text); vertical-align: top;
+    padding: 13px 16px; border-bottom: 1px solid var(--border);
+    background: rgba(255, 250, 240, .55); color: var(--text); vertical-align: top;
   }
   tbody tr:last-child td { border-bottom: 0; }
-  td.ref { font-family: var(--hand); font-weight: 700; font-size: 16px; color: var(--accent); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  td.lock { color: var(--muted); font-style: italic; white-space: nowrap; }
-  td.link a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--border-strong); }
-  td.link a:hover { border-bottom-color: var(--accent); }
+
+  td.ref { white-space: nowrap; }
+  td.ref .status {
+    display: inline-flex; align-items: center; vertical-align: middle;
+    font: 600 9px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 20px; margin-right: 9px;
+  }
+  td.ref .status.found { color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(180, 85, 45, .25); }
+  td.ref .status.lost { color: var(--muted); background: transparent; border: 1px dashed var(--border-strong); }
+  td.ref .code { font-family: var(--serif); font-weight: 600; font-size: 13.5px; font-variant-numeric: tabular-nums; color: var(--text); letter-spacing: .02em; }
+  tr.lost td.ref .code { color: var(--muted); }
+
+  .badge.lock {
+    display: inline-flex; align-items: center; gap: 6px;
+    font: 600 9px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase;
+    color: var(--muted); border: 1px dashed var(--border-strong); border-radius: 20px;
+    padding: 4px 9px; white-space: nowrap;
+  }
+  .badge.lock svg { flex: none; }
+
+  td.link a { color: var(--accent); text-decoration: none; font-weight: 500; }
+  td.link a:hover { text-decoration: underline; }
+  td.link a .ext { opacity: .7; margin-left: 3px; }
   td.na { color: var(--muted); }
   td.pass { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: pre-wrap; line-height: 1.55; }
   td.pass code { font-family: var(--mono); font-size: 11px; color: var(--accent); }
@@ -142,35 +157,58 @@
   td.md ul, td.md ol { margin: 0 0 6px; padding-left: 18px; }
   td.md blockquote { margin: 0 0 6px; padding-left: 10px; border-left: 3px solid var(--border-strong); color: var(--muted); }
   td.md a { color: var(--accent); }
-  tr.lost td { background: rgba(222,208,175,.4); }
-  tr.lost td.ref { color: var(--muted); }
-  tr.lost td.lock { color: var(--danger); }
-  tr.lost td.pass code { color: var(--muted); }
-  .empty { color: var(--muted); padding: 40px; text-align: center; font-family: var(--serif); }
 
-  /* faint scattered Indic marks (like the rendered notes) */
+  tr.lost td { background: rgba(222, 208, 175, .34); }
+  tr.lost td.pass code { color: var(--muted); }
+
+  .empty { color: var(--muted); padding: 44px 20px; text-align: center; font-family: var(--serif); font-size: 14px; }
+  .empty button { margin-top: 10px; }
+
+  /* faint cryptic marks — kept to the gutters, like the margins of a rendered note */
   .mark {
     position: absolute; z-index: 2; pointer-events: none; font-family: var(--indic);
-    color: rgba(51,38,26,.10); line-height: 1; user-select: none;
+    color: rgba(51, 38, 26, .08); line-height: 1; user-select: none;
   }
-
-  /* procedural burnt edge overlay (on the table card) */
-  #burn { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: multiply; }
   #marks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  #burn { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; mix-blend-mode: multiply; }
+
+  /* loading skeleton */
+  .sk-cell, .sk-head {
+    border-radius: 6px;
+    background: linear-gradient(100deg, var(--panel-2) 30%, var(--panel) 50%, var(--panel-2) 70%);
+    background-size: 200% 100%; animation: shimmer 1.3s infinite linear;
+  }
+  .sk-head { height: 12px; }
+  .sk-cell { height: 14px; }
+  .sk-cell.w2 { width: 40%; }
+  @keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+  footer {
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    height: 42px; padding: 0 18px;
+    border-top: 1px solid var(--border);
+    background: linear-gradient(180deg, rgba(236,225,200,.55), rgba(222,208,175,.35));
+    color: var(--muted); font-size: 11px;
+  }
+  footer .fm { font-family: var(--indic); color: rgba(51, 38, 26, .34); font-size: 14px; }
+  footer .ft { letter-spacing: .05em; }
 
   @media (max-width: 720px) {
     header { height: 52px; padding: 0 14px; gap: 8px; }
     .wordmark { font-size: 22px; }
     .devaMark { font-size: 16px; }
     main { padding: 12px; }
-    table { min-width: 560px; }
-    thead th, tbody td { padding: 9px 12px; }
-    td.ref { font-size: 15px; }
-    .mark { opacity: .5; }
+    table { min-width: 600px; }
+    thead th, tbody td { padding: 10px 12px; }
+    td.ref .status { margin-right: 6px; }
+    .toolbar { padding: 10px 12px; }
   }
   @media (max-width: 400px) {
     .wordmark { font-size: 20px; }
     main { padding: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sk-cell, .sk-head { animation-duration: .001ms; }
   }
 </style>
 </head>
@@ -184,6 +222,16 @@
 
 <main>
   <div class="card" id="card">
+    <div class="toolbar">
+      <input id="search" type="search" placeholder="Search records…" aria-label="Search records">
+      <div class="chips" id="chips">
+        <button type="button" class="chip on" data-status="all">All</button>
+        <button type="button" class="chip" data-status="found">Found</button>
+        <button type="button" class="chip" data-status="lost">Lost</button>
+      </div>
+      <span class="spacer"></span>
+      <span class="count" id="count"></span>
+    </div>
     <div class="scroll">
       <table id="archive">
         <thead></thead>
@@ -194,6 +242,11 @@
     <canvas id="burn"></canvas>
   </div>
 </main>
+
+<footer>
+  <span class="fm">विस्मृति</span>
+  <span class="ft">LostArchives — shadow archive</span>
+</footer>
 
 <script>
 /* ---------- procedural burn (mirrors tools/grid_record.html applyDamage) ---------- */
@@ -232,7 +285,7 @@ function drawBurn() {
   var nz2 = valueNoise(seed ^ 0x999, 26);
   var nz3 = valueNoise(seed ^ 0xBBB, 64);
   var side = ['right', 'left', 'top', 'bottom'][Math.floor(rnd() * 4)];
-  var depth = 0.2 + rnd() * 0.12, charA = 0.9, edgeAmt = 1.0;
+  var depth = 0.18 + rnd() * 0.1;
 
   var img = ctx.createImageData(W, H);
   var d = img.data;
@@ -250,13 +303,12 @@ function drawBurn() {
       if (thr < 0.04) thr = 0.04; else if (thr > 0.85) thr = 0.85;
       var e = 1 - edgeDist / thr;
       if (e < 0) e = 0; else if (e > 1) e = 1;
-      e = Math.pow(e, 1.7) * edgeAmt;
-      var burn = Math.min(1, e * 0.55);
-      var t = Math.min(1, burn * 1.15);
-      // mix charred edge brown toward pale paper (page stays light, edges multiply dark)
-      var r = Math.round(230 + (26 - 230) * t);
-      var g = Math.round(217 + (15 - 217) * t);
-      var b = Math.round(184 + (6 - 184) * t);
+      e = Math.pow(e, 1.7);
+      var burn = Math.min(1, e * 0.4);
+      var t = Math.min(1, burn * 1.1);
+      var r = Math.round(233 + (26 - 233) * t);
+      var g = Math.round(219 + (15 - 219) * t);
+      var b = Math.round(187 + (6 - 187) * t);
       d[p] = r; d[p + 1] = g; d[p + 2] = b; d[p + 3] = 255;
     }
   }
@@ -268,7 +320,7 @@ if ('ResizeObserver' in window) {
   new ResizeObserver(function () { drawBurn(); }).observe(document.getElementById('card'));
 }
 
-/* ---------- scattered cryptic marks (multi-script, like tools/cryptic.js) ---------- */
+/* ---------- cryptic marks (multi-script, in the gutters) ---------- */
 var CRYPTIC_TEXTS = [
   'छाया', 'विस्मृति', 'खो गया', 'हरवले', 'हरायो',
   'ছায়া', 'স্মৃতি', 'হেৰাই গৈছে',
@@ -280,22 +332,27 @@ var CRYPTIC_TEXTS = [
   'నీడ', 'ನೆರಳು', 'നിഴൽ',
 ];
 (function () {
-  var rnd = mulberry32(0x9e3779b9);
   var host = document.getElementById('marks');
-  var positions = [
-    { x: 2, y: 10, s: 30 }, { x: 78, y: 6, s: 22 }, { x: 30, y: 40, s: 40 },
-    { x: 62, y: 62, s: 26 }, { x: 8, y: 72, s: 34 }, { x: 88, y: 38, s: 28 },
-    { x: 45, y: 16, s: 24 }, { x: 18, y: 30, s: 20 }, { x: 70, y: 84, s: 30 },
-    { x: 52, y: 90, s: 22 }, { x: 92, y: 80, s: 26 },
+  var marks = [
+    { left: '1.2%', top: '14%', s: 22, i: 0 },
+    { left: '1.2%', top: '42%', s: 18, i: 5 },
+    { left: '1.2%', top: '70%', s: 24, i: 15 },
+    { right: '1.2%', top: '20%', s: 18, i: 9 },
+    { right: '1.2%', top: '50%', s: 22, i: 11 },
+    { right: '1.2%', top: '76%', s: 18, i: 19 },
+    { left: '4%', bottom: '7%', s: 26, i: 2 },
+    { right: '4%', bottom: '7%', s: 24, i: 13 },
   ];
-  positions.forEach(function (p, i) {
+  marks.forEach(function (m) {
     var el = document.createElement('span');
     el.className = 'mark';
-    el.textContent = CRYPTIC_TEXTS[i % CRYPTIC_TEXTS.length];
-    el.style.left = p.x + '%';
-    el.style.top = p.y + '%';
-    el.style.fontSize = p.s + 'px';
-    el.style.transform = 'rotate(' + ((rnd() * 2 - 1) * 35).toFixed(1) + 'deg)';
+    el.textContent = CRYPTIC_TEXTS[m.i % CRYPTIC_TEXTS.length];
+    if (m.left) el.style.left = m.left;
+    if (m.right) el.style.right = m.right;
+    if (m.top) el.style.top = m.top;
+    if (m.bottom) el.style.bottom = m.bottom;
+    el.style.fontSize = m.s + 'px';
+    el.style.transform = 'rotate(' + ((m.i % 2 ? 1 : -1) * 22) + 'deg)';
     host.appendChild(el);
   });
 })();
@@ -323,12 +380,6 @@ function parseCSV(text) {
   if (row.length > 1 || row[0] !== '') rows.push(row);
   return rows;
 }
-function cell(tag, cls, html) {
-  var el = document.createElement(tag);
-  if (cls) el.className = cls;
-  if (html != null) el.innerHTML = html;
-  return el;
-}
 function esc(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
@@ -338,53 +389,201 @@ function html(v) {
   if (isHtml(v)) return v;
   return esc(v).replace(/\n/g, '<br>');
 }
-function linkCell(url) {
-  var td = cell('td', 'link');
-  if (/^https?:\/\//i.test(url.trim())) {
+function textOf(v) {
+  return String(v == null ? '' : v).replace(/<[^>]*>/g, ' ').replace(/&nbsp;/g, ' ').replace(/\s+/g, ' ').trim();
+}
+function isLost(r) { return !!r[0] && String(r[0]).toUpperCase().trim() === 'LOST'; }
+function locked(v) { return String(v).trim() === '[[LOCKED]]'; }
+
+function lockBadge() {
+  var b = document.createElement('span');
+  b.className = 'badge lock';
+  b.innerHTML = '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg> LOCKED';
+  return b;
+}
+
+function refCell(r) {
+  var td = document.createElement('td');
+  td.className = 'ref';
+  var pill = document.createElement('span');
+  pill.className = 'status ' + (isLost(r) ? 'lost' : 'found');
+  pill.textContent = isLost(r) ? 'Lost' : 'Found';
+  td.appendChild(pill);
+  if (!isLost(r)) {
+    var code = document.createElement('span');
+    code.className = 'code';
+    code.textContent = String(r[0] || '').trim();
+    td.appendChild(code);
+  }
+  return td;
+}
+function linkCell(v) {
+  var td = document.createElement('td');
+  td.className = 'link';
+  if (locked(v)) { td.appendChild(lockBadge()); return td; }
+  if (/^https?:\/\//i.test(v.trim())) {
     var a = document.createElement('a');
-    a.href = url.trim(); a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = url.trim();
+    a.href = v.trim(); a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = 'Open record';
+    var ext = document.createElement('span');
+    ext.className = 'ext'; ext.textContent = '↗';
+    a.appendChild(ext);
     td.appendChild(a);
-  } else { td.className = 'md'; td.innerHTML = html(url); }
+  } else { td.className = 'md'; td.innerHTML = html(v); }
+  return td;
+}
+function naCell() {
+  var td = document.createElement('td');
+  td.className = 'na'; td.textContent = '—';
+  return td;
+}
+function mdCell(v) {
+  var td = document.createElement('td');
+  td.className = 'md'; td.innerHTML = html(v);
   return td;
 }
 function passCell(v) {
-  var td = cell('td', 'pass');
+  var td = document.createElement('td');
   if (/^\[0x[0-9a-fA-F]+\] not found$/.test(v.trim())) {
+    td.className = 'pass';
     var code = document.createElement('code');
     code.textContent = v.trim();
     td.appendChild(code);
   } else { td.className = 'md'; td.innerHTML = html(v); }
   return td;
 }
-function locked(v) { return v.trim() === '[[LOCKED]]'; }
+function buildCell(r, j) {
+  var v = r[j] != null ? r[j] : '';
+  if (j === 0) return refCell(r);
+  if (j === 1) return linkCell(v);
+  if (j === 2) return locked(v) ? (function () { var td = document.createElement('td'); td.appendChild(lockBadge()); return td; })() : mdCell(v);
+  if (j === 3) return v.trim() === 'NA' ? naCell() : mdCell(v);
+  return passCell(v);
+}
 
+var headers = [], dataRows = [];
+var sortCol = 0, sortDir = 1;
+var query = '', status = 'all';
+
+function renderHeader() {
+  var thead = document.querySelector('#archive thead');
+  thead.innerHTML = '';
+  var tr = document.createElement('tr');
+  headers.forEach(function (h, j) {
+    var th = document.createElement('th');
+    th.textContent = h;
+    th.setAttribute('role', 'columnheader');
+    th.addEventListener('click', function () {
+      if (sortCol === j) sortDir = -sortDir;
+      else { sortCol = j; sortDir = 1; }
+      render();
+    });
+    if (j === sortCol) {
+      th.setAttribute('aria-sort', sortDir === 1 ? 'ascending' : 'descending');
+      var arrow = document.createElement('span');
+      arrow.className = 'sort-arrow';
+      arrow.textContent = sortDir === 1 ? '▲' : '▼';
+      th.appendChild(arrow);
+    }
+    tr.appendChild(th);
+  });
+  thead.appendChild(tr);
+}
+function render() {
+  renderHeader();
+  var tbody = document.querySelector('#archive tbody');
+  tbody.innerHTML = '';
+  var q = query.trim().toLowerCase();
+  var list = dataRows.filter(function (r) {
+    if (status === 'found' && isLost(r)) return false;
+    if (status === 'lost' && !isLost(r)) return false;
+    if (q && r.map(textOf).join(' ').toLowerCase().indexOf(q) === -1) return false;
+    return true;
+  });
+  if (sortCol >= 0) {
+    list.sort(function (a, b) {
+      if (sortCol === 0) {
+        var al = isLost(a), bl = isLost(b);
+        if (al !== bl) return al ? 1 : -1;
+      }
+      return textOf(a[sortCol]).localeCompare(textOf(b[sortCol]), undefined, { numeric: true }) * sortDir;
+    });
+  }
+  list.forEach(function (r) {
+    var tr = document.createElement('tr');
+    if (isLost(r)) tr.className = 'lost';
+    for (var j = 0; j < headers.length; j++) tr.appendChild(buildCell(r, j));
+    tbody.appendChild(tr);
+  });
+  var n = list.length;
+  document.getElementById('count').textContent = n + ' record' + (n === 1 ? '' : 's');
+  if (!n) {
+    var td = document.createElement('td');
+    td.className = 'empty';
+    td.colSpan = headers.length;
+    var msg = document.createElement('div');
+    msg.textContent = 'No records match.';
+    td.appendChild(msg);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'chip';
+    btn.textContent = 'Clear filters';
+    btn.addEventListener('click', function () {
+      query = ''; status = 'all';
+      document.getElementById('search').value = '';
+      document.querySelectorAll('#chips .chip').forEach(function (c) { c.classList.toggle('on', c.getAttribute('data-status') === 'all'); });
+      render();
+    });
+    td.appendChild(btn);
+    var tr = document.createElement('tr'); tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+}
+
+function showSkeleton() {
+  var thead = document.querySelector('#archive thead');
+  var htr = document.createElement('tr');
+  for (var j = 0; j < 5; j++) {
+    var th = document.createElement('th');
+    var b = document.createElement('div'); b.className = 'sk-head';
+    th.appendChild(b); htr.appendChild(th);
+  }
+  thead.appendChild(htr);
+  var tbody = document.querySelector('#archive tbody');
+  for (var i = 0; i < 5; i++) {
+    var tr = document.createElement('tr');
+    for (var k = 0; k < 5; k++) {
+      var td = document.createElement('td');
+      var c = document.createElement('div'); c.className = 'sk-cell' + (k === 3 ? ' w2' : '');
+      td.appendChild(c); tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  }
+}
+
+document.getElementById('search').addEventListener('input', function (e) {
+  query = e.target.value; render();
+});
+document.getElementById('chips').addEventListener('click', function (e) {
+  var chip = e.target.closest('.chip');
+  if (!chip) return;
+  status = chip.getAttribute('data-status');
+  document.querySelectorAll('#chips .chip').forEach(function (c) { c.classList.toggle('on', c === chip); });
+  render();
+});
+
+showSkeleton();
 fetch('archive.csv')
   .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
   .then(function (text) {
     var rows = parseCSV(text);
-    if (!rows.length) return;
-    var thead = document.querySelector('#archive thead');
-    var tr = document.createElement('tr');
-    rows[0].forEach(function (h) { tr.appendChild(cell('th', '', esc(h))); });
-    thead.appendChild(tr);
-
-    var tbody = document.querySelector('#archive tbody');
-    for (var i = 1; i < rows.length; i++) {
-      var r = rows[i];
-      var rowEl = document.createElement('tr');
-      if (r[0] && r[0].toUpperCase() === 'LOST') rowEl.className = 'lost';
-      r.forEach(function (v, j) {
-        if (j === 0) rowEl.appendChild(cell('td', 'ref', esc(v)));
-        else if (j === 1) rowEl.appendChild(linkCell(v));
-        else if (j === 2) rowEl.appendChild(cell('td', locked(v) ? 'lock' : 'md', locked(v) ? esc(v) : html(v)));
-        else if (j === 3) rowEl.appendChild(cell('td', v.trim() === 'NA' ? 'na' : 'md', v.trim() === 'NA' ? esc(v) : html(v)));
-        else rowEl.appendChild(passCell(v));
-      });
-      tbody.appendChild(rowEl);
-    }
+    if (!rows.length) throw new Error('empty CSV');
+    headers = rows[0];
+    dataRows = rows.slice(1);
+    render();
+    drawBurn();
   })
   .catch(function (err) {
+    document.querySelector('#archive thead').innerHTML = '';
     document.querySelector('#archive tbody').innerHTML =
       '<tr><td class="empty" colspan="5">Could not load archive.csv — ' + esc(String(err)) + '</td></tr>';
   });
