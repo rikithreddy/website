@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Noto+Sans+Devanagari:wght@400;500&family=JetBrains+Mono&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <style>
   :root {
     --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
@@ -102,10 +101,12 @@
   td.pass { font-family: var(--sans); font-variant-numeric: tabular-nums; white-space: pre-wrap; line-height: 1.55; }
   td.pass code { font-family: var(--mono); font-size: 11px; color: var(--accent); }
   td.md { line-height: 1.55; }
+  td.md div { margin: 0 0 4px; }
+  td.md div:last-child { margin-bottom: 0; }
   td.md p { margin: 0 0 6px; }
   td.md p:last-child { margin-bottom: 0; }
-  td.md strong { color: var(--text); }
-  td.md em { color: var(--muted); }
+  td.md strong, td.md b { color: var(--text); }
+  td.md em, td.md i { color: var(--muted); }
   td.md h1, td.md h2, td.md h3, td.md h4 { font-family: var(--serif); font-weight: 600; margin: 0 0 4px; }
   td.md ul, td.md ol { margin: 0 0 6px; padding-left: 18px; }
   td.md blockquote { margin: 0 0 6px; padding-left: 10px; border-left: 3px solid var(--border-strong); color: var(--muted); }
@@ -285,19 +286,20 @@ function cell(tag, cls, html) {
 function esc(s) {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 }
-function md(s) {
-  if (!s || !s.trim()) return '';
-  if (window.marked) return window.marked.parse(s, { breaks: true });
-  return esc(s).replace(/\n/g, '<br>');
+function isHtml(v) { return /<[a-zA-Z/][^>]*>/.test(v); }
+function html(v) {
+  if (!v || !v.trim()) return '';
+  if (isHtml(v)) return v;
+  return esc(v).replace(/\n/g, '<br>');
 }
 function linkCell(url) {
   var td = cell('td', 'link');
-  if (/^https?:\/\//i.test(url)) {
+  if (/^https?:\/\//i.test(url.trim())) {
     var a = document.createElement('a');
-    a.href = url; a.target = '_blank'; a.rel = 'noopener';
-    a.textContent = url;
+    a.href = url.trim(); a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = url.trim();
     td.appendChild(a);
-  } else td.textContent = url;
+  } else { td.className = 'md'; td.innerHTML = html(url); }
   return td;
 }
 function passCell(v) {
@@ -306,7 +308,7 @@ function passCell(v) {
     var code = document.createElement('code');
     code.textContent = v.trim();
     td.appendChild(code);
-  } else { td.className = 'md'; td.innerHTML = md(v); }
+  } else { td.className = 'md'; td.innerHTML = html(v); }
   return td;
 }
 function locked(v) { return v.trim() === '[[LOCKED]]'; }
@@ -329,8 +331,8 @@ fetch('archive.csv')
       r.forEach(function (v, j) {
         if (j === 0) rowEl.appendChild(cell('td', 'ref', esc(v)));
         else if (j === 1) rowEl.appendChild(linkCell(v));
-        else if (j === 2) rowEl.appendChild(cell('td', locked(v) ? 'lock' : 'md', locked(v) ? esc(v) : md(v)));
-        else if (j === 3) rowEl.appendChild(cell('td', v.trim() === 'NA' ? 'na' : 'md', v.trim() === 'NA' ? esc(v) : md(v)));
+        else if (j === 2) rowEl.appendChild(cell('td', locked(v) ? 'lock' : 'md', locked(v) ? esc(v) : html(v)));
+        else if (j === 3) rowEl.appendChild(cell('td', v.trim() === 'NA' ? 'na' : 'md', v.trim() === 'NA' ? esc(v) : html(v)));
         else rowEl.appendChild(passCell(v));
       });
       tbody.appendChild(rowEl);
