@@ -177,14 +177,43 @@
     .wordmark { font-size: 22px; }
     .devaMark { font-size: 16px; }
     main { padding: 12px; }
-    table { min-width: 600px; }
-    thead th, tbody td { padding: 10px 12px; }
-    td.ref .status { margin-right: 6px; }
-    .toolbar { padding: 10px 12px; }
+
+    .toolbar { padding: 10px 12px; gap: 8px; }
+    .toolbar input[type=search] { flex-basis: 100%; }
+
+    /* stack the table into label/value cards */
+    table, thead, tbody, tr, td { display: block; width: 100%; }
+    thead { display: none; }
+    table { min-width: 0; }
+    tbody tr {
+      border: 1px solid var(--border); border-radius: var(--radius-lg);
+      background: var(--field); box-shadow: 0 1px 2px var(--shadow);
+      padding: 2px 14px 4px; margin-bottom: 12px; overflow: hidden;
+    }
+    tbody tr.lost { background: rgba(222, 208, 175, .38); }
+    tbody td {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0; border: 0; border-bottom: 1px solid var(--border);
+      background: transparent;
+    }
+    tbody tr td:last-child { border-bottom: 0; }
+    tbody td::before {
+      content: attr(data-label);
+      flex: 0 0 118px; min-width: 118px;
+      font-family: var(--serif); font-weight: 600;
+      font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+      color: var(--muted); padding-top: 3px;
+    }
+    tbody td > * { min-width: 0; }
+    td.ref { white-space: normal; }
+    td.empty { display: block; text-align: center; padding: 22px 14px; }
+    td.empty::before { display: none; }
+    .empty button { display: inline-block; }
   }
   @media (max-width: 400px) {
     .wordmark { font-size: 20px; }
     main { padding: 10px; }
+    tbody td::before { flex-basis: 100px; min-width: 100px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .sk-cell, .sk-head { animation-duration: .001ms; }
@@ -381,7 +410,11 @@ function render() {
   list.forEach(function (r) {
     var tr = document.createElement('tr');
     if (isLost(r)) tr.className = 'lost';
-    for (var j = 0; j < headers.length; j++) tr.appendChild(buildCell(r, j));
+    for (var j = 0; j < headers.length; j++) {
+      var td = buildCell(r, j);
+      td.setAttribute('data-label', headers[j]);
+      tr.appendChild(td);
+    }
     tbody.appendChild(tr);
   });
   var n = list.length;
