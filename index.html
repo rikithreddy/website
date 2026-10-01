@@ -27,6 +27,7 @@
     --muted: #7a6a55;
     --accent: #b4552d;
     --accent-ink: #fff7ee;
+    --accent-soft: rgba(180, 85, 45, .12);
     --danger: #b23b2e;
     --shadow: rgba(51, 38, 26, .16);
     --shadow-lg: rgba(51, 38, 26, .28);
@@ -69,7 +70,6 @@
   .wordmark .accent { color: var(--accent); }
   .devaMark { font-family: var(--deva); font-size: 19px; color: var(--accent); opacity: .75; line-height: 1; }
   .spacer { flex: 1; }
-  .headNote { font-family: var(--hand); font-size: 16px; color: var(--muted); opacity: .8; }
 
   main { flex: 1; padding: 28px; display: flex; min-height: 0; }
   .card {
@@ -80,6 +80,27 @@
     position: relative;
   }
   .scroll { flex: 1; overflow: auto; }
+  .toolbar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 12px 16px; border-bottom: 1px solid var(--border);
+    background: rgba(230, 218, 189, .5);
+  }
+  .toolbar input[type=search] {
+    width: auto; min-width: 180px; flex: 1 1 180px;
+    background: var(--field); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 7px 11px; color: var(--text); outline: none;
+    font: 12.5px/1.5 var(--sans);
+  }
+  .toolbar input[type=search]:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .chips { display: flex; gap: 6px; }
+  .chip {
+    border: 1px solid var(--border); background: var(--panel-2); border-radius: 20px;
+    padding: 6px 13px; cursor: pointer; color: var(--muted); font-size: 12px;
+    transition: background .12s, color .12s, border-color .12s;
+  }
+  .chip:hover { border-color: var(--border-strong); color: var(--text); }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .count { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
   table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
   thead th {
     position: sticky; top: 0; z-index: 1;
@@ -87,7 +108,10 @@
     font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
     color: var(--muted); background: rgba(230,218,189,.96);
     border-bottom: 1px solid var(--border-strong); padding: 12px 16px; white-space: nowrap;
+    cursor: pointer; user-select: none;
   }
+  thead th:hover { color: var(--text); }
+  .sort-arrow { font-size: 9px; margin-left: 6px; color: var(--accent); }
   tbody td {
     padding: 12px 16px; border-bottom: 1px solid var(--border);
     background: rgba(255,250,240,.62); color: var(--text); vertical-align: top;
@@ -130,7 +154,6 @@
     header { height: 52px; padding: 0 14px; gap: 8px; }
     .wordmark { font-size: 22px; }
     .devaMark { font-size: 16px; }
-    .headNote { display: none; }
     main { padding: 12px; }
     table { min-width: 560px; }
     thead th, tbody td { padding: 9px 12px; }
@@ -149,7 +172,6 @@
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
-  <span class="headNote">field record · संकलन</span>
 </header>
 
 <main>
@@ -280,7 +302,7 @@ function parseCSV(text) {
 function cell(tag, cls, html) {
   var el = document.createElement(tag);
   if (cls) el.className = cls;
-  el.innerHTML = html;
+  if (html != null) el.innerHTML = html;
   return el;
 }
 function esc(s) {
