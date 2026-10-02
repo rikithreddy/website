@@ -175,7 +175,7 @@
 </main>
 
 <script>
-var COLUMNS = ['REFERENCE_CODE', 'DOCUMENT_LINK', 'CIPHER_DECRYPTED', 'ENCRYPTION_DETAILS', 'PASSKEY'];
+var COLUMNS = ['REFERENCE_CODE', 'DOCUMENT_LINK', 'ENCRYPTION_DETAILS', 'PASSKEY'];
 
 function parseCSV(text) {
   var rows = [], row = [], field = '', inQ = false, c;
@@ -301,7 +301,7 @@ document.getElementById('save').addEventListener('click', function () {
 });
 document.getElementById('reload').addEventListener('click', load);
 document.getElementById('addRow').addEventListener('click', function () {
-  grid.querySelector('tbody').appendChild(newRow(['LOST', '[[LOCKED]]', 'NA', 'NA', '']));
+  grid.querySelector('tbody').appendChild(newRow(['LOST', '[[LOCKED]]', 'NA', '']));
   setStatus('row added (unsaved)', '');
 });
 document.getElementById('download').addEventListener('click', function () {

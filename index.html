@@ -182,33 +182,9 @@
     .toolbar { padding: 10px 12px; gap: 8px; }
     .toolbar input[type=search] { flex-basis: 100%; }
 
-    /* stack the table into label/value cards */
-    table, thead, tbody, tr, td { display: block; width: 100%; }
-    thead { display: none; }
-    table { min-width: 0; }
-    tbody tr {
-      border: 1px solid var(--border); border-radius: var(--radius-lg);
-      background: var(--field); box-shadow: 0 1px 2px var(--shadow);
-      padding: 6px 16px 8px; margin-bottom: 12px; overflow: hidden;
-    }
-    tbody tr.lost { background: rgba(222, 208, 175, .38); }
-    tbody td {
-      padding: 10px 0; border: 0; border-bottom: 1px solid var(--border);
-      background: transparent;
-    }
-    tbody tr td:last-child { border-bottom: 0; }
-    tbody td::before {
-      content: attr(data-label);
-      display: block;
-      font-family: var(--serif); font-weight: 600;
-      font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
-      color: var(--muted); margin-bottom: 3px;
-    }
-    td.ref { white-space: normal; }
-    td.md, td.pass, td.link, td.na, td.ref { overflow-wrap: break-word; word-break: break-word; }
-    td.empty { text-align: center; padding: 22px 14px; }
-    td.empty::before { display: none; }
-    .empty button { display: inline-block; }
+    table { min-width: 640px; }
+    thead th, tbody td { padding: 10px 12px; }
+    td.ref .status { margin-right: 6px; }
   }
   @media (max-width: 400px) {
     .wordmark { font-size: 20px; }
@@ -353,8 +329,7 @@ function buildCell(r, j) {
   var v = r[j] != null ? r[j] : '';
   if (j === 0) return refCell(r);
   if (j === 1) return linkCell(v);
-  if (j === 2) return locked(v) ? (function () { var td = document.createElement('td'); td.appendChild(lockBadge()); return td; })() : mdCell(v);
-  if (j === 3) return v.trim() === 'NA' ? naCell() : mdCell(v);
+  if (j === 2) return v.trim() === 'NA' ? naCell() : mdCell(v);
   return passCell(v);
 }
 
