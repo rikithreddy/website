@@ -384,11 +384,7 @@ function render() {
   list.forEach(function (r) {
     var tr = document.createElement('tr');
     if (isLost(r)) tr.className = 'lost';
-    for (var j = 0; j < headers.length; j++) {
-      var td = buildCell(r, j);
-      td.setAttribute('data-label', headers[j]);
-      tr.appendChild(td);
-    }
+    for (var j = 0; j < headers.length; j++) tr.appendChild(buildCell(r, j));
     tbody.appendChild(tr);
   });
   var n = list.length;
