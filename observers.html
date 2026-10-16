@@ -101,9 +101,6 @@
   .panel-head .spacer { flex: 1; }
   .count { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted);
     text-transform: uppercase; white-space: nowrap; }
-  .blurb { margin: 0; padding: 18px 24px 4px; color: var(--muted); font-size: 12.5px; line-height: 1.7;
-    font-style: italic; border-left: 2px solid var(--line-strong); margin: 18px 24px 4px; padding: 0 0 0 13px; }
-
   .list { padding: 18px 24px 26px; display: flex; flex-direction: column; gap: 12px; }
   .list .empty { color: var(--muted); font-family: var(--serif); font-style: italic; padding: 18px 0; }
 
@@ -134,7 +131,6 @@
     padding: 4px 10px; border-radius: 20px; white-space: nowrap;
   }
   .badge.clear { color: var(--gold2); background: rgba(201,150,43,.1); border: 1px solid rgba(201,150,43,.4); }
-  .badge.ok { color: var(--emerald); background: rgba(31,111,84,.12); border: 1px solid rgba(31,111,84,.45); }
 
   footer {
     display: flex; align-items: center; justify-content: center; gap: 12px; height: 40px; padding: 0 18px;
@@ -152,7 +148,6 @@
     main { padding: 18px 12px 34px; }
     .panel-head { padding: 18px 16px 14px; }
     .panel-head h1 { font-size: 22px; }
-    .blurb { margin: 14px 16px 0; }
     .list { padding: 14px 16px 20px; }
     .observer { flex-wrap: wrap; gap: 12px; }
     .obs-tags { flex-direction: row; align-items: center; width: 100%; justify-content: flex-start; }
@@ -185,7 +180,6 @@
         <span class="spacer"></span>
         <span class="count" id="count"></span>
       </div>
-      <p class="blurb">Cleared entities permitted to witness the RR26 network. Additional observers may be inducted over time.</p>
       <div class="list" id="list"></div>
     </section>
   </div>
@@ -232,7 +226,6 @@ function render() {
       '</div>' +
       '<div class="obs-tags">' +
         '<span class="badge clear">Clearance · LV ' + esc(o.clearance) + '</span>' +
-        '<span class="badge ok">Whitelisted</span>' +
       '</div>';
     frag.appendChild(art);
   }
