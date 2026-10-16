@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LostArchives · Whitelisted Observers</title>
+<meta name="description" content="LostArchives — cleared observers permitted to witness the RR26 network.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hand: "Yatra One", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --deva: "Noto Sans Devanagari", serif;
+
+    --soot: #0b0805;
+    --stone: #1b140e;
+    --stone2: #241a11;
+    --brass: #c9962b;
+    --gold: #f0d58a;
+    --gold2: #ffe9b0;
+    --copper: #8a5a2b;
+    --sindoor: #c0392b;
+    --ember: #ff7a3c;
+    --neel: #33468c;
+    --neel-lt: #5a74c4;
+    --emerald: #1f6f54;
+    --ivory: #f3e6c8;
+    --oldgold: #b99a5b;
+    --muted: #8a7550;
+    --line: rgba(201, 150, 43, .22);
+    --line-strong: rgba(240, 213, 138, .45);
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0; color: var(--ivory);
+    font: 13px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    display: flex; flex-direction: column; min-height: 100vh;
+    background: var(--soot);
+  }
+
+  #bg { position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background:
+      radial-gradient(1000px 680px at 50% -10%, rgba(201,150,43,.16), transparent 60%),
+      radial-gradient(900px 620px at 14% 24%, rgba(51,70,140,.14), transparent 62%),
+      radial-gradient(1000px 800px at 86% 86%, rgba(125,31,20,.2), transparent 62%),
+      radial-gradient(1200px 900px at 50% 45%, #201710 0%, #130d08 45%, #0b0805 100%);
+  }
+  #grain { position: absolute; inset: -50%; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E"); }
+  #bgArt { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .07;
+    animation: spin 240s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .y-ring { fill: none; stroke: var(--brass); stroke-width: .9; }
+  .y-petal { fill: none; stroke: var(--brass); stroke-width: .9; }
+  .y-tri { fill: none; stroke: var(--neel-lt); stroke-width: .9; }
+
+  header, main, footer { position: relative; z-index: 1; }
+
+  header {
+    display: flex; align-items: center; gap: 12px; height: 62px; padding: 0 22px;
+    background: linear-gradient(180deg, rgba(20,14,9,.94), rgba(20,14,9,.4));
+    border-bottom: 1px solid var(--line);
+  }
+  .wordmark { font-family: var(--hand); font-size: 26px; line-height: 1;
+    color: var(--gold); letter-spacing: .02em; text-shadow: 0 0 20px rgba(201,150,43,.5); }
+  .wordmark .accent { color: var(--sindoor); text-shadow: 0 0 18px rgba(192,57,43,.55); }
+  .devaMark { font-family: var(--deva); font-size: 19px; color: var(--ember); opacity: .9;
+    line-height: 1; text-shadow: 0 0 14px rgba(255,122,60,.55); }
+  .spacer { flex: 1; }
+  .navlink {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--oldgold); text-decoration: none; border: 1px solid var(--line);
+    border-radius: 20px; padding: 8px 14px; transition: all .14s; white-space: nowrap;
+  }
+  .navlink:hover { color: var(--ivory); border-color: var(--line-strong); background: rgba(255,255,255,.04); }
+
+  main { flex: 1; padding: 30px 22px 46px; display: flex; justify-content: center; }
+  .wrap { width: 100%; max-width: 760px; }
+
+  .panel {
+    background: linear-gradient(180deg, rgba(27,20,14,.92), rgba(19,13,8,.92));
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55); overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    padding: 22px 24px 18px; border-bottom: 1px solid var(--line);
+    background: radial-gradient(600px 120px at 0% 0%, rgba(201,150,43,.12), transparent 70%);
+  }
+  .panel-head h1 { font-family: var(--hand); font-weight: 400; font-size: 27px; margin: 0;
+    color: var(--gold); letter-spacing: .02em; }
+  .panel-head .deva { font-family: var(--deva); font-size: 15px; color: var(--oldgold); }
+  .panel-head .spacer { flex: 1; }
+  .count { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--muted);
+    text-transform: uppercase; white-space: nowrap; }
+  .blurb { margin: 0; padding: 18px 24px 4px; color: var(--muted); font-size: 12.5px; line-height: 1.7;
+    font-style: italic; border-left: 2px solid var(--line-strong); margin: 18px 24px 4px; padding: 0 0 0 13px; }
+
+  .list { padding: 18px 24px 26px; display: flex; flex-direction: column; gap: 12px; }
+  .list .empty { color: var(--muted); font-family: var(--serif); font-style: italic; padding: 18px 0; }
+
+  .observer {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 18px; border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(36,26,17,.9), rgba(27,20,14,.9));
+    border: 1px solid var(--line);
+    transition: border-color .16s, box-shadow .16s, transform .16s;
+    position: relative;
+  }
+  .observer:hover { border-color: var(--line-strong); box-shadow: 0 0 22px rgba(201,150,43,.18); }
+  .observer::before {
+    content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 3px; border-radius: 3px;
+    background: linear-gradient(180deg, var(--gold2), var(--copper));
+  }
+  .sigil { flex: none; width: 40px; height: 40px; color: var(--gold); }
+  .sigil svg { display: block; width: 100%; height: 100%; }
+  .obs-id { font-family: var(--mono); font-weight: 700; font-size: 13px; color: var(--gold2);
+    letter-spacing: .05em; }
+  .obs-body { flex: 1; min-width: 0; }
+  .obs-handle { font-family: var(--mono); font-weight: 700; font-size: 15px; color: var(--ivory);
+    overflow-wrap: break-word; }
+  .obs-sub { font-family: var(--deva); font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+  .obs-tags { display: flex; flex-direction: column; align-items: flex-end; gap: 7px; flex: none; }
+  .badge {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+  }
+  .badge.clear { color: var(--gold2); background: rgba(201,150,43,.1); border: 1px solid rgba(201,150,43,.4); }
+  .badge.ok { color: var(--emerald); background: rgba(31,111,84,.12); border: 1px solid rgba(31,111,84,.45); }
+
+  footer {
+    display: flex; align-items: center; justify-content: center; gap: 12px; height: 40px; padding: 0 18px;
+    border-top: 1px solid var(--line); color: var(--muted); font-size: 11px;
+    background: linear-gradient(0deg, rgba(20,14,9,.9), rgba(20,14,9,.25));
+  }
+  footer .fm { font-family: var(--deva); color: rgba(201,150,43,.55); font-size: 14px; }
+  footer .ft { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+
+  @media (max-width: 640px) {
+    header { height: 54px; padding: 0 14px; gap: 8px; }
+    .wordmark { font-size: 20px; }
+    .devaMark { font-size: 16px; }
+    .navlink { padding: 7px 11px; }
+    main { padding: 18px 12px 34px; }
+    .panel-head { padding: 18px 16px 14px; }
+    .panel-head h1 { font-size: 22px; }
+    .blurb { margin: 14px 16px 0; }
+    .list { padding: 14px 16px 20px; }
+    .observer { flex-wrap: wrap; gap: 12px; }
+    .obs-tags { flex-direction: row; align-items: center; width: 100%; justify-content: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) { #bgArt { animation: none !important; } }
+</style>
+</head>
+<body>
+
+<div id="bg">
+  <div id="grain"></div>
+  <svg id="bgArt" viewBox="-320 -320 640 640" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+    <g id="bgArtG"></g>
+  </svg>
+</div>
+
+<header>
+  <span class="wordmark">Lost<span class="accent">Archives</span></span>
+  <span class="devaMark">छाया</span>
+  <span class="spacer"></span>
+  <a class="navlink" href="index.html">← Archive</a>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="panel">
+      <div class="panel-head">
+        <h1>Whitelisted Observers</h1>
+        <span class="deva">प्रेक्षक</span>
+        <span class="spacer"></span>
+        <span class="count" id="count"></span>
+      </div>
+      <p class="blurb">Cleared entities permitted to witness the RR26 network. Additional observers may be inducted over time.</p>
+      <div class="list" id="list"></div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <span class="fm">विस्मृति</span>
+  <span class="ft">LostArchives</span>
+</footer>
+
+<script>
+/* -------------------------------------------------------------------------
+   WHITELISTED OBSERVERS
+   Add more entries here — the page renders whatever is in this list.
+     { id, handle, role?, clearance, status: 'whitelisted' | ... }
+   ------------------------------------------------------------------------- */
+var OBSERVERS = [
+  { id: 'ZD.0001', handle: 'csillustrator', role: 'Observer', clearance: 2, status: 'whitelisted' }
+];
+
+var SIGIL = '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" ' +
+  'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M20 3 L33 9 V20 C33 28.5 27 34.4 20 37 C13 34.4 7 28.5 7 20 V9 Z"/>' +
+  '<path d="M13 20 C15.5 16.2 24.5 16.2 27 20 C24.5 23.8 15.5 23.8 13 20 Z"/>' +
+  '<circle cx="20" cy="20" r="2.3" fill="currentColor" stroke="none"/></svg>';
+
+function esc(s) {
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+function render() {
+  var list = document.getElementById('list');
+  var frag = document.createDocumentFragment();
+  for (var i = 0; i < OBSERVERS.length; i++) {
+    var o = OBSERVERS[i];
+    var art = document.createElement('article');
+    art.className = 'observer';
+    art.innerHTML =
+      '<div class="sigil">' + SIGIL + '</div>' +
+      '<div class="obs-body">' +
+        '<div class="obs-id">' + esc(o.id) + '</div>' +
+        '<div class="obs-handle">' + esc(o.handle) + '</div>' +
+        '<div class="obs-sub">' + esc(o.role || 'Observer') + ' · प्रेक्षक</div>' +
+      '</div>' +
+      '<div class="obs-tags">' +
+        '<span class="badge clear">Clearance · LV ' + esc(o.clearance) + '</span>' +
+        '<span class="badge ok">Whitelisted</span>' +
+      '</div>';
+    frag.appendChild(art);
+  }
+  list.appendChild(frag);
+  var n = OBSERVERS.length;
+  document.getElementById('count').textContent = n + ' observer' + (n === 1 ? '' : 's');
+}
+
+(function buildArt() {
+  var NS = 'http://www.w3.org/2000/svg';
+  var g = document.getElementById('bgArtG');
+  var radii = [70, 140, 215, 295];
+  for (var r = 0; r < radii.length; r++) {
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', radii[r]); c.setAttribute('class', 'y-ring'); g.appendChild(c);
+  }
+  for (var i = 0; i < 24; i++) {
+    var e = document.createElementNS(NS, 'ellipse');
+    e.setAttribute('rx', 16); e.setAttribute('ry', 46); e.setAttribute('cy', -250);
+    e.setAttribute('class', 'y-petal'); e.setAttribute('transform', 'rotate(' + (i * 15) + ')');
+    g.appendChild(e);
+  }
+  var t1 = document.createElementNS(NS, 'polygon');
+  t1.setAttribute('points', '0,-225 195,112 -195,112'); t1.setAttribute('class', 'y-tri');
+  var t2 = document.createElementNS(NS, 'polygon');
+  t2.setAttribute('points', '0,225 195,-112 -195,-112'); t2.setAttribute('class', 'y-tri');
+  g.appendChild(t1); g.appendChild(t2);
+})();
+
+render();
+</script>
+</body>
+</html>
