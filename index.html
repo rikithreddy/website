@@ -166,6 +166,18 @@
     97% { opacity: .6; }
   }
 
+  /* ---------- progress / clearance node ---------- */
+  .prog-bg { fill: rgba(27,20,14,.95); stroke: rgba(201,150,43,.55); stroke-width: 1.4; }
+  .prog-line { fill: none; stroke: url(#gradBrass); stroke-width: 1.4; }
+  .node:focus-visible .prog-bg { stroke: var(--gold2); stroke-width: 3; }
+  .prog-title { font-family: var(--mono); font-size: 10px; fill: var(--gold2); letter-spacing: .05em; }
+  .prog-target { font-family: var(--mono); font-size: 9.5px; fill: var(--oldgold); letter-spacing: .05em; }
+  .prog-track { fill: rgba(201,150,43,.12); stroke: rgba(201,150,43,.35); stroke-width: 1; }
+  .prog-fill { fill: url(#gradLive); }
+  .prog-count { font-family: var(--mono); font-weight: 700; font-size: 13px; fill: var(--gold2);
+    letter-spacing: .05em; text-anchor: end; }
+  .node.k-progress.s-locked .dot { fill: var(--brass); }
+
   /* ---------- recenter button ---------- */
   .recenter-btn {
     position: fixed; right: 18px; bottom: 18px; z-index: 4;
@@ -213,6 +225,13 @@
     text-transform: uppercase; padding: 5px 12px; border-radius: 20px; margin-bottom: 20px; }
   .d-pill.found { color: var(--emerald); background: rgba(31,111,84,.12); border: 1px solid rgba(31,111,84,.45); }
   .d-pill.hub { color: var(--gold2); background: rgba(201,150,43,.1); border: 1px solid rgba(201,150,43,.4); }
+  .d-pill.progress { color: var(--ember); background: rgba(255,122,60,.1); border: 1px solid rgba(255,122,60,.45); }
+  .clearance-bar { height: 12px; border-radius: 999px; overflow: hidden;
+    background: rgba(201,150,43,.12); border: 1px solid rgba(201,150,43,.35); }
+  .clearance-bar span { display: block; height: 100%; border-radius: 999px;
+    background: linear-gradient(90deg, var(--brass), var(--gold)); }
+  .clearance-meta { display: flex; justify-content: space-between; margin-top: 8px;
+    font-family: var(--mono); font-size: 11px; color: var(--oldgold); letter-spacing: .04em; }
   .d-section { margin-bottom: 20px; }
   .d-label { font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em; text-transform: uppercase;
     color: var(--muted); margin-bottom: 8px; }
@@ -237,6 +256,12 @@
   .frag-chip .fc-key { font-family: var(--hand); font-size: 15px; color: var(--neel-lt); width: 16px; text-align: center; }
   .frag-chip .fc-name { font-family: var(--mono); font-size: 12.5px; color: var(--ivory); flex: 1; }
   .frag-chip code { font-family: var(--mono); font-size: 10.5px; color: var(--oldgold); }
+  .chip-btn { font: inherit; text-align: left; width: 100%; cursor: pointer; color: inherit;
+    transition: border-color .14s, background .14s; }
+  .chip-btn:hover, .chip-btn:focus-visible { border-color: var(--line-strong); background: rgba(90,116,196,.2); outline: none; }
+  .chip-open { font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; color: var(--gold2);
+    opacity: 0; transition: opacity .16s; }
+  .chip-btn:hover .chip-open, .chip-btn:focus-visible .chip-open { opacity: .9; }
 
   .denied { font-family: var(--mono); font-weight: 700; font-size: 18px; letter-spacing: .16em;
     color: var(--sindoor); margin-bottom: 4px; }
@@ -291,10 +316,10 @@
 </div>
 
 <header>
+  <a class="navlink main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
-  <a class="navlink main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
   <a class="navlink" href="observers.html">Observers<span class="nav-deva"> · प्रेक्षक</span></a>
   <span class="tag">RR26 · नेटवर्क</span>
 </header>
@@ -364,7 +389,7 @@ SYS0001,https://lostarchives.my.canva.site/rr26-0006,Length 9,"CHAYA-PQR<br><br>
 LOST,[[LOCKED]],NA,[0x53511222] not found
 LOST,[[LOCKED]],NA,[0x32910312] not found
 LOST,[[LOCKED]],NA,[0x32144111] not found
-LOST,[[LOCKED]],NA,[0x42919322] not found`;
+SYS10000,[[LOCKED]],Observer LV 2 Clearance,1/5`;
 
 var NS = 'http://www.w3.org/2000/svg';
 var stage = document.getElementById('stage');
@@ -555,6 +580,22 @@ function corrHtml(hex) {
     '<line class="card-rule" x1="-92" y1="-8" x2="92" y2="-8"/>' +
     '<text class="corr-hex" x="0" y="26">' + esc(hex) + '</text>';
 }
+function progressHtml(done, total) {
+  var pct = total > 0 ? clamp(done / total, 0, 1) : 0;
+  var trackW = 140, fillW = Math.round(trackW * pct * 10) / 10;
+  return '<rect class="node-hit" x="-124" y="-66" width="248" height="132" rx="16"/>' +
+    '<rect class="prog-bg" x="-116" y="-60" width="232" height="120" rx="14"/>' +
+    '<rect class="prog-line" x="-116" y="-60" width="232" height="120" rx="14"/>' +
+    '<circle class="dot" cx="-96" cy="-37" r="4"/>' +
+    '<text class="card-code" x="-84" y="-32">SYS10000</text>' +
+    '<text class="open-cue" x="106" y="-34">LOCKED</text>' +
+    '<line class="card-rule" x1="-96" y1="-14" x2="96" y2="-14"/>' +
+    '<text class="prog-title" x="-96" y="10">5 OBSERVER LV 2 CLEARANCE</text>' +
+    '<text class="prog-target" x="-96" y="28">TO UNLOCK SYS10000</text>' +
+    '<rect class="prog-track" x="-96" y="44" width="' + trackW + '" height="12" rx="6"/>' +
+    '<rect class="prog-fill" x="-96" y="44" width="' + fillW + '" height="12" rx="6"/>' +
+    '<text class="prog-count" x="96" y="54">' + done + '/' + total + '</text>';
+}
 
 /* Materialize one declarative node spec into a live node.
    A spec is: { id, kind, status, label, aria, html, code, sub, row, hex,
@@ -613,10 +654,11 @@ function buildGraph() {
 
   var found = [], lost = [];
   for (var i = 0; i < records.length; i++) (records[i].lost ? lost : found).push(records[i]);
-  var sys0 = null, sys1 = null;
+  var sys0 = null, sys1 = null, prog = null;
   for (var j = 0; j < found.length; j++) {
     if (found[j].code === 'SYS0000') sys0 = found[j];
     if (found[j].code === 'SYS0001') sys1 = found[j];
+    if (found[j].code === 'SYS10000') prog = found[j];
   }
 
   var P = layoutPoints();
@@ -630,6 +672,7 @@ function buildGraph() {
   var hubLinks = [];
   if (sys0) hubLinks.push({ to: 'SYS0000', kind: 'live' });
   for (var h = 0; h < lost.length; h++) hubLinks.push({ to: 'lost-' + h, kind: 'broken' });
+  if (prog) hubLinks.push({ to: 'SYS10000', kind: 'broken' });
 
   GRAPH.nodes.push({
     id: 'rr26', kind: 'hub', status: 'hub', code: 'RR26',
@@ -655,6 +698,21 @@ function buildGraph() {
       sub: 'शाखा · BRANCH RECORD', label: 'SYS0001', aria: 'SYS0001 branch record',
       html: cardHtml('SYS0001', 'शाखा · BRANCH RECORD'),
       pos: P.sys1, size: { w: 232, h: 104 },
+      links: []
+    });
+  }
+
+  if (prog) {
+    passStore['SYS10000'] = textOf(prog.pass);
+    var pm = /(\d+)\s*\/\s*(\d+)/.exec(prog.pass || '');
+    var progDone = pm ? parseInt(pm[1], 10) : 1;
+    var progTotal = pm ? parseInt(pm[2], 10) : 5;
+    GRAPH.nodes.push({
+      id: 'SYS10000', kind: 'progress', status: 'locked', code: 'SYS10000', row: prog,
+      done: progDone, total: progTotal,
+      sub: 'अनुमति · CLEARANCE', label: 'SYS10000', aria: 'SYS10000 unlock progress ' + progDone + ' of ' + progTotal,
+      html: progressHtml(progDone, progTotal),
+      pos: P.lost[P.lost.length - 1], size: { w: 232, h: 120 },
       links: []
     });
   }
@@ -910,6 +968,24 @@ function hubDrawer() {
     '<h2 class="d-code">RR26</h2>' +
     '<span class="d-pill hub">RR26 SYSLOGS</span>';
 }
+function progressDrawer(n) {
+  var done = n.done || 0, total = n.total || 0;
+  var pct = total > 0 ? Math.round(done / total * 100) : 0;
+  return '<div class="d-eyebrow">Clearance · अनुमति</div>' +
+    '<h2 class="d-code">SYS10000</h2>' +
+    '<span class="d-pill progress">Locked · ' + done + '/' + total + '</span>' +
+    '<div class="d-section"><div class="d-label">Unlock Requirement</div>' +
+    '<p class="d-body">' + total + ' observer LV 2 clearance signatures are required to unlock SYS10000.</p></div>' +
+    '<div class="d-section"><div class="d-label">Progress</div>' +
+    '<div class="clearance-bar"><span style="width:' + pct + '%"></span></div>' +
+    '<div class="clearance-meta"><span>' + done + ' / ' + total + ' clearances</span><span>' + pct + '%</span></div></div>' +
+    '<div class="d-section"><div class="d-label">5 Whitelisted Observers Required</div>' +
+    '<div class="frag-list">' +
+    '<button type="button" class="frag-chip chip-btn" data-open="SYS0000"><span class="fc-key">◈</span><span class="fc-name">SYS0000 · Observer LV 2</span><span class="chip-open">OPEN ↗</span></button>' +
+    '<button type="button" class="frag-chip chip-btn" data-open="SYS0001"><span class="fc-key">◈</span><span class="fc-name">SYS0001 · Observer LV 2</span><span class="chip-open">OPEN ↗</span></button>' +
+    '</div></div>' +
+    '<p class="d-note">The channel stays sealed until every signature is collected.</p>';
+}
 function scrambleOn(root) {
   clearInterval(scrambleTimer);
   var el = root.querySelector('[data-scramble]');
@@ -952,6 +1028,17 @@ function wireCopy(root) {
     })(btns[i]);
   }
 }
+function wireNodeOpen(root) {
+  var links = root.querySelectorAll('[data-open]');
+  for (var i = 0; i < links.length; i++) {
+    (function (el) {
+      el.addEventListener('click', function () {
+        var target = byId[el.getAttribute('data-open')];
+        if (target) openDrawer(target);
+      });
+    })(links[i]);
+  }
+}
 function selectNode(n) {
   for (var i = 0; i < nodes.length; i++) nodes[i].el.classList.remove('selected');
   if (n && n.el) n.el.classList.add('selected');
@@ -964,10 +1051,12 @@ function openDrawer(n) {
     var inner;
     if (n.kind === 'hub') inner = hubDrawer();
     else if (n.kind === 'corrupt') inner = corruptDrawer(n);
+    else if (n.kind === 'progress') inner = progressDrawer(n);
     else inner = recordDrawer(n);
     dContent.innerHTML = inner;
     if (n.kind === 'corrupt') scrambleOn(dContent);
     wireCopy(dContent);
+    wireNodeOpen(dContent);
     selectNode(n);
     drawer.classList.add('open');
     scrim.classList.add('on');
@@ -1061,6 +1150,7 @@ function applyResponsiveLayout() {
     place(byId['SYS0000'], P.sys0);
     place(byId['SYS0001'], P.sys1);
     for (var i = 0; i < P.lost.length; i++) place(byId['lost-' + i], P.lost[i]);
+    place(byId['SYS10000'], P.lost[P.lost.length - 1]);
     updateEdges();
   }
   fitView();
