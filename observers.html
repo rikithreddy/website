@@ -81,6 +81,8 @@
     border-radius: 20px; padding: 8px 14px; transition: all .14s; white-space: nowrap;
   }
   .navlink:hover { color: var(--ivory); border-color: var(--line-strong); background: rgba(255,255,255,.04); }
+  .navlink.main { color: var(--gold); border-color: rgba(201,150,43,.55); box-shadow: 0 0 16px rgba(201,150,43,.18); }
+  .navlink.main:hover { color: var(--gold2); border-color: var(--gold); background: rgba(201,150,43,.08); }
 
   main { flex: 1; padding: 30px 22px 46px; display: flex; justify-content: center; }
   .wrap { width: 100%; max-width: 760px; }
@@ -144,13 +146,17 @@
     header { height: 54px; padding: 0 14px; gap: 8px; }
     .wordmark { font-size: 20px; }
     .devaMark { font-size: 16px; }
-    .navlink { padding: 7px 11px; }
+    .navlink { padding: 6px 9px; font-size: 9px; letter-spacing: .08em; }
     main { padding: 18px 12px 34px; }
     .panel-head { padding: 18px 16px 14px; }
     .panel-head h1 { font-size: 22px; }
     .list { padding: 14px 16px 20px; }
     .observer { flex-wrap: wrap; gap: 12px; }
     .obs-tags { flex-direction: row; align-items: center; width: 100%; justify-content: flex-start; }
+  }
+  @media (max-width: 420px) {
+    .wordmark { font-size: 18px; }
+    .navlink { font-size: 8.5px; padding: 6px 8px; letter-spacing: .04em; }
   }
   @media (prefers-reduced-motion: reduce) { #bgArt { animation: none !important; } }
 </style>
@@ -168,7 +174,8 @@
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
-  <a class="navlink" href="index.html">← Archive</a>
+  <a class="navlink main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
+  <a class="navlink" href="index.html">← SYS_LOGS</a>
 </header>
 
 <main>
