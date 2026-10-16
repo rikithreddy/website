@@ -147,8 +147,6 @@
   .node.s-lost .corr-line { fill: none; stroke: url(#gradCorrupt); stroke-width: 1.4; }
   .corr-hex { font-family: var(--mono); font-size: 12px; fill: var(--ember); text-anchor: middle;
     letter-spacing: .04em; }
-  .corr-deva { font-family: var(--deva); font-size: 46px; fill: var(--sindoor); opacity: .16;
-    text-anchor: middle; }
   .node.s-lost { animation: corruptFlicker 7s steps(1) infinite; }
   @keyframes corruptFlicker {
     0%, 93%, 100% { opacity: 1; }
@@ -494,7 +492,6 @@ function corrHtml(hex) {
   return '<path class="node-hit" d="' + jagPath(120, 60) + '"/>' +
     '<path class="corr-bg" d="' + d + '"/>' +
     '<path class="corr-line" d="' + d + '"/>' +
-    '<text class="corr-deva" x="0" y="46">लुप्त</text>' +
     '<circle class="dot lost" cx="-92" cy="-30" r="4"/>' +
     '<text class="card-code lost" x="-80" y="-25">CORRUPTED</text>' +
     '<text class="open-cue" x="100" y="-27">SEALED</text>' +
@@ -538,11 +535,12 @@ function parseFragments() {
    mandala on larger screens. Swapped live on resize/orientation change. */
 function layoutPoints() {
   if (window.innerWidth <= 720) {
+    /* portrait: corrupted fan above/around the hub, clean vertical trunk below */
     return {
-      hub:  { x: 0, y: -430 },
-      sys0: { x: 0, y: -190 },
-      sys1: { x: 0, y: 60 },
-      lost: [ { x: -175, y: -330 }, { x: 175, y: -330 }, { x: -175, y: 300 }, { x: 175, y: 300 } ]
+      hub:  { x: 0, y: -250 },
+      sys0: { x: 0, y: 70 },
+      sys1: { x: 0, y: 390 },
+      lost: [ { x: -185, y: -410 }, { x: 185, y: -410 }, { x: -205, y: -175 }, { x: 205, y: -175 } ]
     };
   }
   return {
