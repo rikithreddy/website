@@ -387,7 +387,7 @@ var CSV_DATA = `REFERENCE_CODE,DOCUMENT_LINK,ENCRYPTION_DETAILS,PASSKEY
 SYS0000,https://lostarchives.my.canva.site/sys0000,NA,NA
 SYS0001,https://lostarchives.my.canva.site/rr26-0006,Length 9,"CHAYA-PQR<br><br>P=[ RR26.0002.Bubbles ], Q=[ RR26.0001.Stars ], R=[ RR26.0004.Leaves ]"
 LOST,[[LOCKED]],NA,[0x53511222] not found
-LOST,[[LOCKED]],NA,[0x32910312] not found
+SYS2000,https://lostarchives.my.canva.site/sys2000,NA,NA
 LOST,[[LOCKED]],NA,[0x32144111] not found
 SYS10000,[[LOCKED]],Observer LV 2 Clearance,1/5`;
 
@@ -638,6 +638,7 @@ function layoutPoints() {
       hub:  { x: 0, y: -245 },
       sys0: { x: 0, y: 70 },
       sys1: { x: 0, y: 395 },
+      sys2: { x: -120, y: -440 },
       lost: [ { x: -212, y: -300 }, { x: -120, y: -440 }, { x: 120, y: -440 }, { x: 212, y: -300 } ]
     };
   }
@@ -645,6 +646,7 @@ function layoutPoints() {
     hub:  { x: 0, y: -235 },
     sys0: { x: 0, y: -40 },
     sys1: { x: 0, y: 165 },
+    sys2: { x: -280, y: -400 },
     lost: [ { x: -470, y: -145 }, { x: -280, y: -400 }, { x: 280, y: -400 }, { x: 470, y: -145 } ]
   };
 }
@@ -654,10 +656,11 @@ function buildGraph() {
 
   var found = [], lost = [];
   for (var i = 0; i < records.length; i++) (records[i].lost ? lost : found).push(records[i]);
-  var sys0 = null, sys1 = null, prog = null;
+  var sys0 = null, sys1 = null, sys2 = null, prog = null;
   for (var j = 0; j < found.length; j++) {
     if (found[j].code === 'SYS0000') sys0 = found[j];
     if (found[j].code === 'SYS0001') sys1 = found[j];
+    if (found[j].code === 'SYS2000') sys2 = found[j];
     if (found[j].code === 'SYS10000') prog = found[j];
   }
 
@@ -671,6 +674,7 @@ function buildGraph() {
 
   var hubLinks = [];
   if (sys0) hubLinks.push({ to: 'SYS0000', kind: 'live' });
+  if (sys2) hubLinks.push({ to: 'SYS2000', kind: 'live' });
   for (var h = 0; h < lost.length; h++) hubLinks.push({ to: 'lost-' + h, kind: 'broken' });
   if (prog) hubLinks.push({ to: 'SYS10000', kind: 'broken' });
 
@@ -701,6 +705,16 @@ function buildGraph() {
       links: []
     });
   }
+  if (sys2) {
+    passStore['SYS2000'] = textOf(sys2.pass);
+    GRAPH.nodes.push({
+      id: 'SYS2000', kind: 'record', status: 'found', code: 'SYS2000', row: sys2,
+      sub: 'मूल · ROOT NODE', label: 'SYS2000', aria: 'SYS2000 root node',
+      html: cardHtml('SYS2000', 'मूल · ROOT NODE'),
+      pos: P.sys2, size: { w: 232, h: 104 },
+      links: []
+    });
+  }
 
   if (prog) {
     passStore['SYS10000'] = textOf(prog.pass);
@@ -719,7 +733,7 @@ function buildGraph() {
 
   for (var n = 0; n < lost.length; n++) {
     var r = lost[n];
-    var p = P.lost[n % P.lost.length];
+    var p = P.lost[(n + (n > 0 ? 1 : 0)) % P.lost.length];
     var hex = hexFrom(r.raw || [r.code, r.link, r.enc, r.pass]);
     GRAPH.nodes.push({
       id: 'lost-' + n, kind: 'corrupt', status: 'lost', code: 'CORRUPTED', hex: hex, row: r,
@@ -1149,7 +1163,8 @@ function applyResponsiveLayout() {
     place(byId['rr26'], P.hub);
     place(byId['SYS0000'], P.sys0);
     place(byId['SYS0001'], P.sys1);
-    for (var i = 0; i < P.lost.length; i++) place(byId['lost-' + i], P.lost[i]);
+    place(byId['SYS2000'], P.sys2);
+    for (var i = 0; i < P.lost.length; i++) place(byId['lost-' + i], P.lost[(i + (i > 0 ? 1 : 0)) % P.lost.length]);
     place(byId['SYS10000'], P.lost[P.lost.length - 1]);
     updateEdges();
   }
