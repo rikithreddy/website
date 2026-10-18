@@ -1075,6 +1075,21 @@ function trackSyslogClick(n, source) {
     open_source: source || 'graph'
   });
 }
+function wireRecordLink(root, n) {
+  var links = root.querySelectorAll('.d-link');
+  for (var i = 0; i < links.length; i++) {
+    (function (el) {
+      el.addEventListener('click', function () {
+        if (typeof window.gtag !== 'function') return;
+        window.gtag('event', 'record_link_click', {
+          syslog_id: String(n.id || 'unknown'),
+          syslog_code: String(n.code || n.label || n.id || 'unknown'),
+          link_url: String(el.getAttribute('href') || '')
+        });
+      });
+    })(links[i]);
+  }
+}
 function openDrawer(n, source) {
   if (!n || !n.el) return;
   trackSyslogClick(n, source);
@@ -1090,6 +1105,7 @@ function openDrawer(n, source) {
     if (n.kind === 'corrupt') scrambleOn(dContent);
     wireCopy(dContent);
     wireNodeOpen(dContent);
+    wireRecordLink(dContent, n);
     selectNode(n);
     drawer.classList.add('open');
     scrim.classList.add('on');
