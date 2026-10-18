@@ -899,7 +899,7 @@ nodesLayer.addEventListener('click', function (e) {
   if (wasSuppressed) return;
   var g = e.target && e.target.closest ? e.target.closest('.node') : null;
   if (!g) return;
-  openDrawer(byId[g.getAttribute('data-id')]);
+  openDrawer(byId[g.getAttribute('data-id')], 'graph');
 });
 
 stage.addEventListener('wheel', function (e) {
@@ -918,7 +918,7 @@ nodesLayer.addEventListener('keydown', function (e) {
   var g = e.target && e.target.closest ? e.target.closest('.node') : null;
   if (!g) return;
   e.preventDefault();
-  openDrawer(byId[g.getAttribute('data-id')]);
+  openDrawer(byId[g.getAttribute('data-id')], 'keyboard');
 });
 
 /* ---------- recenter ---------- */
@@ -1057,7 +1057,7 @@ function wireNodeOpen(root) {
     (function (el) {
       el.addEventListener('click', function () {
         var target = byId[el.getAttribute('data-open')];
-        if (target) openDrawer(target);
+        if (target) openDrawer(target, 'drawer');
       });
     })(links[i]);
   }
@@ -1066,8 +1066,18 @@ function selectNode(n) {
   for (var i = 0; i < nodes.length; i++) nodes[i].el.classList.remove('selected');
   if (n && n.el) n.el.classList.add('selected');
 }
-function openDrawer(n) {
+function trackSyslogClick(n, source) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('event', 'syslog_click', {
+    syslog_id: String(n.id || 'unknown'),
+    syslog_code: String(n.code || n.label || n.id || 'unknown'),
+    syslog_kind: String(n.kind || 'unknown'),
+    open_source: source || 'graph'
+  });
+}
+function openDrawer(n, source) {
   if (!n || !n.el) return;
+  trackSyslogClick(n, source);
   try {
     clearInterval(scrambleTimer); scrambleTimer = null;
     lastFocused = document.activeElement;
