@@ -398,6 +398,9 @@ SYS0001,https://lostarchives.my.canva.site/rr26-0006,Length 9,"CHAYA-PQR<br><br>
 LOST,[[LOCKED]],NA,[0x53511222] not found
 SYS2000,https://lostarchives.my.canva.site/sys2000,NA,NA
 LOST,[[LOCKED]],NA,[0x32144111] not found
+LOST,[[LOCKED]],NA,[0x42919322] not found
+LOST,[[LOCKED]],NA,[0x6B2F91C4] not found
+LOST,[[LOCKED]],NA,[0x17D8A330] not found
 SYS10000,[[LOCKED]],Observer LV 2 Clearance,1/5`;
 
 var NS = 'http://www.w3.org/2000/svg';
@@ -543,6 +546,12 @@ populateSymbols();
 var nodes = [], edges = [], byId = {}, records = [], fragments = [];
 var layoutMode = null;
 var passStore = {};
+var NEW_CORRUPT = [
+  { parent: 'SYS0000' },
+  { parent: 'SYS0000' },
+  { parent: 'SYS2000' }
+];
+var newCorruptStart = 0;
 
 function jagPath(hw, hh) {
   var p = [
@@ -648,7 +657,8 @@ function layoutPoints() {
       sys0: { x: 0, y: 70 },
       sys1: { x: 0, y: 395 },
       sys2: { x: -120, y: -440 },
-      lost: [ { x: -212, y: -300 }, { x: -120, y: -440 }, { x: 120, y: -440 }, { x: 212, y: -300 } ]
+      lost: [ { x: -212, y: -300 }, { x: -120, y: -440 }, { x: 120, y: -440 }, { x: 212, y: -300 } ],
+      extraCorrupts: [ { x: -150, y: 190 }, { x: 150, y: 190 }, { x: -320, y: -440 } ]
     };
   }
   return {
@@ -656,7 +666,8 @@ function layoutPoints() {
     sys0: { x: 0, y: -40 },
     sys1: { x: 0, y: 165 },
     sys2: { x: -280, y: -400 },
-    lost: [ { x: -470, y: -145 }, { x: -280, y: -400 }, { x: 280, y: -400 }, { x: 470, y: -145 } ]
+    lost: [ { x: -470, y: -145 }, { x: -280, y: -400 }, { x: 280, y: -400 }, { x: 470, y: -145 } ],
+    extraCorrupts: [ { x: -300, y: 60 }, { x: 300, y: 60 }, { x: -560, y: -400 } ]
   };
 }
 
@@ -681,10 +692,20 @@ function buildGraph() {
      --------------------------------------------------------------------- */
   var GRAPH = { nodes: [] };
 
+  /* Existing corrupted records stay wired to RR26; the last three records
+     are new corrupted children of SYS0000 (2) and SYS2000 (1). */
+  newCorruptStart = Math.max(0, lost.length - NEW_CORRUPT.length);
+  var corruptLinks = {};
+  for (var h = newCorruptStart; h < lost.length; h++) {
+    var meta = NEW_CORRUPT[h - newCorruptStart];
+    if (!corruptLinks[meta.parent]) corruptLinks[meta.parent] = [];
+    corruptLinks[meta.parent].push({ to: 'lost-' + h, kind: 'broken' });
+  }
+
   var hubLinks = [];
   if (sys0) hubLinks.push({ to: 'SYS0000', kind: 'live' });
   if (sys2) hubLinks.push({ to: 'SYS2000', kind: 'live' });
-  for (var h = 0; h < lost.length; h++) hubLinks.push({ to: 'lost-' + h, kind: 'broken' });
+  for (var h = 0; h < newCorruptStart; h++) hubLinks.push({ to: 'lost-' + h, kind: 'broken' });
   if (prog) hubLinks.push({ to: 'SYS10000', kind: 'broken' });
 
   GRAPH.nodes.push({
@@ -696,12 +717,15 @@ function buildGraph() {
 
   if (sys0) {
     passStore['SYS0000'] = textOf(sys0.pass);
+    var sys0Links = [];
+    if (sys1) sys0Links.push({ to: 'SYS0001', kind: 'live' });
+    sys0Links = sys0Links.concat(corruptLinks['SYS0000'] || []);
     GRAPH.nodes.push({
       id: 'SYS0000', kind: 'record', status: 'found', code: 'SYS0000', row: sys0,
       sub: 'मूल · ROOT RECORD', label: 'SYS0000', aria: 'SYS0000 root record',
       html: cardHtml('SYS0000', 'मूल · ROOT RECORD'),
       pos: P.sys0, size: { w: 232, h: 104 },
-      links: sys1 ? [{ to: 'SYS0001', kind: 'live' }] : []
+      links: sys0Links
     });
   }
   if (sys1) {
@@ -721,7 +745,7 @@ function buildGraph() {
       sub: 'मूल · ROOT NODE', label: 'SYS2000', aria: 'SYS2000 root node',
       html: cardHtml('SYS2000', 'मूल · ROOT NODE'),
       pos: P.sys2, size: { w: 232, h: 104 },
-      links: []
+      links: corruptLinks['SYS2000'] || []
     });
   }
 
@@ -742,10 +766,14 @@ function buildGraph() {
 
   for (var n = 0; n < lost.length; n++) {
     var r = lost[n];
-    var p = P.lost[(n + (n > 0 ? 1 : 0)) % P.lost.length];
+    var isNew = n >= newCorruptStart;
+    var p = isNew
+      ? (P.extraCorrupts[n - newCorruptStart] || P.extraCorrupts[P.extraCorrupts.length - 1])
+      : P.lost[(n + (n > 0 ? 1 : 0)) % P.lost.length];
     var hex = hexFrom(r.raw || [r.code, r.link, r.enc, r.pass]);
     GRAPH.nodes.push({
       id: 'lost-' + n, kind: 'corrupt', status: 'lost', code: 'CORRUPTED', hex: hex, row: r,
+      parent: isNew ? NEW_CORRUPT[n - newCorruptStart].parent : null,
       label: 'Corrupted ' + hex, aria: 'Corrupted record ' + hex, html: corrHtml(hex),
       pos: { x: p.x, y: p.y }, size: { w: 216, h: 100 },
       links: []
@@ -979,11 +1007,17 @@ function recordDrawer(n) {
     '<div class="d-section"><div class="d-label">Passkey</div>' + pass + '</div>';
 }
 function corruptDrawer(n) {
+  var parent = n.parent ?
+    '<div class="d-section"><div class="d-label">Parent Node · मूल</div>' +
+      '<button type="button" class="frag-chip chip-btn" data-open="' + attrEsc(n.parent) + '">' +
+      '<span class="fc-key">◈</span><span class="fc-name">' + esc(n.parent) + ' · SEVERED</span>' +
+      '<span class="chip-open">OPEN ↗</span></button></div>' : '';
   return '<div class="d-eyebrow crit">Corrupted Node · भ्रष्ट</div>' +
     '<h2 class="d-code glitch" data-scramble="CORRUPTED">CORRUPTED</h2>' +
     '<div class="denied">ACCESS DENIED</div>' +
     '<div class="denied-deva">अनुपलब्ध</div>' +
     '<div class="d-section"><div class="d-label">Memory Address</div><div class="hex">' + esc(n.hex) + '</div></div>' +
+    parent +
     '<p class="d-note">This fragment was severed from the RR26 network. Its reference is unrecoverable — the channel is broken.</p>';
 }
 function hubDrawer() {
@@ -1075,6 +1109,15 @@ function trackSyslogClick(n, source) {
     open_source: source || 'graph'
   });
 }
+function trackCorruptClick(n, source) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('event', 'corrupt_node_click', {
+    corrupt_id: String(n.id || 'unknown'),
+    corrupt_hex: String(n.hex || 'unknown'),
+    corrupt_parent: String(n.parent || 'unknown'),
+    open_source: source || 'graph'
+  });
+}
 function wireRecordLink(root, n) {
   var links = root.querySelectorAll('.d-link');
   for (var i = 0; i < links.length; i++) {
@@ -1093,6 +1136,7 @@ function wireRecordLink(root, n) {
 function openDrawer(n, source) {
   if (!n || !n.el) return;
   trackSyslogClick(n, source);
+  if (n.kind === 'corrupt') trackCorruptClick(n, source);
   try {
     clearInterval(scrambleTimer); scrambleTimer = null;
     lastFocused = document.activeElement;
@@ -1199,7 +1243,12 @@ function applyResponsiveLayout() {
     place(byId['SYS0000'], P.sys0);
     place(byId['SYS0001'], P.sys1);
     place(byId['SYS2000'], P.sys2);
-    for (var i = 0; i < P.lost.length; i++) place(byId['lost-' + i], P.lost[(i + (i > 0 ? 1 : 0)) % P.lost.length]);
+    for (var i = 0; byId['lost-' + i]; i++) {
+      var p = i >= newCorruptStart
+        ? (P.extraCorrupts[i - newCorruptStart] || P.extraCorrupts[P.extraCorrupts.length - 1])
+        : P.lost[(i + (i > 0 ? 1 : 0)) % P.lost.length];
+      place(byId['lost-' + i], p);
+    }
     place(byId['SYS10000'], P.lost[P.lost.length - 1]);
     updateEdges();
   }
