@@ -302,6 +302,12 @@
     .wordmark { font-size: 18px; }
     .navlink { font-size: 8.5px; padding: 6px 8px; letter-spacing: .04em; }
   }
+  @media (max-width: 360px) {
+    header { gap: 6px; padding: 0 10px; }
+    .wordmark { font-size: 17px; }
+    .devaMark { display: none; }
+    .navlink { padding: 6px 7px; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .node.s-lost, .edge.broken, #symbols .sym { animation: none !important; }
   }
@@ -651,14 +657,15 @@ function parseFragments() {
    mandala on larger screens. Swapped live on resize/orientation change. */
 function layoutPoints() {
   if (window.innerWidth <= 720) {
-    /* portrait: corrupted fan above/around the hub, clean vertical trunk below */
+    /* portrait: two balanced columns around a central trunk, so cards stay
+       large and never collide on a tall phone screen. */
     return {
-      hub:  { x: 0, y: -245 },
-      sys0: { x: 0, y: 70 },
-      sys1: { x: 0, y: 395 },
-      sys2: { x: -120, y: -440 },
-      lost: [ { x: -212, y: -300 }, { x: -120, y: -440 }, { x: 120, y: -440 }, { x: 212, y: -300 } ],
-      extraCorrupts: [ { x: -150, y: 190 }, { x: 150, y: 190 }, { x: -320, y: -440 } ]
+      hub:  { x: 0, y: -180 },
+      sys0: { x: 0, y: 130 },
+      sys1: { x: 0, y: 415 },
+      sys2: { x: -135, y: -350 },
+      lost: [ { x: -135, y: -5 }, { x: 135, y: -5 }, { x: 135, y: -5 }, { x: 135, y: -350 } ],
+      extraCorrupts: [ { x: -135, y: 275 }, { x: 135, y: 275 }, { x: -135, y: -480 } ]
     };
   }
   return {
