@@ -401,10 +401,10 @@
 var CSV_DATA = `REFERENCE_CODE,DOCUMENT_LINK,ENCRYPTION_DETAILS,PASSKEY
 SYS0000,https://lostarchives.my.canva.site/sys0000,NA,NA
 SYS0001,https://lostarchives.my.canva.site/rr26-0006,Length 9,"CHAYA-PQR<br><br>P=[ RR26.0002.Bubbles ], Q=[ RR26.0001.Stars ], R=[ RR26.0004.Leaves ]"
+SYS0002,https://lostarchives.my.canva.site/sys0002/,Length 10,"CHAYA-Z<br><br>Z = AB<br><br>[A] Cross-reference fragments <strong>RR26.0010</strong> and <strong>RR26.0011</strong>. Multiply count of STAR bodies from fragments.<br>[B] Cross-reference fragments <strong>RR26.0010</strong> and <strong>RR26.0015</strong>. Multiply count of STAR bodies from fragments."
 LOST,[[LOCKED]],NA,[0x53511222] not found
 SYS2000,https://lostarchives.my.canva.site/sys2000,NA,NA
 LOST,[[LOCKED]],NA,[0x32144111] not found
-LOST,[[LOCKED]],NA,[0x42919322] not found
 LOST,[[LOCKED]],NA,[0x6B2F91C4] not found
 LOST,[[LOCKED]],NA,[0x17D8A330] not found
 SYS10000,[[LOCKED]],Observer LV 2 Clearance,1/5`;
@@ -554,7 +554,6 @@ var layoutMode = null;
 var passStore = {};
 var NEW_CORRUPT = [
   { parent: 'SYS0000' },
-  { parent: 'SYS0000' },
   { parent: 'SYS2000' }
 ];
 var newCorruptStart = 0;
@@ -664,8 +663,9 @@ function layoutPoints() {
       sys0: { x: 0, y: 130 },
       sys1: { x: 0, y: 415 },
       sys2: { x: -135, y: -350 },
+      sys0002: { x: -135, y: 275 },
       lost: [ { x: -135, y: -5 }, { x: 135, y: -5 }, { x: 135, y: -5 }, { x: 135, y: -350 } ],
-      extraCorrupts: [ { x: -135, y: 275 }, { x: 135, y: 275 }, { x: -135, y: -480 } ]
+      extraCorrupts: [ { x: 135, y: 275 }, { x: -135, y: -480 } ]
     };
   }
   return {
@@ -673,8 +673,9 @@ function layoutPoints() {
     sys0: { x: 0, y: -40 },
     sys1: { x: 0, y: 165 },
     sys2: { x: -280, y: -400 },
+    sys0002: { x: -300, y: 60 },
     lost: [ { x: -470, y: -145 }, { x: -280, y: -400 }, { x: 280, y: -400 }, { x: 470, y: -145 } ],
-    extraCorrupts: [ { x: -300, y: 60 }, { x: 300, y: 60 }, { x: -560, y: -400 } ]
+    extraCorrupts: [ { x: 300, y: 60 }, { x: -560, y: -400 } ]
   };
 }
 
@@ -683,10 +684,11 @@ function buildGraph() {
 
   var found = [], lost = [];
   for (var i = 0; i < records.length; i++) (records[i].lost ? lost : found).push(records[i]);
-  var sys0 = null, sys1 = null, sys2 = null, prog = null;
+  var sys0 = null, sys1 = null, sys2 = null, sys0002 = null, prog = null;
   for (var j = 0; j < found.length; j++) {
     if (found[j].code === 'SYS0000') sys0 = found[j];
     if (found[j].code === 'SYS0001') sys1 = found[j];
+    if (found[j].code === 'SYS0002') sys0002 = found[j];
     if (found[j].code === 'SYS2000') sys2 = found[j];
     if (found[j].code === 'SYS10000') prog = found[j];
   }
@@ -699,8 +701,8 @@ function buildGraph() {
      --------------------------------------------------------------------- */
   var GRAPH = { nodes: [] };
 
-  /* Existing corrupted records stay wired to RR26; the last three records
-     are new corrupted children of SYS0000 (2) and SYS2000 (1). */
+  /* Existing corrupted records stay wired to RR26; the last two records
+     are new corrupted children of SYS0000 (1) and SYS2000 (1). */
   newCorruptStart = Math.max(0, lost.length - NEW_CORRUPT.length);
   var corruptLinks = {};
   for (var h = newCorruptStart; h < lost.length; h++) {
@@ -726,6 +728,7 @@ function buildGraph() {
     passStore['SYS0000'] = textOf(sys0.pass);
     var sys0Links = [];
     if (sys1) sys0Links.push({ to: 'SYS0001', kind: 'live' });
+    if (sys0002) sys0Links.push({ to: 'SYS0002', kind: 'live' });
     sys0Links = sys0Links.concat(corruptLinks['SYS0000'] || []);
     GRAPH.nodes.push({
       id: 'SYS0000', kind: 'record', status: 'found', code: 'SYS0000', row: sys0,
@@ -742,6 +745,16 @@ function buildGraph() {
       sub: 'शाखा · BRANCH RECORD', label: 'SYS0001', aria: 'SYS0001 branch record',
       html: cardHtml('SYS0001', 'शाखा · BRANCH RECORD'),
       pos: P.sys1, size: { w: 232, h: 104 },
+      links: []
+    });
+  }
+  if (sys0002) {
+    passStore['SYS0002'] = textOf(sys0002.pass);
+    GRAPH.nodes.push({
+      id: 'SYS0002', kind: 'record', status: 'found', code: 'SYS0002', row: sys0002,
+      sub: 'शाखा · BRANCH RECORD', label: 'SYS0002', aria: 'SYS0002 branch record',
+      html: cardHtml('SYS0002', 'शाखा · BRANCH RECORD'),
+      pos: P.sys0002, size: { w: 232, h: 104 },
       links: []
     });
   }
@@ -1249,6 +1262,7 @@ function applyResponsiveLayout() {
     place(byId['rr26'], P.hub);
     place(byId['SYS0000'], P.sys0);
     place(byId['SYS0001'], P.sys1);
+    place(byId['SYS0002'], P.sys0002);
     place(byId['SYS2000'], P.sys2);
     for (var i = 0; byId['lost-' + i]; i++) {
       var p = i >= newCorruptStart
