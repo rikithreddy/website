@@ -105,6 +105,62 @@
     text-transform: uppercase; color: var(--oldgold); }
   .accept-url { font-family: var(--mono); font-size: 11.5px; overflow-wrap: anywhere; }
 
+  .logs-panel { margin-top: 18px; }
+  .log-strip { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 24px;
+    border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 9px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .log-strip span { display: inline-flex; align-items: center; gap: 6px; }
+  .log-strip span::before { content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--brass); box-shadow: 0 0 8px rgba(201,150,43,.6); }
+  .logs-body { position: relative; padding: 22px 24px 24px; }
+  .logs-body::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    opacity: .35;
+    background-image:
+      linear-gradient(rgba(201,150,43,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,150,43,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%);
+    mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%); }
+  .logs-body > * { position: relative; z-index: 1; }
+  .logs-lede { margin: 0 0 22px; font-family: var(--serif); font-size: 15px; line-height: 1.55;
+    color: var(--ivory); max-width: 62ch; }
+  .logs-lede .mono { font-family: var(--mono); font-size: 11px; color: var(--gold2);
+    letter-spacing: .04em; }
+  .log-label { font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .sequence { display: flex; align-items: stretch; gap: 0; margin-bottom: 18px; }
+  .seq-step { flex: 1; min-width: 0; padding: 14px 12px; border: 1px solid var(--line);
+    border-radius: 10px; background: linear-gradient(180deg, rgba(36,26,17,.75), rgba(27,20,14,.75)); }
+  .seq-num { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; margin-bottom: 9px; border-radius: 50%;
+    border: 1px solid rgba(201,150,43,.5); font-family: var(--mono); font-size: 9px;
+    color: var(--gold2); background: rgba(201,150,43,.08); }
+  .seq-name { display: block; font-family: var(--mono); font-size: 10px; line-height: 1.45;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--ivory); }
+  .seq-link { width: 22px; flex: none; align-self: center; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-strong), transparent); }
+  .notes-format { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+    margin-bottom: 20px; }
+  .notes-format .log-label { margin: 0; }
+  .note-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .note-chip { font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--gold2); padding: 6px 10px; border-radius: 20px;
+    background: rgba(201,150,43,.08); border: 1px solid rgba(201,150,43,.32); }
+  .chip-sep { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+  .log-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .meta-card { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line);
+    background: rgba(27,20,14,.65); }
+  .meta-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tags span { font-family: var(--mono); font-weight: 700; font-size: 12px;
+    letter-spacing: .08em; color: var(--gold2); padding: 4px 10px; border-radius: 6px;
+    border: 1px solid rgba(201,150,43,.35); background: rgba(201,150,43,.07); }
+  .meta-value { font-family: var(--serif); font-size: 17px; color: var(--ivory); }
+  .meta-value .id { font-family: var(--mono); font-size: 11px; color: var(--oldgold); }
+  .bio-note { display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+    border-left: 2px solid var(--line-strong); background: rgba(201,150,43,.04);
+    color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+  .bio-note svg { flex: none; width: 15px; height: 15px; margin-top: 1px; color: var(--gold); }
+
   footer {
     position: relative;
     display: flex; align-items: center; justify-content: center; gap: 12px; height: 40px; padding: 0 18px;
@@ -129,6 +185,13 @@
     .panel-head h1 { font-size: 22px; }
     .panel-body { padding: 18px 16px 22px; }
     .footer-main { right: 12px; font-size: 8px; letter-spacing: .1em; }
+    .log-strip { padding: 9px 16px; gap: 6px 12px; }
+    .logs-body { padding: 18px 16px 20px; }
+    .sequence { flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .seq-link { width: 1px; height: 12px; align-self: flex-start; margin-left: 23px;
+      background: linear-gradient(180deg, transparent, var(--line-strong), transparent); }
+    .seq-step { padding: 12px 12px; }
+    .log-meta { grid-template-columns: 1fr; }
   }
   @media (max-width: 420px) {
     .wordmark { font-size: 18px; }
@@ -178,6 +241,66 @@
           <span class="accept-label">View project</span>
           <span class="accept-url">nightmind.info/puzzleproj/lost-archives</span>
         </a>
+      </div>
+    </section>
+
+    <section class="panel logs-panel">
+      <div class="panel-head">
+        <h1>The Mainframe Logs</h1>
+        <span class="deva">अभिलेख</span>
+      </div>
+      <div class="log-strip">
+        <span>Archival records</span>
+        <span>Source: MAIN_ARCHIVE</span>
+        <span>Status: Retrieved</span>
+      </div>
+      <div class="logs-body">
+        <p class="logs-lede">Archival records retrieved from observers in <span class="mono">MAIN_ARCHIVE</span>.</p>
+
+        <div class="log-label">Format · 3-part sequence</div>
+        <div class="sequence">
+          <div class="seq-step">
+            <span class="seq-num">01</span>
+            <span class="seq-name">Daily Observer Illustrated Visual</span>
+          </div>
+          <div class="seq-link" aria-hidden="true"></div>
+          <div class="seq-step">
+            <span class="seq-num">02</span>
+            <span class="seq-name">Observer Recovery Grid</span>
+          </div>
+          <div class="seq-link" aria-hidden="true"></div>
+          <div class="seq-step">
+            <span class="seq-num">03</span>
+            <span class="seq-name">Notes</span>
+          </div>
+        </div>
+
+        <div class="notes-format">
+          <span class="log-label">Notes format</span>
+          <div class="note-chips">
+            <span class="note-chip">Daily Observation Logs</span>
+            <span class="chip-sep" aria-hidden="true">|</span>
+            <span class="note-chip">Personal Journal Logs</span>
+          </div>
+        </div>
+
+        <div class="log-meta">
+          <div class="meta-card">
+            <div class="log-label">Observers</div>
+            <div class="meta-tags"><span>RR26</span><span>ZS10</span></div>
+          </div>
+          <div class="meta-card">
+            <div class="log-label">Subject</div>
+            <div class="meta-value">CHAYA <span class="id">[ID:4]</span></div>
+          </div>
+        </div>
+
+        <div class="bio-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 17 17 7M9 7h8v8"/>
+          </svg>
+          <span>Additional recovered fragments located in bio link index.</span>
+        </div>
       </div>
     </section>
   </div>
