@@ -15,6 +15,9 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: staging
+      url: https://rikithreddy.github.io/website-staging/
     steps:
       - name: Checkout staging
         uses: actions/checkout@v4
