@@ -1,0 +1,41 @@
+name: Deploy staging
+
+on:
+  push:
+    branches: [staging]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: staging-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout staging
+        uses: actions/checkout@v4
+        with:
+          ref: staging
+          fetch-depth: 0
+
+      - name: Prepare deployment
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm --cached CNAME || true
+          git commit -m "Deploy staging ${GITHUB_SHA}" || true
+
+      - name: Push to staging site
+        env:
+          SSH_KEY: ${{ secrets.STAGING_DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_KEY" > ~/.ssh/staging_deploy_key
+          chmod 600 ~/.ssh/staging_deploy_key
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+          GIT_SSH_COMMAND="ssh -i ~/.ssh/staging_deploy_key -o IdentitiesOnly=yes" \
+            git push --force git@github.com:rikithreddy/website-staging.git HEAD:main
