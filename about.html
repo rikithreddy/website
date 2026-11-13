@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LostArchives · About</title>
+<meta name="description" content="LostArchives — project accepted at Nightmind.">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hand: "Yatra One", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    --deva: "Noto Sans Devanagari", serif;
+    --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+
+    --soot: #0b0805;
+    --stone: #1b140e;
+    --brass: #c9962b;
+    --gold: #f0d58a;
+    --gold2: #ffe9b0;
+    --copper: #8a5a2b;
+    --sindoor: #c0392b;
+    --ember: #ff7a3c;
+    --ivory: #f3e6c8;
+    --oldgold: #b99a5b;
+    --muted: #8a7550;
+    --line: rgba(201, 150, 43, .22);
+    --line-strong: rgba(240, 213, 138, .45);
+    --radius-lg: 16px;
+  }
+  * { box-sizing: border-box; }
+  html, body { min-height: 100%; }
+  body {
+    margin: 0; color: var(--ivory);
+    font: 13px/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    display: flex; flex-direction: column; min-height: 100vh;
+    background: var(--soot);
+  }
+
+  #bg { position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    background:
+      radial-gradient(1000px 680px at 50% -10%, rgba(201,150,43,.16), transparent 60%),
+      radial-gradient(900px 620px at 14% 24%, rgba(51,70,140,.14), transparent 62%),
+      radial-gradient(1000px 800px at 86% 86%, rgba(125,31,20,.2), transparent 62%),
+      radial-gradient(1200px 900px at 50% 45%, #201710 0%, #130d08 45%, #0b0805 100%);
+  }
+  #grain { position: absolute; inset: -50%; opacity: .05; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+  header, main, footer { position: relative; z-index: 1; }
+
+  header {
+    display: flex; align-items: center; gap: 12px; height: 62px; padding: 0 22px;
+    background: linear-gradient(180deg, rgba(20,14,9,.94), rgba(20,14,9,.4));
+    border-bottom: 1px solid var(--line);
+  }
+  .wordmark { font-family: var(--hand); font-size: 26px; line-height: 1;
+    color: var(--gold); letter-spacing: .02em; text-shadow: 0 0 20px rgba(201,150,43,.5); }
+  .wordmark .accent { color: var(--sindoor); text-shadow: 0 0 18px rgba(192,57,43,.55); }
+  .devaMark { font-family: var(--deva); font-size: 19px; color: var(--ember); opacity: .9;
+    line-height: 1; text-shadow: 0 0 14px rgba(255,122,60,.55); }
+  .spacer { flex: 1; }
+  .navlink {
+    font-family: var(--mono); font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--oldgold); text-decoration: none; border: 1px solid var(--line);
+    border-radius: 20px; padding: 8px 14px; transition: all .14s; white-space: nowrap;
+  }
+  .navlink:hover { color: var(--ivory); border-color: var(--line-strong); background: rgba(255,255,255,.04); }
+  .navlink.main { color: var(--gold); border-color: rgba(201,150,43,.55); box-shadow: 0 0 16px rgba(201,150,43,.18); }
+  .navlink.main:hover { color: var(--gold2); border-color: var(--gold); background: rgba(201,150,43,.08); }
+
+  main { flex: 1; padding: 30px 22px 46px; display: flex; justify-content: center; }
+  .wrap { width: 100%; max-width: 760px; }
+
+  .panel {
+    background: linear-gradient(180deg, rgba(27,20,14,.92), rgba(19,13,8,.92));
+    border: 1px solid var(--line); border-radius: var(--radius-lg);
+    box-shadow: 0 20px 60px rgba(0,0,0,.55); overflow: hidden;
+  }
+  .panel-head {
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    padding: 22px 24px 18px; border-bottom: 1px solid var(--line);
+    background: radial-gradient(600px 120px at 0% 0%, rgba(201,150,43,.12), transparent 70%);
+  }
+  .panel-head h1 { font-family: var(--hand); font-weight: 400; font-size: 27px; margin: 0;
+    color: var(--gold); letter-spacing: .02em; }
+  .panel-head .deva { font-family: var(--deva); font-size: 15px; color: var(--oldgold); }
+
+  .log-strip { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 24px;
+    border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 9px;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .log-strip span { display: inline-flex; align-items: center; gap: 6px; }
+  .log-strip span::before { content: ""; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--brass); box-shadow: 0 0 8px rgba(201,150,43,.6); }
+  .logs-body { position: relative; padding: 22px 24px 24px; }
+  .logs-body::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+    opacity: .35;
+    background-image:
+      linear-gradient(rgba(201,150,43,.08) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,150,43,.08) 1px, transparent 1px);
+    background-size: 28px 28px;
+    -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%);
+    mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%); }
+  .logs-body > * { position: relative; z-index: 1; }
+  .logs-heading { font-family: var(--hand); font-weight: 400; font-size: 21px; margin: 0 0 8px;
+    color: var(--gold); letter-spacing: .02em; }
+  .logs-lede { margin: 0 0 22px; font-family: var(--serif); font-size: 15px; line-height: 1.55;
+    color: var(--ivory); max-width: 62ch; }
+  .logs-lede .mono { font-family: var(--mono); font-size: 11px; color: var(--gold2);
+    letter-spacing: .04em; }
+  .logs-lede a { text-decoration: none; border-bottom: 1px dotted rgba(201,150,43,.5); }
+  .logs-lede a:hover, .logs-lede a:focus-visible { color: var(--gold); border-bottom-color: var(--gold); outline: none; }
+  .log-label { font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .sequence { display: flex; align-items: stretch; gap: 0; margin-bottom: 18px; }
+  .seq-step { flex: 1; min-width: 0; padding: 14px 12px; border: 1px solid var(--line);
+    border-radius: 10px; background: linear-gradient(180deg, rgba(36,26,17,.75), rgba(27,20,14,.75)); }
+  .seq-num { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; margin-bottom: 9px; border-radius: 50%;
+    border: 1px solid rgba(201,150,43,.5); font-family: var(--mono); font-size: 9px;
+    color: var(--gold2); background: rgba(201,150,43,.08); }
+  .seq-name { display: block; font-family: var(--mono); font-size: 10px; line-height: 1.45;
+    letter-spacing: .05em; text-transform: uppercase; color: var(--ivory); }
+  .seq-link { width: 22px; flex: none; align-self: center; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line-strong), transparent); }
+  .notes-format { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px;
+    margin-bottom: 20px; }
+  .notes-format .log-label { margin: 0; }
+  .note-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  .note-chip { font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em;
+    text-transform: uppercase; color: var(--gold2); padding: 6px 10px; border-radius: 20px;
+    background: rgba(201,150,43,.08); border: 1px solid rgba(201,150,43,.32); }
+  .chip-sep { color: var(--muted); font-family: var(--mono); font-size: 10px; }
+  .log-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  .meta-card { padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line);
+    background: rgba(27,20,14,.65); }
+  .meta-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .meta-tags span { font-family: var(--mono); font-weight: 700; font-size: 12px;
+    letter-spacing: .08em; color: var(--gold2); padding: 4px 10px; border-radius: 6px;
+    border: 1px solid rgba(201,150,43,.35); background: rgba(201,150,43,.07); }
+  .meta-value { font-family: var(--serif); font-size: 17px; color: var(--ivory); }
+  .meta-value .id { font-family: var(--mono); font-size: 11px; color: var(--oldgold); }
+  .logs-help { display: flex; align-items: flex-start; gap: 8px; margin: 0 0 18px;
+    padding: 10px 12px; border-left: 2px solid var(--line-strong);
+    background: rgba(201,150,43,.04); color: var(--muted); font-size: 12.5px; line-height: 1.55; }
+  .logs-help .help-mark { flex: none; color: var(--gold); font-family: var(--mono); }
+  .embed-wrap { display: flex; justify-content: center; margin: 0 0 20px; }
+  .embed-wrap blockquote { margin: 0 !important; }
+
+  footer {
+    position: relative;
+    display: flex; align-items: center; justify-content: center; gap: 12px; height: 40px; padding: 0 18px;
+    border-top: 1px solid var(--line); color: var(--muted); font-size: 11px;
+    background: linear-gradient(0deg, rgba(20,14,9,.9), rgba(20,14,9,.25));
+  }
+  footer .fm { font-family: var(--deva); color: rgba(201,150,43,.55); font-size: 14px; }
+  footer .ft { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+  .footer-links { position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    display: flex; align-items: center; gap: 14px; }
+  .footer-link { font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
+    text-transform: uppercase; color: var(--muted); opacity: .7; text-decoration: none;
+    transition: color .15s, opacity .15s; }
+  .footer-link:hover, .footer-link:focus-visible { color: var(--gold2); opacity: 1; outline: none; }
+  .footer-main { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--gold); opacity: .9; text-decoration: none;
+    transition: color .15s, opacity .15s; }
+  .footer-main:hover, .footer-main:focus-visible { color: var(--gold2); opacity: 1; outline: none; }
+
+  @media (max-width: 640px) {
+    header { height: 54px; padding: 0 14px; gap: 8px; }
+    .wordmark { font-size: 20px; }
+    .devaMark { font-size: 16px; }
+    .navlink { padding: 6px 9px; font-size: 9px; letter-spacing: .08em; }
+    main { padding: 18px 12px 34px; }
+    .panel-head { padding: 18px 16px 14px; }
+    .panel-head h1 { font-size: 22px; }
+    .footer-main { right: 12px; font-size: 8px; letter-spacing: .1em; }
+    .footer-links { left: 12px; gap: 10px; }
+    .footer-link { font-size: 8px; letter-spacing: .1em; }
+    .log-strip { padding: 9px 16px; gap: 6px 12px; }
+    .logs-body { padding: 18px 16px 20px; }
+    .sequence { flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .seq-link { width: 1px; height: 12px; align-self: flex-start; margin-left: 23px;
+      background: linear-gradient(180deg, transparent, var(--line-strong), transparent); }
+    .seq-step { padding: 12px 12px; }
+    .log-meta { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .wordmark { font-size: 18px; }
+    .navlink { font-size: 8.5px; padding: 6px 8px; letter-spacing: .04em; }
+  }
+  @media (max-width: 360px) {
+    header { gap: 6px; padding: 0 10px; }
+    .wordmark { font-size: 17px; }
+    .devaMark { display: none; }
+    .navlink { padding: 6px 7px; }
+  }
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NR4B96Q0KX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-NR4B96Q0KX');
+</script>
+</head>
+<body>
+
+<div id="bg">
+  <div id="grain"></div>
+</div>
+
+<header>
+  <span class="wordmark">Lost<span class="accent">Archives</span></span>
+  <span class="devaMark">छाया</span>
+  <span class="spacer"></span>
+  <a class="navlink main" href="about.html">ABOUT</a>
+  <a class="navlink" href="index.html">← SYS_LOGS</a>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="panel logs-panel">
+      <div class="panel-head">
+        <h1>About</h1>
+        <span class="deva">परिचय</span>
+      </div>
+      <div class="log-strip">
+        <span>Archival records</span>
+        <span>Source: MAIN_ARCHIVE</span>
+        <span>Status: Retrieved</span>
+      </div>
+      <div class="logs-body">
+        <h2 class="logs-heading">The Mainframe Logs</h2>
+        <p class="logs-lede">Archival records retrieved from observers in <a class="mono" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>.</p>
+
+        <div class="log-label">Format · 3-part sequence</div>
+        <div class="sequence">
+          <div class="seq-step">
+            <span class="seq-num">01</span>
+            <span class="seq-name">Daily Observer Illustrated Visual</span>
+          </div>
+          <div class="seq-link" aria-hidden="true"></div>
+          <div class="seq-step">
+            <span class="seq-num">02</span>
+            <span class="seq-name">Observer Recovery Grid</span>
+          </div>
+          <div class="seq-link" aria-hidden="true"></div>
+          <div class="seq-step">
+            <span class="seq-num">03</span>
+            <span class="seq-name">Notes</span>
+          </div>
+        </div>
+
+        <div class="notes-format">
+          <span class="log-label">Notes format</span>
+          <div class="note-chips">
+            <span class="note-chip">Daily Observation Logs</span>
+            <span class="chip-sep" aria-hidden="true">|</span>
+            <span class="note-chip">Personal Journal Logs</span>
+          </div>
+        </div>
+
+        <p class="logs-help">
+          <span class="help-mark" aria-hidden="true">↳</span>
+          <span>To read a daily log, follow the sequence left to right: begin with the illustrated visual, use the recovery grid, then read the notes. Notes always run from daily observations into personal journal entries.</span>
+        </p>
+
+        <div class="log-label">Example daily log</div>
+        <div class="embed-wrap">
+          <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="https://www.instagram.com/p/De1qyl4jE3y/?utm_source=ig_embed&amp;utm_campaign=loading" data-instgrm-version="14" style=" background:#FFF; border:0; border-radius:3px; box-shadow:0 0 1px 0 rgba(0,0,0,0.5),0 1px 10px 0 rgba(0,0,0,0.15); margin: 1px; max-width:540px; min-width:326px; padding:0; width:99.375%; width:-webkit-calc(100% - 2px); width:calc(100% - 2px);"><div style="padding:16px;"> <a href="https://www.instagram.com/p/De1qyl4jE3y/?utm_source=ig_embed&amp;utm_campaign=loading" style=" background:#FFFFFF; line-height:0; padding:0 0; text-align:center; text-decoration:none; width:100%;" target="_blank"> <div style=" display: flex; flex-direction: row; align-items: center;"> <div style="background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 40px; margin-right: 14px; width: 40px;"></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 100px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 60px;"></div></div></div><div style="padding: 19% 0;"></div> <div style="display:block; height:50px; margin:0 auto 12px; width:50px;"><svg width="50px" height="50px" viewBox="0 0 60 60" version="1.1" xmlns="https://www.w3.org/2000/svg" xmlns:xlink="https://www.w3.org/1999/xlink"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g transform="translate(-511.000000, -20.000000)" fill="#000000"><g><path d="M556.869,30.41 C554.814,30.41 553.148,32.076 553.148,34.131 C553.148,36.186 554.814,37.852 556.869,37.852 C558.924,37.852 560.59,36.186 560.59,34.131 C560.59,32.076 558.924,30.41 556.869,30.41 M541,60.657 C535.114,60.657 530.342,55.887 530.342,50 C530.342,44.114 535.114,39.342 541,39.342 C546.887,39.342 551.658,44.114 551.658,50 C551.658,55.887 546.887,60.657 541,60.657 M541,33.886 C532.1,33.886 524.886,41.1 524.886,50 C524.886,58.899 532.1,66.113 541,66.113 C549.9,66.113 557.115,58.899 557.115,50 C557.115,41.1 549.9,33.886 541,33.886 M565.378,62.101 C565.244,65.022 564.756,66.606 564.346,67.663 C563.803,69.06 563.154,70.057 562.106,71.106 C561.058,72.155 560.06,72.803 558.662,73.347 C557.607,73.757 556.021,74.244 553.102,74.378 C549.944,74.521 548.997,74.552 541,74.552 C533.003,74.552 532.056,74.521 528.898,74.378 C525.979,74.244 524.393,73.757 523.338,73.347 C521.94,72.803 520.942,72.155 519.894,71.106 C518.846,70.057 518.197,69.06 517.654,67.663 C517.244,66.606 516.755,65.022 516.623,62.101 C516.479,58.943 516.448,57.996 516.448,50 C516.448,42.003 516.479,41.056 516.623,37.899 C516.755,34.978 517.244,33.391 517.654,32.338 C518.197,30.938 518.846,29.942 519.894,28.894 C520.942,27.846 521.94,27.196 523.338,26.654 C524.393,26.244 525.979,25.756 528.898,25.623 C532.057,25.479 533.004,25.448 541,25.448 C548.997,25.448 549.943,25.479 553.102,25.623 C556.021,25.756 557.607,26.244 558.662,26.654 C560.06,27.196 561.058,27.846 562.106,28.894 C563.154,29.942 563.803,30.938 564.346,32.338 C564.756,33.391 565.244,34.978 565.378,37.899 C565.522,41.056 565.552,42.003 565.552,50 C565.552,57.996 565.522,58.943 565.378,62.101 M570.82,37.631 C570.674,34.438 570.167,32.258 569.425,30.349 C568.659,28.377 567.633,26.702 565.965,25.035 C564.297,23.368 562.623,22.342 560.652,21.575 C558.743,20.834 556.562,20.326 553.369,20.18 C550.169,20.033 549.148,20 541,20 C532.853,20 531.831,20.033 528.631,20.18 C525.438,20.326 523.257,20.834 521.349,21.575 C519.376,22.342 517.703,23.368 516.035,25.035 C514.368,26.702 513.342,28.377 512.574,30.349 C511.834,32.258 511.326,34.438 511.181,37.631 C511.035,40.831 511,41.851 511,50 C511,58.147 511.035,59.17 511.181,62.369 C511.326,65.562 511.834,67.743 512.574,69.651 C513.342,71.625 514.368,73.296 516.035,74.965 C517.703,76.634 519.376,77.658 521.349,78.425 C523.257,79.167 525.438,79.673 528.631,79.82 C531.831,79.965 532.853,80.001 541,80.001 C549.148,80.001 550.169,79.965 553.369,79.82 C556.562,79.673 558.743,79.167 560.652,78.425 C562.623,77.658 564.297,76.634 565.965,74.965 C567.633,73.296 568.659,71.625 569.425,69.651 C570.167,67.743 570.674,65.562 570.82,62.369 C570.966,59.17 571,58.147 571,50 C571,41.851 570.966,40.831 570.82,37.631"></path></g></g></g></svg></div><div style="padding-top: 8px;"> <div style=" color:#3897f0; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:550; line-height:18px;">View this post on Instagram</div></div><div style="padding: 12.5% 0;"></div> <div style="display: flex; flex-direction: row; margin-bottom: 14px; align-items: center;"><div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(0px) translateY(7px);"></div> <div style="background-color: #F4F4F4; height: 12.5px; transform: rotate(-45deg) translateX(3px) translateY(1px); width: 12.5px; flex-grow: 0; margin-right: 14px; margin-left: 2px;"></div> <div style="background-color: #F4F4F4; border-radius: 50%; height: 12.5px; width: 12.5px; transform: translateX(9px) translateY(-18px);"></div></div><div style="margin-left: 8px;"> <div style=" background-color: #F4F4F4; border-radius: 50%; flex-grow: 0; height: 20px; width: 20px;"></div> <div style=" width: 0; height: 0; border-top: 2px solid transparent; border-left: 6px solid #f4f4f4; border-bottom: 2px solid transparent; transform: translateX(16px) translateY(-4px) rotate(30deg)"></div></div><div style="margin-left: auto;"> <div style=" width: 0px; border-top: 8px solid #F4F4F4; border-right: 8px solid transparent; transform: translateY(16px);"></div> <div style=" background-color: #F4F4F4; flex-grow: 0; height: 12px; width: 16px; transform: translateY(-4px);"></div> <div style=" width: 0; height: 0; border-top: 8px solid #F4F4F4; border-left: 8px solid transparent; transform: translateY(-4px) translateX(8px);"></div></div></div> <div style="display: flex; flex-direction: column; flex-grow: 1; justify-content: center; margin-bottom: 24px;"> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; margin-bottom: 6px; width: 224px;"></div> <div style=" background-color: #F4F4F4; border-radius: 4px; flex-grow: 0; height: 14px; width: 144px;"></div></div></a><p style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; line-height:17px; margin-bottom:0; margin-top:8px; overflow:hidden; padding:8px 0 7px; text-align:center; text-overflow:ellipsis; white-space:nowrap;"><a href="https://www.instagram.com/p/De1qyl4jE3y/?utm_source=ig_embed&amp;utm_campaign=loading" style=" color:#c9c8cd; font-family:Arial,sans-serif; font-size:14px; font-style:normal; font-weight:normal; line-height:17px; text-decoration:none;" target="_blank">A post shared by Rikith Reddy (@rikith.lostarchives)</a></p></div></blockquote>
+        </div>
+        <script async src="https://www.instagram.com/embed.js"></script>
+
+        <div class="log-meta">
+          <div class="meta-card">
+            <div class="log-label">Observers</div>
+            <div class="meta-tags"><span>RR26</span><span>ZS10</span></div>
+          </div>
+          <div class="meta-card">
+            <div class="log-label">Subject</div>
+            <div class="meta-value">CHAYA <span class="id">[ID:4]</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <span class="fm">विस्मृति</span>
+  <span class="ft">LostArchives</span>
+  <span class="footer-links">
+    <a class="footer-link" href="newsfeed.html">newsfeed</a>
+  </span>
+  <a class="footer-main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
+</footer>
+
+</body>
+</html>
