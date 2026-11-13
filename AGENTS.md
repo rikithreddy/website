@@ -3,7 +3,9 @@
 ## Release notes and versioning
 
 - `RELEASE_NOTES.md` contains the high-level summary for each released version.
-- `CHANGELOG.md` contains the detailed, chronological list of changes.
+- `CHANGELOG.md` contains customer-facing release highlights, not commit messages.
+- Do not add changelog entries for routine commits. Update `CHANGELOG.md` only when the user explicitly asks or when preparing a merge/release to `main`.
+- The website changelog panel reads `CHANGELOG.md`, so keep its contents customer-facing.
 - Keep both in sync when preparing a release.
 - `RELEASE_NOTES.md` and `VERSION` are protected by a pre-commit hook.
 - Never commit changes to `RELEASE_NOTES.md` or `VERSION` without explicit approval from the user in the current conversation.
