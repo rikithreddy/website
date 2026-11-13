@@ -180,7 +180,7 @@
 
   /* ---------- recenter button ---------- */
   .recenter-btn {
-    position: fixed; right: 18px; bottom: 18px; z-index: 4;
+    position: fixed; right: 18px; bottom: 58px; z-index: 4;
     width: 46px; height: 46px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     background: linear-gradient(180deg, #241a11, #1a120b);
@@ -290,6 +290,11 @@
     transition: color .15s, opacity .15s; }
   .footer-link:hover, .footer-link:focus-visible,
   .changelog-btn:hover, .changelog-btn:focus-visible { color: var(--gold2); opacity: 1; outline: none; }
+  .footer-main { position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+    color: var(--gold); opacity: .9; text-decoration: none;
+    transition: color .15s, opacity .15s; }
+  .footer-main:hover, .footer-main:focus-visible { color: var(--gold2); opacity: 1; outline: none; }
   #changelogPanel { position: fixed; left: 18px; bottom: 52px; z-index: 4;
     width: min(340px, calc(100vw - 36px)); max-height: 300px;
     display: none; flex-direction: column; overflow: hidden;
@@ -334,7 +339,8 @@
     #drawer.open { transform: translateY(0); }
     footer { height: 34px; }
     .footer-links { left: 12px; gap: 10px; }
-    .footer-link, .changelog-btn { font-size: 8px; letter-spacing: .1em; }
+    .footer-link, .changelog-btn, .footer-main { font-size: 8px; letter-spacing: .1em; }
+    .footer-main { right: 12px; }
     #changelogPanel { left: 12px; bottom: 100px; width: min(340px, calc(100vw - 24px)); max-height: 260px; }
   }
   @media (max-width: 420px) {
@@ -370,7 +376,6 @@
 </div>
 
 <header>
-  <a class="navlink main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
@@ -424,6 +429,7 @@
     <a class="footer-link" href="about.html">about</a>
     <button type="button" class="changelog-btn" id="changelogToggle" aria-expanded="false" aria-controls="changelogPanel">changelog</button>
   </span>
+  <a class="footer-main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
 </footer>
 
 <div id="changelogPanel" role="dialog" aria-modal="false" aria-labelledby="changelogTitle" aria-hidden="true">
