@@ -281,10 +281,14 @@
   footer .ft { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
 
   /* ---------- subtle changelog ---------- */
-  .changelog-btn { position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+  .footer-links { position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+    display: flex; align-items: center; gap: 14px; }
+  .footer-link, .changelog-btn {
     background: none; border: 0; padding: 4px 2px; cursor: pointer;
     font-family: var(--mono); font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
-    color: var(--muted); opacity: .7; transition: color .15s, opacity .15s; }
+    color: var(--muted); opacity: .7; text-decoration: none;
+    transition: color .15s, opacity .15s; }
+  .footer-link:hover, .footer-link:focus-visible,
   .changelog-btn:hover, .changelog-btn:focus-visible { color: var(--gold2); opacity: 1; outline: none; }
   #changelogPanel { position: fixed; left: 18px; bottom: 52px; z-index: 4;
     width: min(340px, calc(100vw - 36px)); max-height: 300px;
@@ -329,7 +333,8 @@
       transform: translateY(102%); border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; }
     #drawer.open { transform: translateY(0); }
     footer { height: 34px; }
-    .changelog-btn { left: 12px; font-size: 8px; letter-spacing: .1em; }
+    .footer-links { left: 12px; gap: 10px; }
+    .footer-link, .changelog-btn { font-size: 8px; letter-spacing: .1em; }
     #changelogPanel { left: 12px; bottom: 100px; width: min(340px, calc(100vw - 24px)); max-height: 260px; }
   }
   @media (max-width: 420px) {
@@ -415,7 +420,10 @@
 <footer>
   <span class="fm">विस्मृति</span>
   <span class="ft">LostArchives</span>
-  <button type="button" class="changelog-btn" id="changelogToggle" aria-expanded="false" aria-controls="changelogPanel">changelog</button>
+  <span class="footer-links">
+    <a class="footer-link" href="about.html">about</a>
+    <button type="button" class="changelog-btn" id="changelogToggle" aria-expanded="false" aria-controls="changelogPanel">changelog</button>
+  </span>
 </footer>
 
 <div id="changelogPanel" role="dialog" aria-modal="false" aria-labelledby="changelogTitle" aria-hidden="true">
