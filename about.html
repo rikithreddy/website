@@ -91,21 +91,6 @@
     color: var(--gold); letter-spacing: .02em; }
   .panel-head .deva { font-family: var(--deva); font-size: 15px; color: var(--oldgold); }
 
-  .panel-body { padding: 24px; }
-  .eyebrow { font-family: var(--mono); font-size: 9.5px; letter-spacing: .18em;
-    text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-  .accept-date { font-family: var(--serif); font-size: 20px; color: var(--gold2);
-    margin: 0 0 16px; }
-  .accept-link { display: inline-flex; flex-direction: column; gap: 3px;
-    color: var(--gold2); text-decoration: none; border: 1px solid rgba(201,150,43,.5);
-    border-radius: 10px; padding: 10px 15px; transition: all .15s; }
-  .accept-link:hover, .accept-link:focus-visible { background: rgba(201,150,43,.1);
-    border-color: var(--line-strong); outline: none; }
-  .accept-label { font-family: var(--mono); font-size: 9px; letter-spacing: .16em;
-    text-transform: uppercase; color: var(--oldgold); }
-  .accept-url { font-family: var(--mono); font-size: 11.5px; overflow-wrap: anywhere; }
-
-  .logs-panel { margin-top: 18px; }
   .log-strip { display: flex; flex-wrap: wrap; gap: 8px 18px; padding: 10px 24px;
     border-bottom: 1px solid var(--line); font-family: var(--mono); font-size: 9px;
     letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
@@ -122,10 +107,14 @@
     -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%);
     mask-image: radial-gradient(120% 100% at 50% 0%, #000 30%, transparent 85%); }
   .logs-body > * { position: relative; z-index: 1; }
+  .logs-heading { font-family: var(--hand); font-weight: 400; font-size: 21px; margin: 0 0 8px;
+    color: var(--gold); letter-spacing: .02em; }
   .logs-lede { margin: 0 0 22px; font-family: var(--serif); font-size: 15px; line-height: 1.55;
     color: var(--ivory); max-width: 62ch; }
   .logs-lede .mono { font-family: var(--mono); font-size: 11px; color: var(--gold2);
     letter-spacing: .04em; }
+  .logs-lede a { text-decoration: none; border-bottom: 1px dotted rgba(201,150,43,.5); }
+  .logs-lede a:hover, .logs-lede a:focus-visible { color: var(--gold); border-bottom-color: var(--gold); outline: none; }
   .log-label { font-family: var(--mono); font-size: 9px; letter-spacing: .18em;
     text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
   .sequence { display: flex; align-items: stretch; gap: 0; margin-bottom: 18px; }
@@ -183,7 +172,6 @@
     main { padding: 18px 12px 34px; }
     .panel-head { padding: 18px 16px 14px; }
     .panel-head h1 { font-size: 22px; }
-    .panel-body { padding: 18px 16px 22px; }
     .footer-main { right: 12px; font-size: 8px; letter-spacing: .1em; }
     .log-strip { padding: 9px 16px; gap: 6px 12px; }
     .logs-body { padding: 18px 16px 20px; }
@@ -224,30 +212,16 @@
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
+  <a class="navlink" href="news.html">NEWS</a>
   <a class="navlink" href="index.html">← SYS_LOGS</a>
 </header>
 
 <main>
   <div class="wrap">
-    <section class="panel">
+    <section class="panel logs-panel">
       <div class="panel-head">
         <h1>About</h1>
         <span class="deva">परिचय</span>
-      </div>
-      <div class="panel-body">
-        <div class="eyebrow">Project accepted</div>
-        <p class="accept-date">November 5, 2026</p>
-        <a class="accept-link" href="https://www.nightmind.info/puzzleproj/lost-archives" target="_blank" rel="noopener">
-          <span class="accept-label">View project</span>
-          <span class="accept-url">nightmind.info/puzzleproj/lost-archives</span>
-        </a>
-      </div>
-    </section>
-
-    <section class="panel logs-panel">
-      <div class="panel-head">
-        <h1>The Mainframe Logs</h1>
-        <span class="deva">अभिलेख</span>
       </div>
       <div class="log-strip">
         <span>Archival records</span>
@@ -255,7 +229,8 @@
         <span>Status: Retrieved</span>
       </div>
       <div class="logs-body">
-        <p class="logs-lede">Archival records retrieved from observers in <span class="mono">MAIN_ARCHIVE</span>.</p>
+        <h2 class="logs-heading">The Mainframe Logs</h2>
+        <p class="logs-lede">Archival records retrieved from observers in <a class="mono" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>.</p>
 
         <div class="log-label">Format · 3-part sequence</div>
         <div class="sequence">
