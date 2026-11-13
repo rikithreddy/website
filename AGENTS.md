@@ -2,6 +2,9 @@
 
 ## Release notes and versioning
 
+- `RELEASE_NOTES.md` contains the high-level summary for each released version.
+- `CHANGELOG.md` contains the detailed, chronological list of changes.
+- Keep both in sync when preparing a release.
 - `RELEASE_NOTES.md` and `VERSION` are protected by a pre-commit hook.
 - Never commit changes to `RELEASE_NOTES.md` or `VERSION` without explicit approval from the user in the current conversation.
 - Before requesting approval, stage the proposed `RELEASE_NOTES.md` and `VERSION` changes and show the user the exact diff.
