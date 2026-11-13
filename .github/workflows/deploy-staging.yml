@@ -27,6 +27,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm --cached CNAME || true
+          git rm -r --cached .github || true
           git commit -m "Deploy staging ${GITHUB_SHA}" || true
 
       - name: Push to staging site
