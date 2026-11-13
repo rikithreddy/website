@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=$(git rev-parse --show-toplevel)
+cd "$ROOT"
+
+NOTES=RELEASE_NOTES.md
+VERSION_FILE=VERSION
+APPROVAL=.release-notes-approval
+
+staged=$(git diff --cached --name-only)
+
+if ! printf '%s\n' "$staged" | grep -qx "$NOTES"; then
+  exit 0
+fi
+
+if printf '%s\n' "$staged" | grep -qx "$APPROVAL"; then
+  echo "error: $APPROVAL is local-only and must not be committed." >&2
+  exit 1
+fi
+
+if ! git cat-file -e :"$NOTES" 2>/dev/null; then
+  echo "error: $NOTES cannot be deleted." >&2
+  exit 1
+fi
+
+if ! printf '%s\n' "$staged" | grep -qx "$VERSION_FILE"; then
+  echo "error: release notes changed without a $VERSION_FILE bump." >&2
+  echo "Update and stage $VERSION_FILE with $NOTES." >&2
+  exit 1
+fi
+
+old_version=$(git show HEAD:"$VERSION_FILE" 2>/dev/null | tr -d '[:space:]' || true)
+new_version=$(git show :"$VERSION_FILE" | tr -d '[:space:]')
+
+if [ -z "$new_version" ]; then
+  echo "error: $VERSION_FILE is empty." >&2
+  exit 1
+fi
+
+if [ "$old_version" = "$new_version" ]; then
+  echo "error: $VERSION_FILE must increase when release notes change (still $new_version)." >&2
+  exit 1
+fi
+
+if [ -n "$old_version" ]; then
+  highest=$(printf '%s\n%s\n' "$old_version" "$new_version" | sort -V | tail -n 1)
+  if [ "$highest" != "$new_version" ]; then
+    echo "error: $VERSION_FILE must increase (current: $old_version, staged: $new_version)." >&2
+    exit 1
+  fi
+fi
+
+if command -v sha256sum >/dev/null 2>&1; then
+  notes_hash=$(git show :"$NOTES" | sha256sum | awk '{print $1}')
+else
+  notes_hash=$(git show :"$NOTES" | shasum -a 256 | awk '{print $1}')
+fi
+
+if [ ! -f "$APPROVAL" ]; then
+  echo "error: release notes have not been approved." >&2
+  echo "Review the staged changes, then run: scripts/approve-release-notes.sh" >&2
+  exit 1
+fi
+
+read -r approved_version approved_hash _ < "$APPROVAL" || true
+
+if [ "${approved_version:-}" != "$new_version" ] || [ "${approved_hash:-}" != "$notes_hash" ]; then
+  echo "error: approval does not match the staged release notes or version." >&2
+  echo "Re-run: scripts/approve-release-notes.sh" >&2
+  exit 1
+fi
+
+echo "Release notes approved for version $new_version."

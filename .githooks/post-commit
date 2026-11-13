@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+ROOT=$(git rev-parse --show-toplevel)
+cd "$ROOT"
+
+if git show --pretty=format: --name-only HEAD | grep -qx 'RELEASE_NOTES.md'; then
+  rm -f .release-notes-approval
+fi
