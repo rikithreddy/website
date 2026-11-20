@@ -6,3 +6,4 @@ Customer-facing release notes for LostArchives. Release summaries live in `RELEA
 
 - Project accepted at Nightmind on November 5, 2026: https://www.nightmind.info/puzzleproj/lost-archives
 - Added Newsfeed and About pages.
+- Added observer notebooks.

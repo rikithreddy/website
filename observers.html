@@ -8,13 +8,15 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Kalam:wght@300;400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
   :root {
     --hand: "Yatra One", Georgia, serif;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --deva: "Noto Sans Devanagari", serif;
+    --hand-script: "Kalam", "Segoe Script", cursive;
+    --robot: "Share Tech Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
     --soot: #0b0805;
     --stone: #1b140e;
@@ -107,7 +109,7 @@
   .list .empty { color: var(--muted); font-family: var(--serif); font-style: italic; padding: 18px 0; }
 
   .observer {
-    display: flex; align-items: center; gap: 16px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
     padding: 16px 18px; border-radius: var(--radius);
     background: linear-gradient(180deg, rgba(36,26,17,.9), rgba(27,20,14,.9));
     border: 1px solid var(--line);
@@ -133,6 +135,208 @@
     padding: 4px 10px; border-radius: 20px; white-space: nowrap;
   }
   .badge.clear { color: var(--gold2); background: rgba(201,150,43,.1); border: 1px solid rgba(201,150,43,.4); }
+
+  .note { position: relative; padding-left: 20px; font-size: 12.5px; line-height: 1.5;
+    color: var(--ivory); overflow-wrap: break-word; }
+  .note::before { content: "›"; position: absolute; left: 4px; top: 0;
+    font-family: var(--mono); color: var(--brass); }
+  .note-meta { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; color: var(--muted);
+    margin-left: 8px; white-space: nowrap; }
+  .note-full {
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background:
+      repeating-linear-gradient(180deg, transparent 0, transparent 23px,
+        rgba(201,150,43,.07) 23px, rgba(201,150,43,.07) 24px),
+      linear-gradient(180deg, rgba(36,26,17,.72), rgba(24,17,11,.72));
+  }
+  .note-full::before { display: none; }
+  .note-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px;
+    margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px dashed var(--line); }
+  .note-id { font-family: var(--mono); font-weight: 700; font-size: 11px; letter-spacing: .05em;
+    color: var(--gold2); }
+  .note-date { font-family: var(--mono); font-size: 9px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); }
+  .note-author { font-family: var(--mono); font-weight: 700; font-size: 12px; color: var(--gold2); }
+  .note-ref { margin-left: auto; font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--gold); text-decoration: none;
+    border-bottom: 1px solid transparent; transition: color .15s, border-color .15s; }
+  .note-ref:hover, .note-ref:focus-visible { color: var(--gold2); border-color: var(--gold); outline: none; }
+  .note-title { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; }
+  .note-body { font-size: 12.5px; line-height: 24px; color: var(--ivory); }
+  .note-body p, .mf-body p { margin: 0 0 9px; }
+  .note-body p:last-child, .mf-body p:last-child { margin-bottom: 0; }
+  .redact { color: var(--ember); letter-spacing: .04em; }
+  .err { color: var(--sindoor); }
+  .eof { font-family: var(--mono); font-size: 9px; letter-spacing: .14em; color: var(--muted); }
+  .mf-reply { border-left: 3px solid var(--neel-lt); border-radius: 0 8px 8px 0;
+    background: rgba(51,70,140,.14); padding: 10px 12px; }
+  .mf-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; margin-bottom: 6px;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--neel-lt); }
+  .mf-author { font-weight: 700; font-size: 11px; }
+  .mf-tag { color: var(--muted); }
+  .mf-body { font-family: var(--mono); font-size: 12px; line-height: 1.55; color: var(--ivory);
+    overflow-wrap: break-word; }
+
+  .obs-notebook-btn {
+    flex: 1 0 100%; display: flex; align-items: center; gap: 10px; margin-top: 2px;
+    padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(36,26,17,.9), rgba(27,20,14,.9));
+    color: var(--gold); font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; text-align: left; cursor: pointer;
+    transition: border-color .16s, box-shadow .16s, color .16s;
+  }
+  .obs-notebook-btn:hover, .obs-notebook-btn:focus-visible {
+    border-color: var(--line-strong); color: var(--gold2);
+    box-shadow: 0 0 22px rgba(201,150,43,.18); outline: none;
+  }
+  .obs-notebook-btn .nb-icon { flex: none; width: 20px; height: 20px; display: flex; color: var(--brass); }
+  .obs-notebook-btn .nb-icon svg { width: 100%; height: 100%; }
+  .obs-notebook-btn .nb-count { margin-left: auto; font-size: 9px; letter-spacing: .1em;
+    color: var(--muted); text-transform: none; }
+
+  .nb-overlay {
+    position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center;
+    padding: 24px; opacity: 0; pointer-events: none; transition: opacity .2s;
+    background: radial-gradient(1100px 760px at 50% 26%, rgba(11,8,5,.7), rgba(5,3,2,.93));
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  }
+  .nb-overlay.open { opacity: 1; pointer-events: auto; }
+  .notebook {
+    width: 100%; max-width: 720px; max-height: 88vh; display: flex; flex-direction: column;
+    background: linear-gradient(180deg, #1b140e, #130d08);
+    border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.7), 0 0 44px rgba(201,150,43,.12);
+    transform: translateY(14px) scale(.98); transition: transform .22s;
+  }
+  .nb-overlay.open .notebook { transform: none; }
+  .nb-top { display: flex; align-items: center; gap: 12px; padding: 15px 20px;
+    border-bottom: 1px solid var(--line);
+    background: radial-gradient(600px 120px at 0% 0%, rgba(201,150,43,.12), transparent 70%); }
+  .nb-title { font-family: var(--hand); font-size: 22px; color: var(--gold); }
+  .nb-owner { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); }
+  .nb-close { margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 8px;
+    border: 1px solid var(--line); background: transparent; color: var(--oldgold);
+    font-size: 14px; line-height: 1; cursor: pointer; transition: all .15s; }
+  .nb-close:hover, .nb-close:focus-visible { color: var(--gold2); border-color: var(--line-strong);
+    background: rgba(255,255,255,.04); outline: none; }
+  .nb-pages { flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
+  .nb-page { position: relative; min-height: 430px; padding: 26px 28px 46px 38px; margin: 0 auto;
+    border: 1px solid rgba(90,55,25,.4); border-radius: 8px;
+    --burnA: 88% 12%; --burnB: 8% 82%; --burnC: 52% 98%; --burnD: 30% 4%;
+    --stainA: 62% 38%; --stainB: 22% 58%;
+    background:
+      radial-gradient(42% 30% at var(--burnA), rgba(58,28,9,.34), transparent 72%),
+      radial-gradient(38% 46% at var(--burnB), rgba(48,23,8,.36), transparent 70%),
+      radial-gradient(22% 16% at var(--burnC), rgba(70,35,12,.26), transparent 75%),
+      radial-gradient(18% 14% at var(--burnD), rgba(60,30,10,.22), transparent 78%),
+      radial-gradient(26% 20% at var(--stainA), rgba(120,72,32,.16), transparent 72%),
+      radial-gradient(20% 26% at var(--stainB), rgba(110,64,28,.14), transparent 74%),
+      radial-gradient(120% 90% at 15% 10%, rgba(255,246,220,.55), transparent 45%),
+      radial-gradient(110% 100% at 85% 90%, rgba(120,72,32,.22), transparent 55%),
+      linear-gradient(155deg, #ecd9ae 0%, #f1e2bc 45%, #ddc294 100%);
+    color: #2a1d10; isolation: isolate;
+    clip-path: polygon(0.6% 1.4%, 12% 0.4%, 33% 1.2%, 58% 0.2%, 81% 1%, 99.4% 0%,
+      100% 9%, 99% 22%, 99.6% 41%, 98.9% 63%, 99.5% 82%, 100% 97%,
+      88% 99%, 66% 98.6%, 41% 99.5%, 19% 98.7%, 0.5% 99.6%,
+      0% 88%, 0.8% 66%, 0.2% 45%, 0.9% 24%, 0% 8%);
+  }
+  .nb-page:nth-child(3n+2) {
+    --burnA: 12% 16%; --burnB: 90% 78%; --burnC: 42% 6%; --burnD: 72% 96%;
+    --stainA: 34% 44%; --stainB: 80% 30%;
+  }
+  .nb-page:nth-child(3n+3) {
+    --burnA: 96% 54%; --burnB: 4% 22%; --burnC: 60% 94%; --burnD: 22% 86%;
+    --stainA: 48% 70%; --stainB: 12% 34%;
+  }
+  .nb-page::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(115deg, transparent 60%, rgba(242,230,190,.42) 61%, rgba(242,230,190,.42) 65%, transparent 66%),
+      linear-gradient(-68deg, transparent 82%, rgba(242,230,190,.36) 83%, rgba(242,230,190,.36) 87%, transparent 88%),
+      radial-gradient(130% 120% at 50% 50%, transparent 52%, rgba(80,42,16,.2) 74%,
+        rgba(55,28,10,.55) 90%, rgba(24,11,4,.82) 100%),
+      radial-gradient(34% 28% at 0% 4%, rgba(40,18,6,.5), transparent 70%),
+      radial-gradient(30% 34% at 100% 62%, rgba(45,20,7,.42), transparent 72%),
+      radial-gradient(40% 30% at 6% 96%, rgba(50,24,8,.44), transparent 70%),
+      radial-gradient(28% 24% at 78% 100%, rgba(55,26,9,.4), transparent 72%),
+      radial-gradient(50% 35% at 94% 6%, rgba(70,35,12,.32), transparent 70%);
+    box-shadow: inset 0 0 40px rgba(70,35,12,.4), inset 0 0 120px rgba(50,25,9,.28);
+  }
+  .nb-page::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    border-radius: inherit; mix-blend-mode: multiply; opacity: .62;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013 0.019' numOctaves='3' seed='9'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23c)' opacity='0.4'/%3E%3C/svg%3E"),
+      linear-gradient(38deg, transparent 49.6%, rgba(70,38,15,.45) 49.85%, transparent 50.1%),
+      linear-gradient(63deg, transparent 44%, rgba(90,50,20,.16) 46%, transparent 48%),
+      linear-gradient(-71deg, transparent 30%, rgba(90,50,20,.14) 33%, transparent 36%),
+      linear-gradient(115deg, transparent 60%, rgba(255,245,215,.35) 63%, transparent 66%),
+      linear-gradient(-35deg, transparent 20%, rgba(90,50,20,.12) 24%, transparent 27%);
+  }
+  .nb-page > * { position: relative; z-index: 1; }
+  .nb-page[hidden] { display: none; }
+  .nb-page .note { padding-left: 0; }
+  .nb-page .note::before { display: none; }
+  .nb-page .note-full {
+    padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  }
+  .nb-page .note-head { border-bottom: 1px dashed rgba(120,90,50,.45); }
+  .nb-page .note-id { color: #7a4a12; font-family: var(--mono); }
+  .nb-page .note-date { color: #8a6a3a; font-family: var(--mono); }
+  .nb-page .note-title { color: #6e5026; font-family: var(--hand-script); font-size: 19px;
+    font-weight: 400; letter-spacing: 0; text-transform: none; margin-bottom: 8px; }
+  .nb-page .note-ref { color: #8a5a2b; font-family: var(--mono); }
+  .nb-page .note-ref:hover, .nb-page .note-ref:focus-visible { color: #5e3a12; border-color: #8a5a2b; }
+  .nb-page .note-body {
+    font-family: var(--hand-script); font-size: 19px; font-weight: 400; line-height: 28px;
+    color: #23305a;
+  }
+  .nb-page .note-body p { margin: 0; }
+  .nb-page .note-body p + p { text-indent: 30px; }
+  .nb-page .note-body .note-meta { font-family: var(--mono); font-size: 9px; color: #8a6a3a; }
+  .nb-page .eof { font-family: var(--mono); font-size: 9px; line-height: 28px; color: #8a6a3a; }
+  .nb-page .note-meta { color: #8a6a3a; }
+  .nb-page .redact { color: #b0432b; }
+  .nb-page .err { color: #a5321f; }
+  .nb-page .mf-reply {
+    margin-top: 16px; padding: 11px 13px; border-radius: 4px;
+    border: 1px solid rgba(51,70,140,.35); border-left: 3px solid #33468c;
+    background: rgba(51,70,140,.08);
+  }
+  .nb-page .mf-head, .nb-page .mf-author, .nb-page .mf-tag {
+    font-family: var(--robot); color: #33468c;
+  }
+  .nb-page .mf-tag { color: #6a5a8a; }
+  .nb-page .mf-body {
+    font-family: var(--robot); font-size: 13px; line-height: 20px; color: #232c52;
+  }
+  .nb-page .mf-body p { margin: 0 0 6px; }
+  .nb-page .mf-body p:last-child { margin-bottom: 0; }
+  .nb-pagenum { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em; color: rgba(90,60,30,.65); }
+  .nb-foot { display: flex; align-items: center; justify-content: center; gap: 18px; padding: 12px;
+    border-top: 1px solid var(--line); }
+  .nb-nav { width: 36px; height: 32px; border-radius: 8px; border: 1px solid var(--line);
+    background: transparent; color: var(--gold); font-family: var(--mono); font-size: 14px;
+    cursor: pointer; transition: all .15s; }
+  .nb-nav:hover:not(:disabled), .nb-nav:focus-visible:not(:disabled) {
+    color: var(--gold2); border-color: var(--line-strong); background: rgba(255,255,255,.04); outline: none; }
+  .nb-nav:disabled { opacity: .3; cursor: default; }
+  .nb-indicator { font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    color: var(--muted); min-width: 52px; text-align: center; }
+
+  @media (max-width: 640px) {
+    .nb-overlay { padding: 12px; }
+    .nb-title { font-size: 18px; }
+    .nb-owner { display: none; }
+    .nb-pages { padding: 12px; }
+    .nb-page { padding: 20px 18px 40px 30px; min-height: 380px; }
+    .nb-page::before { left: 20px; }
+  }
 
   footer {
     position: relative;
@@ -231,15 +435,65 @@
   <a class="footer-main" href="https://www.instagram.com/rikith.lostarchives/" target="_blank" rel="noopener">MAIN_ARCHIVE</a>
 </footer>
 
+<div class="nb-overlay" id="nbOverlay" aria-hidden="true">
+  <div class="notebook" role="dialog" aria-modal="true" aria-labelledby="nbTitle">
+    <div class="nb-top">
+      <span class="nb-title" id="nbTitle">Observer Notebook</span>
+      <span class="nb-owner" id="nbOwner"></span>
+      <button type="button" class="nb-close" id="nbClose" aria-label="Close notebook">✕</button>
+    </div>
+    <div class="nb-pages" id="nbPages"></div>
+    <div class="nb-foot">
+      <button type="button" class="nb-nav" id="nbPrev" aria-label="Previous page">←</button>
+      <span class="nb-indicator" id="nbIndicator"></span>
+      <button type="button" class="nb-nav" id="nbNext" aria-label="Next page">→</button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* -------------------------------------------------------------------------
    WHITELISTED OBSERVERS
    Add more entries here — the page renders whatever is in this list.
-     { id, handle, role?, clearance, status: 'whitelisted' | ... }
+     { id, handle, role?, clearance, status,
+       notes: [ 'text' | { text, meta } |
+                { id, date, ref, author?, tag?, body: [ 'para' | { text, meta } ] } ],
+       reply: 'mainframe reply' | { author, tag, body: [ 'para' ] } }
    ------------------------------------------------------------------------- */
 var OBSERVERS = [
-  { id: 'ZD.0001', handle: 'csillustrator', role: 'Observer', clearance: 2, status: 'whitelisted' },
-  { id: 'ZD.0002', handle: 'poet_on_a_bike', role: 'Observer', clearance: 2, status: 'whitelisted' }
+  {
+    id: 'ZD.0001', handle: 'csillustrator', role: 'Observer', clearance: 2, status: 'whitelisted',
+    notes: [
+      {
+        id: 'ZD.0001-001',
+        date: '16th Nov 2026',
+        ref: 'https://www.instagram.com/p/DePC3b2jrs2/c/18639964330065325/?img_index=1',
+        body: [
+          'The fragments document two observers, RR26 and ZS10, studying Subject 4, Chaya, under an enigmatic organisation whose motives remain unclear. Chaya exhibits unusually strong relationships with fauna, which appear docile in her presence. She seems capable of controlling a mysterious power termed Echo, while her glowing amulet emits a strange energy, attracts animals and may guide her travels. The amulet also distorts space, though ZS10 attributes the disruption of space and time to Chaya herself. The relationship between these phenomena remains uncertain.',
+          "The observers' journals reveal that their superiors consider understanding Chaya essential to their survival, yet refuse to explain why. Both express distrust towards the organisation, with RR26 explicitly warning against trusting the system.",
+          "SYS fragments establish a broader cosmological framework involving the Kali Yuga, an age of spiritual decline, and corrupted projections of subsequent cycles. Recurring references to memory, forgetting and loss may relate to the deterioration of the archives themselves, potentially connected to Chaya's disruptive abilities.",
+          "Particularly intriguing are the Seven Islands, whose pre-disruption coordinates correspond to Tirumala, home to Sri Venkateswara Temple. The site's seven hills traditionally represent the seven hoods of Adishesha, Vishnu's divine serpent. The temple honours Venkateswara, a manifestation of Vishnu believed to protect humanity during Kali Yuga. Whether the Seven Islands correspond to these hills, and how this relates to Chaya, the disruption and the organisation's survival, remains unresolved."
+        ]
+      }
+    ],
+    reply: {
+      author: '@csillustrator',
+      tag: 'LOG · SYNTHESIS SYNCHRONIZATION COMPLETE',
+      body: [
+        'INPUT FROM ZD.0001 VERIFIED. DETAIL DENSITY: HIGH. OBSERVER_TRUST_METRIC: INCREASED. ACCESS TIER ELEVATED. RELEASING RESTRICTED ARCHIVE FRAGMENT...',
+        'MAINFRAME ARCHIVE UPDATED: The disruptions are attributed to the 7 Floating Islands referenced in regional folklores as the abode of the 9th Avatar of Vishnu in the 28th Mahayuga (REF: SYS2000).',
+        '[ERR::0x4F_DATA_CORRUPT] ...The 10th Avatar, ‘Kalki’, arrived at the threshold of Kali Yuga and ▓▓▓▓▓▓ [SECTOR_PURGED // STREAM_FRAGMENTED // 0x99A] ▓▓▓▓▓▓',
+        'TRINITY ARCHITECTURE DETECTED: The Protector: Vishnu. The Creator: Brahma. And we have the Destroyer: [ERR::PACKET_CORRUPTED]',
+        'ANOMALOUS RESONANCE LOGGED — SUBJECT 04: Her affiliations to the Linga, the Trishul, the Damaru, the Third Eye... [SIGNAL_CORRUPTED]',
+        '...The prophecy. The harbinger of destruction.'
+      ]
+    }
+  },
+  {
+    id: 'ZD.0002', handle: 'poet_on_a_bike', role: 'Observer', clearance: 2, status: 'whitelisted',
+    notes: [],
+    reply: null
+  }
 ];
 
 var SIGIL = '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.4" ' +
@@ -249,8 +503,146 @@ var SIGIL = '<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-w
   '<circle cx="20" cy="20" r="2.3" fill="currentColor" stroke="none"/></svg>';
 
 function esc(s) {
-  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
+
+function corrupt(s) {
+  return s
+    .replace(/(▓+)/g, '<span class="redact">$1</span>')
+    .replace(/\[[^\]]*(?:ERR|CORRUPT|PURGED|FRAGMENTED)[^\]]*\]/g, '<span class="err">$&</span>');
+}
+
+function paragraphsHtml(paras) {
+  var out = '';
+  for (var k = 0; k < paras.length; k++) {
+    var p = paras[k];
+    var text = typeof p === 'string' ? p : p.text;
+    var meta = typeof p === 'string' ? '' : p.meta;
+    out += '<p>' + corrupt(esc(text)) +
+      (meta ? '<span class="note-meta">' + esc(meta) + '</span>' : '') + '</p>';
+  }
+  return out;
+}
+
+function noteInner(note) {
+  return '<div class="note-head">' +
+      (note.id ? '<span class="note-id">' + esc(note.id) + '</span>' : '') +
+      (note.date ? '<span class="note-date">' + esc(note.date) + '</span>' : '') +
+      (note.author ? '<span class="note-author">' + esc(note.author) + '</span>' : '') +
+      (note.ref ? '<a class="note-ref" href="' + esc(note.ref) + '" target="_blank" rel="noopener">REF ↗</a>' : '') +
+    '</div>' +
+    (note.tag ? '<div class="note-title">' + esc(note.tag) + '</div>' : '') +
+    '<div class="note-body">' + paragraphsHtml(note.body) + '</div>';
+}
+
+function notePage(note) {
+  if (typeof note === 'string') {
+    return '<div class="note">' + corrupt(esc(note)) + '</div>';
+  }
+  if (note.body == null) {
+    return '<div class="note">' + corrupt(esc(note.text)) +
+      (note.meta ? '<span class="note-meta">' + esc(note.meta) + '</span>' : '') + '</div>';
+  }
+  return '<div class="note note-full">' + noteInner(note) + '</div>';
+}
+
+function replyHtml(reply) {
+  if (!reply) return '';
+  if (typeof reply === 'string') {
+    return '<div class="mf-reply">' +
+      '<div class="mf-head">◈ Mainframe Reply</div>' +
+      '<div class="mf-body">' + corrupt(esc(reply)) + '</div></div>';
+  }
+  return '<div class="mf-reply">' +
+    '<div class="mf-head">' +
+      '<span class="mf-author">◈ ' + esc(reply.author || 'MAINFRAME') + '</span>' +
+      (reply.tag ? '<span class="mf-tag">' + esc(reply.tag) + '</span>' : '') +
+    '</div>' +
+    '<div class="mf-body">' + paragraphsHtml(reply.body || []) +
+      '<p class="eof">[EoF]</p></div></div>';
+}
+
+var BOOK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+  'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+  '<path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/>' +
+  '<path d="M4 21.5V5.5"/><path d="M8 7h8"/><path d="M8 11h8"/></svg>';
+
+var nbState = { pages: [], index: 0 };
+
+function buildNotebookPages(o) {
+  var notes = o.notes || [];
+  var pages = [];
+  for (var i = 0; i < notes.length; i++) {
+    var inner = notePage(notes[i]);
+    if (i === notes.length - 1 && o.reply) inner += replyHtml(o.reply);
+    pages.push(inner);
+  }
+  if (!notes.length && o.reply) pages.push(replyHtml(o.reply));
+  for (var b = 0; b < 2; b++) pages.push('');
+  return pages;
+}
+
+function showPage(i) {
+  var pages = document.getElementById('nbPages').children;
+  if (i < 0 || i >= pages.length) return;
+  nbState.index = i;
+  for (var k = 0; k < pages.length; k++) {
+    if (k === i) pages[k].removeAttribute('hidden');
+    else pages[k].setAttribute('hidden', '');
+  }
+  document.getElementById('nbIndicator').textContent = (i + 1) + ' / ' + pages.length;
+  document.getElementById('nbPrev').disabled = (i === 0);
+  document.getElementById('nbNext').disabled = (i === pages.length - 1);
+}
+
+function openNotebook(obsIndex) {
+  var o = OBSERVERS[obsIndex];
+  if (!o) return;
+  var pages = buildNotebookPages(o);
+  nbState.pages = pages;
+  var pagesEl = document.getElementById('nbPages');
+  var html = '';
+  for (var i = 0; i < pages.length; i++) {
+    html += '<div class="nb-page' + (pages[i] ? '' : ' blank') + '">' + pages[i] +
+      '<span class="nb-pagenum">' + (i + 1) + ' / ' + pages.length + '</span></div>';
+  }
+  pagesEl.innerHTML = html;
+  pagesEl.scrollTop = 0;
+  document.getElementById('nbOwner').textContent = o.id + ' · @' + o.handle;
+  showPage(0);
+  var overlay = document.getElementById('nbOverlay');
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('nbClose').focus();
+}
+
+function closeNotebook() {
+  var overlay = document.getElementById('nbOverlay');
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+(function wireNotebook() {
+  document.getElementById('list').addEventListener('click', function (e) {
+    var btn = e.target.closest ? e.target.closest('.obs-notebook-btn') : null;
+    if (btn) openNotebook(parseInt(btn.getAttribute('data-nb'), 10));
+  });
+  document.getElementById('nbClose').addEventListener('click', closeNotebook);
+  document.getElementById('nbPrev').addEventListener('click', function () { showPage(nbState.index - 1); });
+  document.getElementById('nbNext').addEventListener('click', function () { showPage(nbState.index + 1); });
+  document.getElementById('nbOverlay').addEventListener('click', function (e) {
+    if (e.target === e.currentTarget) closeNotebook();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!document.getElementById('nbOverlay').classList.contains('open')) return;
+    if (e.key === 'Escape') closeNotebook();
+    else if (e.key === 'ArrowLeft') showPage(nbState.index - 1);
+    else if (e.key === 'ArrowRight') showPage(nbState.index + 1);
+  });
+})();
 
 function render() {
   var list = document.getElementById('list');
@@ -268,7 +660,13 @@ function render() {
       '</div>' +
       '<div class="obs-tags">' +
         '<span class="badge clear">Clearance · LV ' + esc(o.clearance) + '</span>' +
-      '</div>';
+      '</div>' +
+      '<button type="button" class="obs-notebook-btn" data-nb="' + i + '">' +
+        '<span class="nb-icon">' + BOOK + '</span>' +
+        '<span>Observer Notebook</span>' +
+        '<span class="nb-count">' + (o.notes ? o.notes.length : 0) + ' note' +
+          ((o.notes && o.notes.length === 1) ? '' : 's') + '</span>' +
+      '</button>';
     frag.appendChild(art);
   }
   list.appendChild(frag);
