@@ -1,7 +1,5 @@
 # Changelog
 
-Customer-facing release notes for LostArchives. Release summaries live in `RELEASE_NOTES.md`.
-
 ## 0.2v — 2026-11-20
 
 - Added observer notebooks.
