@@ -389,13 +389,81 @@
     opacity: 0; pointer-events: none; transition: all .3s ease; z-index: 20; max-width: 90vw; }
   #toast.on { opacity: 1; transform: translateX(-50%) translateY(0); }
 
+  /* ---------- view toggle (System Logs / Field Observers) ---------- */
+  .view-toggle { display: inline-flex; align-items: center;
+    border: 1px solid var(--line-strong); border-radius: 22px; padding: 3px;
+    background: rgba(20,14,9,.94); }
+  .vt-options { position: relative; display: inline-flex; align-items: stretch; }
+  .vt-thumb { position: absolute; top: 0; bottom: 0; left: 0; width: 0; border-radius: 18px;
+    background: linear-gradient(180deg, var(--gold), var(--brass));
+    box-shadow: 0 0 14px rgba(201,150,43,.45); pointer-events: none;
+    transition: left .26s cubic-bezier(.22,1,.36,1), width .26s cubic-bezier(.22,1,.36,1); }
+  .view-btn { position: relative; z-index: 1; appearance: none; -webkit-appearance: none;
+    background: none; border: 0; margin: 0; cursor: pointer; border-radius: 18px;
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--oldgold); padding: 7px 10px; white-space: nowrap;
+    transition: color .18s, background .18s; }
+  .view-btn:hover, .view-btn:focus-visible { color: var(--ivory); outline: none; }
+  .view-btn.active { color: #1b140e; font-weight: 700; }
+  .view-btn .vt-short { display: none; }
+  #viewToggle { position: absolute; z-index: 6; transform: translate(-50%, -100%);
+    box-shadow: 0 8px 22px rgba(0,0,0,.5); }
+
+  /* ---------- field observers stage ---------- */
+  #fieldStage { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
+    touch-action: none; user-select: none; -webkit-user-select: none; }
+  #stage[hidden], #fieldStage[hidden] { display: none !important; }
+  #fieldStage .card-line { stroke: url(#fGradBrass); }
+  #fieldStage .node { cursor: pointer; }
+  #fieldArtPos { opacity: .14; }
+  .field-hub-code { font-size: 13px; letter-spacing: .06em; }
+  #fieldStage .node.k-observer .card-bg { stroke: rgba(240,213,138,.7); stroke-width: 1.7; }
+  #fieldStage .node.k-observer .dot { fill: var(--gold2); }
+  #fieldStage .node.k-log .card-bg { stroke: rgba(90,116,196,.55); }
+  #fieldStage .node.k-log .card-line { stroke: rgba(90,116,196,.75); }
+  #fieldStage .node.k-log .dot { fill: var(--neel-lt); }
+  #fieldStage .node.k-log .card-code { font-size: 13px; }
+  #fieldStage .node.k-log .card-sub { fill: var(--neel-lt); }
+
+  /* ---------- instagram embed popup ---------- */
+  #embedOverlay { position: fixed; inset: 0; z-index: 40; display: none;
+    align-items: center; justify-content: center; padding: 18px;
+    background: rgba(6,4,2,.78); }
+  #embedOverlay.open { display: flex; }
+  .embed-dialog { width: min(540px, 94vw); height: min(88vh, 860px); max-height: 92vh;
+    display: flex; flex-direction: column;
+    background: linear-gradient(180deg, #1d140d, #120c07); border: 1px solid var(--line-strong);
+    border-radius: 16px; box-shadow: 0 30px 80px rgba(0,0,0,.7); overflow: hidden; }
+  .embed-head { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+    padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .embed-title { font-family: var(--mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--gold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .embed-close { background: none; border: 1px solid var(--line); color: var(--oldgold); cursor: pointer;
+    width: 32px; height: 32px; border-radius: 9px; font-size: 18px; line-height: 1; flex: none;
+    transition: color .14s, border-color .14s; }
+  .embed-close:hover, .embed-close:focus-visible { color: var(--ivory); border-color: var(--line-strong); outline: none; }
+  .embed-body { position: relative; flex: 1 1 auto; min-height: 0; background: #000; overflow: hidden; }
+  .embed-body iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .embed-foot { padding: 10px 16px 12px; border-top: 1px solid var(--line); text-align: center; }
+  .embed-foot .d-link { font-size: 12px; }
+  .post-chip .fc-name { letter-spacing: .02em; }
+
+  @media (max-width: 900px) {
+    .tag { display: none; }
+    .nav-deva { display: none; }
+  }
+
   @media (max-width: 720px) {
-    header { height: 54px; padding: 0 14px; gap: 8px; }
+    header { height: auto; min-height: 54px; flex-wrap: wrap; padding: 8px 14px; gap: 6px 8px; }
     .wordmark { font-size: 20px; }
     .devaMark { font-size: 16px; }
     .tag { display: none; }
     .navlink { padding: 6px 9px; font-size: 9px; letter-spacing: .08em; }
     .nav-deva { display: none; }
+    .view-toggle { justify-content: center; padding: 2px; }
+    .view-btn { font-size: 8.5px; padding: 6px 10px; letter-spacing: .06em; }
+    .view-btn .vt-long { display: none; }
+    .view-btn .vt-short { display: inline; }
     .recenter-btn { right: 14px; bottom: 50px; width: 44px; height: 44px; }
     #drawer { width: 100%; max-width: 100%; border-left: 0; top: auto; bottom: 0; height: 66%;
       transform: translateY(102%); border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; }
@@ -406,20 +474,23 @@
     .footer-main { right: 12px; }
     #changelogPanel { left: 12px; bottom: 100px; width: min(340px, calc(100vw - 24px)); max-height: 260px; }
     #legend { left: 12px; bottom: 44px; gap: 7px 10px; font-size: 8px; max-width: 230px; }
-    #map-hint { top: 58px; font-size: 8px; letter-spacing: .1em; }
+    #map-hint { top: 60px; font-size: 8px; letter-spacing: .1em; }
+    #embedOverlay { padding: 8px; }
+    .embed-dialog { width: 100%; height: 92vh; max-height: 94vh; }
   }
   @media (max-width: 420px) {
     .wordmark { font-size: 18px; }
     .navlink { font-size: 8.5px; padding: 6px 8px; letter-spacing: .04em; }
   }
   @media (max-width: 360px) {
-    header { gap: 6px; padding: 0 10px; }
+    header { gap: 6px; padding: 8px 10px; }
     .wordmark { font-size: 17px; }
     .devaMark { display: none; }
     .navlink { padding: 6px 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .node.s-lost, .node.is-entry, .node.is-unread .dot, .expand-btn circle, .edge.broken, #symbols .sym { animation: none !important; }
+    .vt-thumb { transition: none !important; }
   }
 </style>
 <!-- Google tag (gtag.js) -->
@@ -478,6 +549,36 @@
     </g>
   </svg>
 
+  <svg id="fieldStage" role="application" aria-label="Field observers graph" hidden>
+    <defs>
+      <linearGradient id="fGradLive" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stop-color="#f0d58a"/>
+        <stop offset="100%" stop-color="#c9962b"/>
+      </linearGradient>
+      <linearGradient id="fGradBrass" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#ffe9b0"/>
+        <stop offset="100%" stop-color="#8a5a2b"/>
+      </linearGradient>
+    </defs>
+    <g id="fieldViewport">
+      <g id="fieldArtPos"><g id="fieldArtSpin"></g></g>
+      <g id="fieldEdges"></g>
+      <g id="fieldNodes"></g>
+    </g>
+  </svg>
+
+  <div class="view-toggle" id="viewToggle" role="tablist" aria-label="Switch archive view">
+    <span class="vt-options">
+      <span class="vt-thumb" aria-hidden="true"></span>
+      <button type="button" class="view-btn active" role="tab" aria-selected="true" data-view="logs" id="viewLogsBtn" aria-controls="stage" title="Show System Logs">
+        <span class="vt-long">System Logs</span><span class="vt-short">Logs</span>
+      </button>
+      <button type="button" class="view-btn" role="tab" aria-selected="false" data-view="field" id="viewFieldBtn" aria-controls="fieldStage" title="Show Field Observers">
+        <span class="vt-long">Field Observers</span><span class="vt-short">Observers</span>
+      </button>
+    </span>
+  </div>
+
 </main>
 
 <div id="map-hint">Tap + to expand · tap a node to open</div>
@@ -526,6 +627,21 @@
 </aside>
 <div id="toast" role="status" aria-live="polite"></div>
 
+<div id="embedOverlay" aria-hidden="true">
+  <div class="embed-dialog" role="dialog" aria-modal="true" aria-labelledby="embedTitle">
+    <div class="embed-head">
+      <span class="embed-title" id="embedTitle">Observer Post</span>
+      <button type="button" class="embed-close" id="embedClose" aria-label="Close post">×</button>
+    </div>
+    <div class="embed-body">
+      <iframe id="embedFrame" title="Instagram post" allowtransparency="true" frameborder="0" scrolling="no"></iframe>
+    </div>
+    <div class="embed-foot">
+      <a class="d-link" id="embedExternal" href="#" target="_blank" rel="noopener">Open on Instagram ↗</a>
+    </div>
+  </div>
+</div>
+
 <script>
 /* =========================================================================
    LostArchives — single-file graph.
@@ -541,6 +657,9 @@ LOST,[[LOCKED]],NA,[0x6B2F91C4] not found
 LOST,[[LOCKED]],NA,[0x17D8A330] not found
 SYS10000,[[LOCKED]],Observer LV 2 Clearance,2/5`;
 
+/* ---------- field observers (loaded from field-observers.csv) ---------- */
+var VIEW_KEY = 'la_view_v1';
+
 var NS = 'http://www.w3.org/2000/svg';
 var stage = document.getElementById('stage');
 var viewport = document.getElementById('viewport');
@@ -551,6 +670,12 @@ var drawer = document.getElementById('drawer');
 var dContent = document.getElementById('dContent');
 var scrim = document.getElementById('scrim');
 var toastEl = document.getElementById('toast');
+var fieldStageEl = document.getElementById('fieldStage');
+var fieldViewport = document.getElementById('fieldViewport');
+var fieldEdgesLayer = document.getElementById('fieldEdges');
+var fieldNodesLayer = document.getElementById('fieldNodes');
+var fieldArtPos = document.getElementById('fieldArtPos');
+var fieldArtSpin = document.getElementById('fieldArtSpin');
 var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- read / unread state (persisted per node) ---------- */
@@ -643,6 +768,28 @@ var artPos = null, artSpin = null;
   artPos = document.getElementById('artPos');
   artSpin = document.getElementById('artSpin');
   var g = artSpin;
+  var radii = [70, 140, 215, 295];
+  for (var r = 0; r < radii.length; r++) {
+    var c = document.createElementNS(NS, 'circle');
+    c.setAttribute('r', radii[r]); c.setAttribute('class', 'y-ring'); g.appendChild(c);
+  }
+  for (var i = 0; i < 24; i++) {
+    var e = document.createElementNS(NS, 'ellipse');
+    e.setAttribute('rx', 16); e.setAttribute('ry', 46); e.setAttribute('cy', -250);
+    e.setAttribute('class', 'y-petal'); e.setAttribute('transform', 'rotate(' + (i * 15) + ')');
+    g.appendChild(e);
+  }
+  var t1 = document.createElementNS(NS, 'polygon');
+  t1.setAttribute('points', '0,-225 195,112 -195,112'); t1.setAttribute('class', 'y-tri');
+  var t2 = document.createElementNS(NS, 'polygon');
+  t2.setAttribute('points', '0,225 195,-112 -195,-112'); t2.setAttribute('class', 'y-tri');
+  g.appendChild(t1); g.appendChild(t2);
+})();
+
+(function buildFieldArt() {
+  var g = fieldArtSpin;
+  if (!g) return;
+  if (fieldArtPos) fieldArtPos.setAttribute('transform', 'translate(-560 0)');
   var radii = [70, 140, 215, 295];
   for (var r = 0; r < radii.length; r++) {
     var c = document.createElementNS(NS, 'circle');
@@ -1139,7 +1286,10 @@ function render() {
 
 /* ---------- view transform ---------- */
 var scale = 1, tx = 0, ty = 0;
-function applyTransform() { viewport.setAttribute('transform', 'translate(' + tx + ' ' + ty + ') scale(' + scale + ')'); }
+function applyTransform() {
+  viewport.setAttribute('transform', 'translate(' + tx + ' ' + ty + ') scale(' + scale + ')');
+  positionViewToggle();
+}
 
 function boundsFor(ids) {
   var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -1326,14 +1476,17 @@ function recenter() {
       setNodePos(f.n);
     }
     updateEdges();
+    positionViewToggle();
     if (p < 1) requestAnimationFrame(step); else fitView();
   }
   if (reduceMotion) {
     for (var i = 0; i < from.length; i++) { from[i].n.x = from[i].n.x0; from[i].n.y = from[i].n.y0; setNodePos(from[i].n); }
-    updateEdges(); fitView();
+    updateEdges(); positionViewToggle(); fitView();
   } else requestAnimationFrame(step);
 }
-document.getElementById('recenter').addEventListener('click', recenter);
+document.getElementById('recenter').addEventListener('click', function () {
+  if (currentView === 'field') fitFieldView(); else recenter();
+});
 
 /* ---------- drawer ---------- */
 var lastFocused = null;
@@ -1514,6 +1667,8 @@ function openDrawer(n, source) {
   try {
     clearInterval(scrambleTimer); scrambleTimer = null;
     lastFocused = document.activeElement;
+    var dt = document.getElementById('drawerTitle');
+    if (dt) dt.textContent = 'Record Detail';
     var inner;
     if (n.kind === 'hub') inner = hubDrawer();
     else if (n.kind === 'corrupt') inner = corruptDrawer(n);
@@ -1546,7 +1701,21 @@ function closeDrawer() {
 document.getElementById('close').addEventListener('click', closeDrawer);
 scrim.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', function (e) {
-  if (e.key === 'Escape') closeDrawer();
+  var embed = document.getElementById('embedOverlay');
+  var embedOpen = embed && embed.classList.contains('open');
+  if (e.key === 'Escape') {
+    if (embedOpen) { closeEmbed(); return; }
+    closeDrawer();
+  }
+  if (e.key === 'Tab' && embedOpen) {
+    var ef = embed.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
+    if (ef.length) {
+      var efirst = ef[0], elast = ef[ef.length - 1];
+      if (e.shiftKey && document.activeElement === efirst) { e.preventDefault(); elast.focus(); }
+      else if (!e.shiftKey && document.activeElement === elast) { e.preventDefault(); efirst.focus(); }
+    }
+    return;
+  }
   if (e.key === 'Tab' && drawer.classList.contains('open')) {
     var f = drawer.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
     if (!f.length) return;
@@ -1630,6 +1799,7 @@ document.addEventListener('keydown', function (e) {
 (function tick(t) {
   if (!reduceMotion && !document.hidden) {
     if (artSpin) artSpin.setAttribute('transform', 'rotate(' + (t / 1000 * 1.8) + ')');
+    if (fieldArtSpin) fieldArtSpin.setAttribute('transform', 'rotate(' + (t / 1000 * 1.8) + ')');
     for (var i = 0; i < edges.length; i++) {
       var e = edges[i];
       if (e.kind !== 'live' || !e.dot) continue;
@@ -1643,6 +1813,570 @@ document.addEventListener('keydown', function (e) {
   }
   requestAnimationFrame(tick);
 })(0);
+
+/* ---------- field observers view ---------- */
+var currentView = 'logs';
+var FIELD_HUB_ID = 'field-hub';
+var fieldState = {
+  loaded: false, loading: false, error: null, waiters: [],
+  observers: [], nodes: [], edges: [], byId: {}, chains: [], revealed: {}
+};
+var fieldScale = 1, fieldTx = 0, fieldTy = 0;
+var fieldPress = null, fieldPan = null, fieldSuppressClick = false;
+
+function igEmbed(url) {
+  return String(url || '').replace(/\/+$/, '') + '/embed/';
+}
+
+function fieldHubHtml() {
+  var spokes = '';
+  for (var i = 0; i < 12; i++) {
+    spokes += '<line class="spoke" x1="0" y1="-26" x2="0" y2="-58" transform="rotate(' + (i * 30) + ')"/>';
+  }
+  return '<circle class="node-hit" r="76"/>' +
+    '<circle class="hub-halo" r="80"/>' +
+    '<circle class="hub-ring" r="62"/>' +
+    '<g class="hub-spokes">' + spokes + '</g>' +
+    '<circle class="hub-core" r="22"/>' +
+    '<text class="hub-code field-hub-code" y="-3">FIELD</text>' +
+    '<text class="hub-code field-hub-code" y="17">OBSERVERS</text>' +
+    '<text class="hub-sub" y="100">प्रेक्षक · FIELD LOGS</text>';
+}
+
+function isFieldRevealed(id) {
+  return id === FIELD_HUB_ID || fieldState.revealed[id] === 1;
+}
+function fieldChainIndexOf(id) {
+  for (var i = 0; i < fieldState.chains.length; i++) {
+    var k = fieldState.chains[i].indexOf(id);
+    if (k !== -1) return k;
+  }
+  return -1;
+}
+function fieldNextOf(id) {
+  for (var i = 0; i < fieldState.chains.length; i++) {
+    var k = fieldState.chains[i].indexOf(id);
+    if (k !== -1 && k < fieldState.chains[i].length - 1) return fieldState.chains[i][k + 1];
+  }
+  return null;
+}
+function initFieldReveal() {
+  fieldState.revealed = {};
+  var maxIdx = window.innerWidth > 720 ? 3 : 1;
+  for (var i = 0; i < fieldState.chains.length; i++) {
+    var chain = fieldState.chains[i];
+    for (var k = 0; k < chain.length && k < maxIdx; k++) fieldState.revealed[chain[k]] = 1;
+  }
+}
+function revealFieldNext(id) {
+  var nx = fieldNextOf(id);
+  if (!nx || fieldState.revealed[nx]) return;
+  fieldState.revealed[nx] = 1;
+  renderField();
+  ensureFieldVisible(nx);
+}
+
+function addFieldNode(spec) {
+  spec.x0 = spec.pos.x; spec.y0 = spec.pos.y;
+  spec.w = spec.size.w; spec.h = spec.size.h;
+  spec.x = spec.x0; spec.y = spec.y0;
+  fieldState.byId[spec.id] = spec;
+  fieldState.nodes.push(spec);
+  return spec;
+}
+function addFieldEdge(a, b) {
+  var from = fieldState.byId[a], to = fieldState.byId[b];
+  if (from && to) fieldState.edges.push({ from: from, to: to });
+}
+
+function buildFieldGraph() {
+  fieldState.nodes = []; fieldState.edges = []; fieldState.byId = {}; fieldState.chains = [];
+  var observers = fieldState.observers || [];
+
+  addFieldNode({
+    id: FIELD_HUB_ID, kind: 'hub', status: 'hub', label: 'FIELD OBSERVERS',
+    aria: 'Field observers hub', html: fieldHubHtml(),
+    pos: { x: -560, y: 0 }, size: { w: 200, h: 210 }
+  });
+
+  var count = observers.length;
+  for (var i = 0; i < count; i++) {
+    var o = observers[i];
+    var y = count <= 1 ? 0 : (i - (count - 1) / 2) * 320;
+    var chain = [o.id];
+    addFieldNode({
+      id: o.id, kind: 'observer', status: 'found', label: o.id,
+      aria: o.id + ' field observer, ' + o.posts.length + ' logs',
+      html: cardHtml(o.id, 'प्रेक्षक · ' + o.posts.length + ' LOGS'),
+      pos: { x: -280, y: y }, size: { w: 200, h: 104 }
+    });
+    addFieldEdge(FIELD_HUB_ID, o.id);
+    for (var j = 0; j < o.posts.length; j++) {
+      var post = o.posts[j];
+      addFieldNode({
+        id: post.id, kind: 'log', status: 'found', observerId: o.id, url: post.url,
+        label: post.id, aria: post.id + ' log post',
+        html: cardHtml(post.id, 'FIELD LOG · लॉग'),
+        pos: { x: j * 280, y: y }, size: { w: 200, h: 104 }
+      });
+      addFieldEdge(chain[chain.length - 1], post.id);
+      chain.push(post.id);
+    }
+    fieldState.chains.push(chain);
+  }
+
+  initFieldReveal();
+  renderField();
+  fitFieldView();
+}
+
+function renderField() {
+  while (fieldEdgesLayer.firstChild) fieldEdgesLayer.removeChild(fieldEdgesLayer.firstChild);
+  while (fieldNodesLayer.firstChild) fieldNodesLayer.removeChild(fieldNodesLayer.firstChild);
+  var i, e, n;
+
+  for (i = 0; i < fieldState.edges.length; i++) {
+    e = fieldState.edges[i];
+    var hidden = !isFieldRevealed(e.from.id) || !isFieldRevealed(e.to.id);
+    var d = pathD(e.from, e.to);
+    var halo = svgEl('path', 'edge halo' + (hidden ? ' is-hidden' : ''));
+    var core = svgEl('path', 'edge core' + (hidden ? ' is-hidden' : ''));
+    halo.setAttribute('d', d); core.setAttribute('d', d);
+    fieldEdgesLayer.appendChild(halo);
+    fieldEdgesLayer.appendChild(core);
+  }
+
+  for (i = 0; i < fieldState.nodes.length; i++) {
+    n = fieldState.nodes[i];
+    var shown = isFieldRevealed(n.id);
+    var g = svgEl('g', 'node k-' + n.kind + (n.status ? ' s-' + n.status : '') + (shown ? '' : ' is-hidden'));
+    g.setAttribute('data-field-id', n.id);
+    if (!shown) {
+      g.setAttribute('aria-hidden', 'true');
+    } else {
+      g.setAttribute('tabindex', '0');
+      g.setAttribute('role', 'button');
+      g.setAttribute('aria-label', n.aria || n.label || n.id);
+    }
+    g.innerHTML = n.html;
+    var nx = fieldNextOf(n.id);
+    if (shown && nx && !isFieldRevealed(nx)) g.innerHTML += expandBtnHtml();
+    g.setAttribute('transform', 'translate(' + n.x + ' ' + n.y + ')');
+    n.el = g;
+    fieldNodesLayer.appendChild(g);
+  }
+}
+
+function applyFieldTransform() {
+  fieldViewport.setAttribute('transform', 'translate(' + fieldTx + ' ' + fieldTy + ') scale(' + fieldScale + ')');
+  positionViewToggle();
+}
+function positionViewToggle() {
+  var el = document.getElementById('viewToggle');
+  if (!el) return;
+  var container = document.querySelector('main');
+  if (!container) return;
+  var r = container.getBoundingClientRect();
+  if (!r.width) { el.style.display = 'none'; return; }
+  var hub, sc, txv, tyv;
+  if (currentView === 'field') {
+    hub = fieldState.byId[FIELD_HUB_ID]; sc = fieldScale; txv = fieldTx; tyv = fieldTy;
+  } else {
+    hub = byId['rr26']; sc = scale; txv = tx; tyv = ty;
+  }
+  el.style.display = '';
+  var w = el.offsetWidth || 1, h = el.offsetHeight || 1;
+  var x, bottom;
+  if (hub) {
+    x = hub.x * sc + txv;
+    bottom = hub.y * sc + tyv - (hub.h / 2) * sc - 18;
+  } else {
+    x = w / 2 + 12;
+    bottom = h + 12;
+  }
+  x = clamp(x, w / 2 + 8, r.width - w / 2 - 8);
+  bottom = clamp(bottom, h + 8, r.height - 8);
+  el.style.left = x + 'px';
+  el.style.top = bottom + 'px';
+}
+function updateViewThumb() {
+  var options = document.querySelector('#viewToggle .vt-options');
+  if (!options) return;
+  var thumb = options.querySelector('.vt-thumb');
+  var active = options.querySelector('.view-btn.active');
+  if (!thumb || !active) return;
+  thumb.style.left = active.offsetLeft + 'px';
+  thumb.style.width = active.offsetWidth + 'px';
+}
+function fieldBoundsFor(ids) {
+  var minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (var i = 0; i < ids.length; i++) {
+    var n = fieldState.byId[ids[i]];
+    if (!n) continue;
+    minX = Math.min(minX, n.x - n.w / 2); maxX = Math.max(maxX, n.x + n.w / 2);
+    minY = Math.min(minY, n.y - n.h / 2); maxY = Math.max(maxY, n.y + n.h / 2);
+  }
+  return { minX: minX, minY: minY, maxX: maxX, maxY: maxY };
+}
+function fieldRevealedBounds() {
+  var ids = [];
+  for (var i = 0; i < fieldState.nodes.length; i++) {
+    if (isFieldRevealed(fieldState.nodes[i].id)) ids.push(fieldState.nodes[i].id);
+  }
+  return fieldBoundsFor(ids);
+}
+function fieldAllBounds() {
+  var ids = [];
+  for (var i = 0; i < fieldState.nodes.length; i++) ids.push(fieldState.nodes[i].id);
+  return fieldBoundsFor(ids);
+}
+
+function fitFieldView() {
+  if (!fieldState.nodes.length) return;
+  var r = fieldStageEl.getBoundingClientRect();
+  if (!r.width) return;
+  var narrow = r.width <= 720;
+  var padX = narrow ? 14 : 36, padTop = narrow ? 34 : 40, padBottom = narrow ? 34 : 44;
+  var availW = r.width - padX * 2;
+  var availH = Math.max(120, r.height - padTop - padBottom);
+  var b;
+  if (narrow) {
+    var focus = [FIELD_HUB_ID];
+    for (var i = 0; i < fieldState.observers.length; i++) focus.push(fieldState.observers[i].id);
+    b = fieldBoundsFor(focus);
+    if (isFinite(b.minX)) b.maxX += 46;
+  } else {
+    b = fieldRevealedBounds();
+  }
+  if (!isFinite(b.minX)) b = fieldAllBounds();
+  var k = Math.min(availW / (b.maxX - b.minX), availH / (b.maxY - b.minY));
+  fieldScale = clamp(k, 0.28, narrow ? 1.8 : 1.4);
+  var cx = (b.minX + b.maxX) / 2, cy = (b.minY + b.maxY) / 2;
+  fieldTx = narrow ? (r.width / 2 - cx * fieldScale) : (padX - b.minX * fieldScale);
+  fieldTy = (padTop + availH / 2) - cy * fieldScale;
+  applyFieldTransform();
+}
+
+function ensureFieldVisible(id) {
+  var n = fieldState.byId[id];
+  var r = fieldStageEl.getBoundingClientRect();
+  if (!n || !r.width) return;
+  var padX = 64, padTop = 70, padBottom = 58;
+  var sx = n.x * fieldScale + fieldTx, sy = n.y * fieldScale + fieldTy;
+  var hw = (n.w / 2) * fieldScale, hh = (n.h / 2) * fieldScale;
+  var nx = fieldNextOf(id);
+  if (nx && !isFieldRevealed(nx)) hw += 32 * fieldScale;
+  var dx = 0, dy = 0;
+  if (sx - hw < padX) dx = padX - (sx - hw);
+  else if (sx + hw > r.width - padX) dx = (r.width - padX) - (sx + hw);
+  if (sy - hh < padTop) dy = padTop - (sy - hh);
+  else if (sy + hh > r.height - padBottom) dy = (r.height - padBottom) - (sy + hh);
+  if (dx || dy) { fieldTx += dx; fieldTy += dy; applyFieldTransform(); }
+}
+
+function fieldStatus(msg) {
+  while (fieldEdgesLayer.firstChild) fieldEdgesLayer.removeChild(fieldEdgesLayer.firstChild);
+  while (fieldNodesLayer.firstChild) fieldNodesLayer.removeChild(fieldNodesLayer.firstChild);
+  var r = fieldStageEl.getBoundingClientRect();
+  fieldViewport.setAttribute('transform', 'translate(' + ((r.width || 600) / 2) + ' ' + ((r.height || 400) / 2) + ')');
+  var t = svgEl('text', 'lane-label');
+  t.setAttribute('text-anchor', 'middle');
+  t.setAttribute('y', '0');
+  t.textContent = msg;
+  fieldNodesLayer.appendChild(t);
+}
+
+function loadFieldData(cb) {
+  if (fieldState.loaded) { if (cb) cb(); return; }
+  if (fieldState.loading) { if (cb) fieldState.waiters.push(cb); return; }
+  fieldState.loading = true;
+  fieldState.waiters = cb ? [cb] : [];
+  fieldStatus('LOADING FIELD DATA…');
+  fetch('field-observers.csv', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(function (text) {
+      var rows = parseCSV(text), map = {}, order = [];
+      for (var i = 1; i < rows.length; i++) {
+        var row = rows[i];
+        var observer = String(row[0] || '').trim();
+        var code = String(row[1] || '').trim();
+        var link = String(row[2] || '').trim();
+        if (!observer || !code || !link) continue;
+        if (!map[observer]) { map[observer] = { id: observer, posts: [] }; order.push(observer); }
+        map[observer].posts.push({ id: code, url: link });
+      }
+      fieldState.observers = order.map(function (id) { return map[id]; });
+      fieldState.loaded = true;
+      fieldState.loading = false;
+      fieldState.error = null;
+      buildFieldGraph();
+      var waiters = fieldState.waiters; fieldState.waiters = [];
+      for (var w = 0; w < waiters.length; w++) waiters[w]();
+    })
+    .catch(function (e) {
+      fieldState.loading = false;
+      fieldState.error = e && e.message ? e.message : String(e);
+      fieldStatus('FIELD DATA UNAVAILABLE');
+      showToast('Could not load field observers');
+      var waiters = fieldState.waiters; fieldState.waiters = [];
+      for (var w = 0; w < waiters.length; w++) waiters[w]();
+    });
+}
+
+function trackFieldEvent(name, params) {
+  if (typeof window.gtag === 'function') window.gtag('event', name, params);
+}
+
+function wireFieldPosts(o) {
+  var btns = dContent.querySelectorAll('.post-chip');
+  for (var i = 0; i < btns.length; i++) {
+    (function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(btn.getAttribute('data-post'), 10);
+        var post = o.posts[idx];
+        if (post) openEmbed(post.url, o.id + ' · ' + post.id, o.id, post.id, btn);
+      });
+    })(btns[i]);
+  }
+}
+
+function openFieldObserver(id, focusEl) {
+  var o = null;
+  for (var i = 0; i < fieldState.observers.length; i++) {
+    if (fieldState.observers[i].id === id) o = fieldState.observers[i];
+  }
+  if (!o) return;
+  var rows = '';
+  for (var j = 0; j < o.posts.length; j++) {
+    rows += '<button type="button" class="frag-chip chip-btn post-chip" data-post="' + j + '">' +
+      '<span class="fc-key">◈</span>' +
+      '<span class="fc-name">' + esc(o.posts[j].id) + '</span>' +
+      '<span class="chip-open">OPEN ↗</span></button>';
+  }
+  var dt = document.getElementById('drawerTitle');
+  if (dt) dt.textContent = 'Observer Logs';
+  dContent.innerHTML =
+    '<div class="d-eyebrow">Field Observer · प्रेक्षक</div>' +
+    '<h2 class="d-code">' + esc(o.id) + '</h2>' +
+    '<span class="d-pill hub">' + o.posts.length + ' logs · अभिलेख</span>' +
+    '<div class="d-section"><div class="d-label">Observation Logs · लॉग</div>' +
+    '<div class="frag-list">' + rows + '</div></div>';
+  wireFieldPosts(o);
+  lastFocused = focusEl || document.activeElement;
+  drawer.classList.add('open');
+  scrim.classList.add('on');
+  drawer.setAttribute('aria-hidden', 'false');
+  trackFieldEvent('field_observer_open', { observer_id: o.id, log_count: o.posts.length });
+  var c = document.getElementById('close');
+  if (c) c.focus();
+}
+
+function openFieldHub(focusEl) {
+  var rows = '';
+  for (var i = 0; i < fieldState.observers.length; i++) {
+    var o = fieldState.observers[i];
+    rows += '<button type="button" class="frag-chip chip-btn" data-open-field="' + attrEsc(o.id) + '">' +
+      '<span class="fc-key">◈</span>' +
+      '<span class="fc-name">' + esc(o.id) + ' · ' + o.posts.length + ' logs</span>' +
+      '<span class="chip-open">OPEN ↗</span></button>';
+  }
+  var dt = document.getElementById('drawerTitle');
+  if (dt) dt.textContent = 'Field Observers';
+  dContent.innerHTML =
+    '<div class="d-eyebrow">Category · समूह</div>' +
+    '<h2 class="d-code">FIELD OBSERVERS</h2>' +
+    '<span class="d-pill hub">Field logs · प्रेक्षक</span>' +
+    '<div class="d-section"><div class="d-label">Observers</div>' +
+    '<div class="frag-list">' + rows + '</div></div>' +
+    '<p class="d-note">Each observer files its own chain of logs in sequence. Tap + on a node to reveal the next log.</p>';
+  var links = dContent.querySelectorAll('[data-open-field]');
+  for (var k = 0; k < links.length; k++) {
+    (function (el) {
+      el.addEventListener('click', function () { openFieldObserver(el.getAttribute('data-open-field'), el); });
+    })(links[k]);
+  }
+  lastFocused = focusEl || document.activeElement;
+  drawer.classList.add('open');
+  scrim.classList.add('on');
+  drawer.setAttribute('aria-hidden', 'false');
+  var c = document.getElementById('close');
+  if (c) c.focus();
+}
+
+var embedLastFocused = null;
+function openEmbed(url, label, observerId, postId, focusEl) {
+  var overlay = document.getElementById('embedOverlay');
+  var frame = document.getElementById('embedFrame');
+  var ext = document.getElementById('embedExternal');
+  var title = document.getElementById('embedTitle');
+  if (!overlay || !frame) return;
+  embedLastFocused = focusEl || document.activeElement;
+  frame.src = igEmbed(url);
+  if (ext) ext.href = url;
+  if (title) title.textContent = label || 'Observer Post';
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  trackFieldEvent('field_post_open', { observer_id: observerId || '', post_id: postId || '' });
+  var c = document.getElementById('embedClose');
+  if (c) c.focus();
+}
+function closeEmbed() {
+  var overlay = document.getElementById('embedOverlay');
+  var frame = document.getElementById('embedFrame');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  if (frame) frame.src = 'about:blank';
+  document.body.style.overflow = '';
+  if (embedLastFocused && embedLastFocused.focus) { try { embedLastFocused.focus(); } catch (e) {} }
+  embedLastFocused = null;
+}
+
+function storedView() {
+  try { return localStorage.getItem(VIEW_KEY) === 'field' ? 'field' : 'logs'; } catch (e) { return 'logs'; }
+}
+
+function setView(mode, persist) {
+  mode = mode === 'field' ? 'field' : 'logs';
+  currentView = mode;
+  var logsBtn = document.getElementById('viewLogsBtn');
+  var fieldBtn = document.getElementById('viewFieldBtn');
+  var legend = document.getElementById('legend');
+  var hint = document.getElementById('map-hint');
+  if (logsBtn) {
+    logsBtn.classList.toggle('active', mode === 'logs');
+    logsBtn.setAttribute('aria-selected', mode === 'logs' ? 'true' : 'false');
+  }
+  if (fieldBtn) {
+    fieldBtn.classList.toggle('active', mode === 'field');
+    fieldBtn.setAttribute('aria-selected', mode === 'field' ? 'true' : 'false');
+  }
+  updateViewThumb();
+  if (drawer.classList.contains('open')) closeDrawer();
+  var embed = document.getElementById('embedOverlay');
+  if (embed && embed.classList.contains('open')) closeEmbed();
+  if (mode === 'field') {
+    stage.setAttribute('hidden', '');
+    fieldStageEl.removeAttribute('hidden');
+    if (legend) legend.style.display = 'none';
+    if (hint) {
+      hint.textContent = 'Tap + to expand · tap a log';
+      hint.classList.remove('hide');
+    }
+    loadFieldData(function () { requestAnimationFrame(fitFieldView); });
+    if (fieldState.loaded) requestAnimationFrame(fitFieldView);
+  } else {
+    fieldStageEl.setAttribute('hidden', '');
+    stage.removeAttribute('hidden');
+    if (legend) legend.style.display = '';
+    if (hint && !hintDismissed) {
+      hint.textContent = layoutMode === 'narrow'
+        ? 'Tap + to expand · drag to explore →'
+        : 'Tap + to expand · tap a node to open';
+      hint.classList.remove('hide');
+    }
+    requestAnimationFrame(fitView);
+  }
+  positionViewToggle();
+  if (persist !== false) { try { localStorage.setItem(VIEW_KEY, mode); } catch (e) {} }
+}
+
+function fieldNodeFromEvent(e) {
+  var g = e.target && e.target.closest ? e.target.closest('.node') : null;
+  if (!g) return null;
+  return fieldState.byId[g.getAttribute('data-field-id')] || null;
+}
+
+(function wireView() {
+  var logsBtn = document.getElementById('viewLogsBtn');
+  var fieldBtn = document.getElementById('viewFieldBtn');
+  if (logsBtn) logsBtn.addEventListener('click', function () { setView('logs'); });
+  if (fieldBtn) fieldBtn.addEventListener('click', function () { setView('field'); });
+  updateViewThumb();
+  window.addEventListener('resize', updateViewThumb);
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(updateViewThumb);
+  }
+
+  fieldNodesLayer.addEventListener('click', function (e) {
+    if (fieldSuppressClick) { fieldSuppressClick = false; return; }
+    var exp = e.target && e.target.closest ? e.target.closest('.expand-btn') : null;
+    if (exp) {
+      var eg = exp.closest('.node');
+      if (eg) revealFieldNext(eg.getAttribute('data-field-id'));
+      return;
+    }
+    var n = fieldNodeFromEvent(e);
+    if (!n) return;
+    var g = n.el;
+    if (n.kind === 'log') openEmbed(n.url, n.id, n.observerId, n.id, g);
+    else if (n.kind === 'observer') openFieldObserver(n.id, g);
+    else if (n.kind === 'hub') openFieldHub(g);
+  });
+
+  fieldNodesLayer.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ' && e.key !== 'Spacebar') return;
+    var exp = e.target && e.target.closest ? e.target.closest('.expand-btn') : null;
+    if (exp) {
+      var eg = exp.closest('.node');
+      if (eg) { e.preventDefault(); revealFieldNext(eg.getAttribute('data-field-id')); }
+      return;
+    }
+    var n = fieldNodeFromEvent(e);
+    if (!n) return;
+    e.preventDefault();
+    var g = n.el;
+    if (n.kind === 'log') openEmbed(n.url, n.id, n.observerId, n.id, g);
+    else if (n.kind === 'observer') openFieldObserver(n.id, g);
+    else if (n.kind === 'hub') openFieldHub(g);
+  });
+
+  fieldStageEl.addEventListener('pointerdown', function (e) {
+    fieldSuppressClick = false;
+    var nodeG = e.target && e.target.closest ? e.target.closest('.node') : null;
+    if (nodeG) {
+      if (!fieldState.byId[nodeG.getAttribute('data-field-id')]) return;
+      fieldPress = { sx: e.clientX, sy: e.clientY, moved: false };
+    } else {
+      fieldPan = { sx: e.clientX, sy: e.clientY, tx0: fieldTx, ty0: fieldTy };
+      e.preventDefault();
+    }
+  });
+  window.addEventListener('pointermove', function (e) {
+    if (fieldPress) {
+      var dx = e.clientX - fieldPress.sx, dy = e.clientY - fieldPress.sy;
+      if (Math.abs(dx) + Math.abs(dy) > CLICK_THRESHOLD) fieldPress.moved = true;
+    } else if (fieldPan) {
+      fieldTx = fieldPan.tx0 + (e.clientX - fieldPan.sx);
+      fieldTy = fieldPan.ty0 + (e.clientY - fieldPan.sy);
+      applyFieldTransform();
+    }
+  });
+  function endFieldPointer() {
+    if (fieldPress) { fieldSuppressClick = fieldPress.moved; fieldPress = null; }
+    fieldPan = null;
+  }
+  window.addEventListener('pointerup', endFieldPointer);
+  window.addEventListener('pointercancel', endFieldPointer);
+
+  fieldStageEl.addEventListener('wheel', function (e) {
+    if (fieldStageEl.hasAttribute('hidden')) return;
+    e.preventDefault();
+    var r = fieldStageEl.getBoundingClientRect();
+    var mx = e.clientX - r.left, my = e.clientY - r.top;
+    var old = fieldScale;
+    fieldScale = clamp(fieldScale * (e.deltaY < 0 ? 1.1 : 1 / 1.1), 0.25, 2.4);
+    fieldTx = mx - (mx - fieldTx) * (fieldScale / old);
+    fieldTy = my - (my - fieldTy) * (fieldScale / old);
+    applyFieldTransform();
+  }, { passive: false });
+
+  var embedClose = document.getElementById('embedClose');
+  if (embedClose) embedClose.addEventListener('click', closeEmbed);
+  var overlay = document.getElementById('embedOverlay');
+  if (overlay) overlay.addEventListener('click', function (e) { if (e.target === overlay) closeEmbed(); });
+})();
 
 /* ---------- boot ---------- */
 (function boot() {
@@ -1667,6 +2401,7 @@ document.addEventListener('keydown', function (e) {
     var hintEl = document.getElementById('map-hint');
     if (hintEl && layoutMode === 'narrow') hintEl.textContent = 'Tap + to expand · drag to explore →';
     fitView();
+    setView(storedView(), false);
   } catch (err) {
     console.error('Boot failed:', err);
     showToast('Could not build the graph');
@@ -1702,13 +2437,14 @@ function applyResponsiveLayout() {
     updateEdges();
     if (mode === 'wide' && revealDepth(3)) render();
     var hintEl = document.getElementById('map-hint');
-    if (hintEl && !hintDismissed) {
+    if (hintEl && !hintDismissed && currentView !== 'field') {
       hintEl.textContent = mode === 'narrow'
         ? 'Tap + to expand · drag to explore →'
         : 'Tap + to expand · tap a node to open';
     }
   }
-  fitView();
+  if (currentView === 'field') { fitFieldView(); }
+  else fitView();
 }
 
 var resizeTimer = null;
