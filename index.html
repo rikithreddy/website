@@ -1162,11 +1162,16 @@ function addEdge(a, b, kind) {
 
 /* ---------- progressive reveal ----------
    Each series is a chain that starts collapsed: only the first node is
-   shown, and a + on each node reveals the next one. */
+   shown, and a + on each node reveals the next one.
+   IMPORTANT: every new child node must be appended to a chain here so it
+   stays sealed behind a + instead of appearing open by default. Chains
+   listed in COLLAPSED_CHAINS never auto-expand past their first node. */
 var CHAINS = [
   ['SYS0000', 'SYS0001', 'SYS0002', 'lost-1'],
-  ['SYS2000', 'lost-2']
+  ['SYS2000', 'lost-2'],
+  ['lost-0', 'SYS3001']
 ];
+var COLLAPSED_CHAINS = { 'lost-0': true };
 var revealed = {};
 function chainIndexOf(id) {
   for (var i = 0; i < CHAINS.length; i++) {
@@ -1174,6 +1179,15 @@ function chainIndexOf(id) {
     if (k !== -1) return k;
   }
   return -1;
+}
+function chainStartOf(id) {
+  for (var i = 0; i < CHAINS.length; i++) {
+    if (CHAINS[i].indexOf(id) !== -1) return CHAINS[i][0];
+  }
+  return null;
+}
+function revealLimit(startId, maxIdx) {
+  return COLLAPSED_CHAINS[startId] ? Math.min(maxIdx, 1) : maxIdx;
 }
 function nextOf(id) {
   for (var i = 0; i < CHAINS.length; i++) {
@@ -1187,7 +1201,9 @@ function revealDepth(maxIdx) {
   var changed = false;
   for (var i = 0; i < nodes.length; i++) {
     var idx = chainIndexOf(nodes[i].id);
-    if (idx >= 0 && idx < maxIdx && !revealed[nodes[i].id]) {
+    if (idx < 0) continue;
+    var limit = revealLimit(chainStartOf(nodes[i].id), maxIdx);
+    if (idx < limit && !revealed[nodes[i].id]) {
       revealed[nodes[i].id] = 1;
       changed = true;
     }
@@ -1201,7 +1217,8 @@ function initReveal() {
   var maxIdx = window.innerWidth > 720 ? 3 : 1;
   for (var i = 0; i < nodes.length; i++) {
     var idx = chainIndexOf(nodes[i].id);
-    if (idx < maxIdx) revealed[nodes[i].id] = 1;
+    var limit = revealLimit(chainStartOf(nodes[i].id), maxIdx);
+    if (idx < limit) revealed[nodes[i].id] = 1;
   }
 }
 function revealNext(id) {
