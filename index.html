@@ -158,7 +158,7 @@
   .node.s-lost .corr-line { fill: none; stroke: url(#gradCorrupt); stroke-width: 1.4; }
   .corr-hex { font-family: var(--mono); font-size: 12px; fill: var(--ember); text-anchor: middle;
     letter-spacing: .04em; }
-  .corr-note { font-family: var(--mono); font-size: 8px; fill: var(--sindoor); text-anchor: middle;
+  .corr-sealed { font-family: var(--mono); font-size: 8.5px; fill: var(--ember); text-anchor: middle;
     letter-spacing: .16em; opacity: .9; }
   .node.s-lost { animation: corruptFlicker 7s steps(1) infinite; }
   @keyframes corruptFlicker {
@@ -167,7 +167,6 @@
     95% { opacity: .86; }
     97% { opacity: .55; }
   }
-  .node.s-lost .open-cue.sealed { opacity: .6; }
   .node.s-lost:hover, .node.s-lost.selected { opacity: 1;
     filter: drop-shadow(0 0 13px rgba(255,122,60,.62)); }
   .node.s-lost:hover .corr-line, .node.s-lost.selected .corr-line {
@@ -194,12 +193,6 @@
     0%, 100% { filter: drop-shadow(0 0 3px rgba(255,233,176,.3)); }
     50% { filter: drop-shadow(0 0 16px rgba(255,233,176,.85)); }
   }
-  .entry-pill { fill: rgba(255,233,176,.14); stroke: rgba(255,233,176,.65); stroke-width: 1; }
-  .entry-tag { font-family: var(--mono); font-size: 8px; font-weight: 700; letter-spacing: .16em;
-    fill: var(--gold2); text-anchor: middle; }
-  .series-pill { fill: none; stroke: rgba(201,150,43,.5); stroke-width: 1; }
-  .series-tag { font-family: var(--mono); font-size: 8px; letter-spacing: .12em; fill: var(--oldgold);
-    text-anchor: middle; }
   .seq-badge { font-family: var(--mono); font-size: 9px; letter-spacing: .08em; fill: var(--oldgold);
     opacity: .85; }
   .node.is-unread .dot { fill: var(--ember); animation: dotPulse 2.2s ease-in-out infinite; }
@@ -451,7 +444,7 @@
   <span class="wordmark">Lost<span class="accent">Archives</span></span>
   <span class="devaMark">छाया</span>
   <span class="spacer"></span>
-  <a class="navlink" href="about.html">About<span class="nav-deva"> · परिचय</span></a>
+  <a class="navlink" href="guide.html">Guide<span class="nav-deva"> · मार्गदर्शिका</span></a>
   <a class="navlink" href="observers.html">Observers<span class="nav-deva"> · प्रेक्षक</span></a>
   <span class="tag">RR26 · नेटवर्क</span>
 </header>
@@ -752,21 +745,12 @@ function hubHtml() {
 }
 function cardHtml(code, sub, opts) {
   opts = opts || {};
-  var tag = '';
-  if (opts.entry) {
-    tag = '<rect class="entry-pill" x="56" y="-41" width="38" height="16" rx="8"/>' +
-      '<text class="entry-tag" x="75" y="-30">ENTRY</text>';
-  } else if (opts.seriesStart) {
-    tag = '<rect class="series-pill" x="58" y="-41" width="34" height="16" rx="8"/>' +
-      '<text class="series-tag" x="75" y="-30">START</text>';
-  }
   var seq = opts.seq ? '<text class="seq-badge" x="-82" y="45">' + esc(opts.seq) + '</text>' : '';
   return '<rect class="node-hit" x="-110" y="-58" width="220" height="116" rx="16"/>' +
     '<rect class="card-bg" x="-100" y="-52" width="200" height="104" rx="14"/>' +
     '<rect class="card-line" x="-100" y="-52" width="200" height="104" rx="14"/>' +
     '<circle class="dot" cx="-82" cy="-31" r="4"/>' +
     '<text class="card-code" x="-70" y="-26">' + esc(code) + '</text>' +
-    tag +
     '<text class="open-cue" x="92" y="45">OPEN ↗</text>' +
     '<line class="card-rule" x1="-82" y1="-8" x2="82" y2="-8"/>' +
     '<text class="card-sub" x="0" y="24">' + esc(sub) + '</text>' +
@@ -775,18 +759,17 @@ function cardHtml(code, sub, opts) {
 function corrHtml(hex, name) {
   var d = jagPath(92, 50);
   var title = name || 'CORRUPTED';
-  var meta = name
-    ? '<text class="corr-hex" x="0" y="18">' + esc(hex) + '</text>' +
-      '<text class="corr-note" x="0" y="37">CORRUPTED</text>'
-    : '<text class="corr-hex" x="0" y="26">' + esc(hex) + '</text>';
+  var status = name ? 'SEALED · CORRUPTED' : 'SEALED';
+  /* SEALED sits centered beneath the hex so the jagged border never
+     clips it (it used to overlap the right-hand edge). */
   return '<path class="node-hit" d="' + jagPath(104, 60) + '"/>' +
     '<path class="corr-bg" d="' + d + '"/>' +
     '<path class="corr-line" d="' + d + '"/>' +
     '<circle class="dot lost" cx="-78" cy="-30" r="4"/>' +
     '<text class="card-code lost" x="-66" y="-25">' + esc(title) + '</text>' +
-    '<text class="open-cue sealed" x="88" y="-27">SEALED</text>' +
     '<line class="card-rule" x1="-78" y1="-8" x2="78" y2="-8"/>' +
-    meta;
+    '<text class="corr-hex" x="0" y="16">' + esc(hex) + '</text>' +
+    '<text class="corr-sealed" x="0" y="36">' + esc(status) + '</text>';
 }
 function expandBtnHtml() {
   return '<g class="expand-btn" role="button" tabindex="0" aria-label="Reveal next record">' +
