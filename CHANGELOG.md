@@ -7,7 +7,8 @@
 
 ## 0.2v — 2026-11-20
 
-- Added observer notebooks.
+- Added observer notebooks to observer page.
+- Added SYS3000 node.
 
 ## 0.1v — 2026-11-13
 
