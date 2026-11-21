@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3v — 2026-11-21
+
+- Enhanced visual layout for System logs.
+
 ## 0.2v — 2026-11-20
 
 - Added observer notebooks.
