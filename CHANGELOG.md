@@ -4,10 +4,11 @@
 
 - Enhanced visual layout for System logs.
 - Added Field Observers view with Instagram log records mapping.
+- Added SYS3000 node.
 
 ## 0.2v — 2026-11-20
 
-- Added observer notebooks.
+- Added observer notebooks to observer page.
 
 ## 0.1v — 2026-11-13
 

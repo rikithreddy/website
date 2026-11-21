@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;500;700&family=JetBrains+Mono:wght@400;700&family=Kalam:wght@300;400;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --hand: "Yatra One", Georgia, serif;
@@ -16,6 +16,7 @@
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
     --deva: "Noto Sans Devanagari", serif;
     --serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
+    --hand-script: "Kalam", "Segoe Script", cursive;
 
     --soot: #0b0805;
     --stone: #1b140e;
@@ -484,6 +485,121 @@
   .embed-foot .d-link { font-size: 12px; }
   .post-chip .fc-name { letter-spacing: .02em; }
 
+  /* ---------- SYS3000 recovered notebook ---------- */
+  #sysNotebookOverlay {
+    position: fixed; inset: 0; z-index: 45; display: flex; align-items: center; justify-content: center;
+    padding: 24px; opacity: 0; pointer-events: none; transition: opacity .2s;
+    background: radial-gradient(1100px 760px at 50% 26%, rgba(11,8,5,.7), rgba(5,3,2,.93));
+    -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  }
+  #sysNotebookOverlay.open { opacity: 1; pointer-events: auto; }
+  .sys-nb {
+    width: 100%; max-width: 720px; max-height: 88vh; display: flex; flex-direction: column;
+    background: linear-gradient(180deg, #1b140e, #130d08);
+    border: 1px solid var(--line-strong); border-radius: var(--radius-lg); overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.7), 0 0 44px rgba(201,150,43,.12);
+    transform: translateY(14px) scale(.98); transition: transform .22s;
+  }
+  #sysNotebookOverlay.open .sys-nb { transform: none; }
+  .sys-nb-top { display: flex; align-items: center; gap: 12px; padding: 15px 20px;
+    border-bottom: 1px solid var(--line);
+    background: radial-gradient(600px 120px at 0% 0%, rgba(201,150,43,.12), transparent 70%); }
+  .sys-nb-title { font-family: var(--hand); font-size: 22px; color: var(--gold); }
+  .sys-nb-owner { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); }
+  .sys-nb-close { margin-left: auto; flex: none; width: 30px; height: 30px; border-radius: 8px;
+    border: 1px solid var(--line); background: transparent; color: var(--oldgold);
+    font-size: 14px; line-height: 1; cursor: pointer; transition: all .15s; }
+  .sys-nb-close:hover, .sys-nb-close:focus-visible { color: var(--gold2); border-color: var(--line-strong);
+    background: rgba(255,255,255,.04); outline: none; }
+  .sys-nb-pages { flex: 1; overflow-y: auto; padding: 20px; -webkit-overflow-scrolling: touch; }
+  .sys-nb-page { position: relative; min-height: 430px; padding: 26px 28px 46px 38px; margin: 0 auto;
+    border: 1px solid rgba(90,55,25,.4); border-radius: 8px;
+    --burnA: 88% 12%; --burnB: 8% 82%; --burnC: 52% 98%; --burnD: 30% 4%;
+    --stainA: 62% 38%; --stainB: 22% 58%;
+    background:
+      radial-gradient(42% 30% at var(--burnA), rgba(58,28,9,.34), transparent 72%),
+      radial-gradient(38% 46% at var(--burnB), rgba(48,23,8,.36), transparent 70%),
+      radial-gradient(22% 16% at var(--burnC), rgba(70,35,12,.26), transparent 75%),
+      radial-gradient(18% 14% at var(--burnD), rgba(60,30,10,.22), transparent 78%),
+      radial-gradient(26% 20% at var(--stainA), rgba(120,72,32,.16), transparent 72%),
+      radial-gradient(20% 26% at var(--stainB), rgba(110,64,28,.14), transparent 74%),
+      radial-gradient(120% 90% at 15% 10%, rgba(255,246,220,.55), transparent 45%),
+      radial-gradient(110% 100% at 85% 90%, rgba(120,72,32,.22), transparent 55%),
+      linear-gradient(155deg, #ecd9ae 0%, #f1e2bc 45%, #ddc294 100%);
+    color: #2a1d10; isolation: isolate;
+    clip-path: polygon(0.6% 1.4%, 12% 0.4%, 33% 1.2%, 58% 0.2%, 81% 1%, 99.4% 0%,
+      100% 9%, 99% 22%, 99.6% 41%, 98.9% 63%, 99.5% 82%, 100% 97%,
+      88% 99%, 66% 98.6%, 41% 99.5%, 19% 98.7%, 0.5% 99.6%,
+      0% 88%, 0.8% 66%, 0.2% 45%, 0.9% 24%, 0% 8%);
+  }
+  .sys-nb-page:nth-child(3n+2) {
+    --burnA: 12% 16%; --burnB: 90% 78%; --burnC: 42% 6%; --burnD: 72% 96%;
+    --stainA: 34% 44%; --stainB: 80% 30%;
+  }
+  .sys-nb-page:nth-child(3n+3) {
+    --burnA: 96% 54%; --burnB: 4% 22%; --burnC: 60% 94%; --burnD: 22% 86%;
+    --stainA: 48% 70%; --stainB: 12% 34%;
+  }
+  .sys-nb-page::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(115deg, transparent 60%, rgba(242,230,190,.42) 61%, rgba(242,230,190,.42) 65%, transparent 66%),
+      linear-gradient(-68deg, transparent 82%, rgba(242,230,190,.36) 83%, rgba(242,230,190,.36) 87%, transparent 88%),
+      radial-gradient(130% 120% at 50% 50%, transparent 62%, rgba(80,42,16,.12) 80%,
+        rgba(55,28,10,.3) 92%, rgba(24,11,4,.55) 100%),
+      radial-gradient(34% 28% at 0% 4%, rgba(40,18,6,.28), transparent 70%),
+      radial-gradient(30% 34% at 100% 62%, rgba(45,20,7,.22), transparent 72%),
+      radial-gradient(40% 30% at 6% 96%, rgba(50,24,8,.24), transparent 70%),
+      radial-gradient(28% 24% at 78% 100%, rgba(55,26,9,.22), transparent 72%),
+      radial-gradient(50% 35% at 94% 6%, rgba(70,35,12,.18), transparent 70%);
+    box-shadow: inset 0 0 40px rgba(70,35,12,.22), inset 0 0 120px rgba(50,25,9,.16);
+  }
+  .sys-nb-page::after { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    border-radius: inherit; mix-blend-mode: multiply; opacity: .28;
+    background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.013 0.019' numOctaves='3' seed='9'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23c)' opacity='0.4'/%3E%3C/svg%3E"),
+      linear-gradient(38deg, transparent 49.6%, rgba(70,38,15,.45) 49.85%, transparent 50.1%),
+      linear-gradient(63deg, transparent 44%, rgba(90,50,20,.16) 46%, transparent 48%),
+      linear-gradient(-71deg, transparent 30%, rgba(90,50,20,.14) 33%, transparent 36%),
+      linear-gradient(115deg, transparent 60%, rgba(255,245,215,.35) 63%, transparent 66%),
+      linear-gradient(-35deg, transparent 20%, rgba(90,50,20,.12) 24%, transparent 27%);
+  }
+  .sys-nb-page > * { position: relative; z-index: 1; }
+  .sys-nb-page[hidden] { display: none; }
+  .sys-nb-inner {
+    font-family: var(--serif); font-size: 17px; font-weight: 400; line-height: 1.72;
+    letter-spacing: .002em; color: #1c2540;
+  }
+  .sys-nb-inner p { margin: 0; }
+  .sys-nb-inner p + p { margin-top: 14px; text-indent: 26px; }
+  .sys-nb-inner .sys-nb-meta {
+    font-family: var(--serif); font-style: italic; font-size: 14px; letter-spacing: .01em;
+    text-transform: none; line-height: 1.5; color: #5e4423; margin-bottom: 20px; text-indent: 0;
+  }
+  .sys-nb-inner .sys-nb-redact { color: #b0432b; letter-spacing: .04em; }
+  .sys-nb-inner .sys-nb-err { color: #a5321f; }
+  .sys-nb-pagenum { position: absolute; left: 0; right: 0; bottom: 14px; text-align: center;
+    font-family: var(--mono); font-size: 9px; letter-spacing: .16em; color: rgba(90,60,30,.65); }
+  .sys-nb-foot { display: flex; align-items: center; justify-content: center; gap: 18px; padding: 12px;
+    border-top: 1px solid var(--line); }
+  .sys-nb-nav { width: 36px; height: 32px; border-radius: 8px; border: 1px solid var(--line);
+    background: transparent; color: var(--gold); font-family: var(--mono); font-size: 14px;
+    cursor: pointer; transition: all .15s; }
+  .sys-nb-nav:hover:not(:disabled), .sys-nb-nav:focus-visible:not(:disabled) {
+    color: var(--gold2); border-color: var(--line-strong); background: rgba(255,255,255,.04); outline: none; }
+  .sys-nb-nav:disabled { opacity: .3; cursor: default; }
+  .sys-nb-indicator { font-family: var(--mono); font-size: 10px; letter-spacing: .16em;
+    color: var(--muted); min-width: 52px; text-align: center; }
+
+  @media (max-width: 640px) {
+    #sysNotebookOverlay { padding: 12px; }
+    .sys-nb-title { font-size: 18px; }
+    .sys-nb-owner { display: none; }
+    .sys-nb-pages { padding: 12px; }
+    .sys-nb-page { padding: 20px 18px 40px 30px; min-height: 380px; }
+  }
+
   @media (max-width: 900px) {
     .tag { display: none; }
     .nav-deva { display: none; }
@@ -691,6 +807,22 @@
     </div>
     <div class="embed-foot">
       <a class="d-link" id="embedExternal" href="#" target="_blank" rel="noopener">Open on Instagram ↗</a>
+    </div>
+  </div>
+</div>
+
+<div id="sysNotebookOverlay" aria-hidden="true">
+  <div class="sys-nb" role="dialog" aria-modal="true" aria-labelledby="sysNbTitle">
+    <div class="sys-nb-top">
+      <span class="sys-nb-title" id="sysNbTitle">SYS3000</span>
+      <span class="sys-nb-owner" id="sysNbOwner">Recovered Fragment</span>
+      <button type="button" class="sys-nb-close" id="sysNbClose" aria-label="Close notebook">✕</button>
+    </div>
+    <div class="sys-nb-pages" id="sysNbPages"></div>
+    <div class="sys-nb-foot">
+      <button type="button" class="sys-nb-nav" id="sysNbPrev" aria-label="Previous page">←</button>
+      <span class="sys-nb-indicator" id="sysNbIndicator"></span>
+      <button type="button" class="sys-nb-nav" id="sysNbNext" aria-label="Next page">→</button>
     </div>
   </div>
 </div>
@@ -1030,11 +1162,16 @@ function addEdge(a, b, kind) {
 
 /* ---------- progressive reveal ----------
    Each series is a chain that starts collapsed: only the first node is
-   shown, and a + on each node reveals the next one. */
+   shown, and a + on each node reveals the next one.
+   IMPORTANT: every new child node must be appended to a chain here so it
+   stays sealed behind a + instead of appearing open by default. Chains
+   listed in COLLAPSED_CHAINS never auto-expand past their first node. */
 var CHAINS = [
   ['SYS0000', 'SYS0001', 'SYS0002', 'lost-1'],
-  ['SYS2000', 'lost-2']
+  ['SYS2000', 'lost-2'],
+  ['lost-0', 'SYS3001']
 ];
+var COLLAPSED_CHAINS = { 'lost-0': true };
 var revealed = {};
 function chainIndexOf(id) {
   for (var i = 0; i < CHAINS.length; i++) {
@@ -1042,6 +1179,15 @@ function chainIndexOf(id) {
     if (k !== -1) return k;
   }
   return -1;
+}
+function chainStartOf(id) {
+  for (var i = 0; i < CHAINS.length; i++) {
+    if (CHAINS[i].indexOf(id) !== -1) return CHAINS[i][0];
+  }
+  return null;
+}
+function revealLimit(startId, maxIdx) {
+  return COLLAPSED_CHAINS[startId] ? Math.min(maxIdx, 1) : maxIdx;
 }
 function nextOf(id) {
   for (var i = 0; i < CHAINS.length; i++) {
@@ -1055,7 +1201,9 @@ function revealDepth(maxIdx) {
   var changed = false;
   for (var i = 0; i < nodes.length; i++) {
     var idx = chainIndexOf(nodes[i].id);
-    if (idx >= 0 && idx < maxIdx && !revealed[nodes[i].id]) {
+    if (idx < 0) continue;
+    var limit = revealLimit(chainStartOf(nodes[i].id), maxIdx);
+    if (idx < limit && !revealed[nodes[i].id]) {
       revealed[nodes[i].id] = 1;
       changed = true;
     }
@@ -1069,7 +1217,8 @@ function initReveal() {
   var maxIdx = window.innerWidth > 720 ? 3 : 1;
   for (var i = 0; i < nodes.length; i++) {
     var idx = chainIndexOf(nodes[i].id);
-    if (idx < maxIdx) revealed[nodes[i].id] = 1;
+    var limit = revealLimit(chainStartOf(nodes[i].id), maxIdx);
+    if (idx < limit) revealed[nodes[i].id] = 1;
   }
 }
 function revealNext(id) {
@@ -1150,7 +1299,11 @@ function buildGraph() {
   var hubLinks = [];
   if (sys0) hubLinks.push({ to: 'SYS0000', kind: 'live' });
   if (sys2) hubLinks.push({ to: 'SYS2000', kind: 'live' });
-  for (var h = 0; h < newCorruptStart; h++) hubLinks.push({ to: 'lost-' + h, kind: 'broken' });
+  for (var h = 0; h < newCorruptStart; h++) {
+    var hr = lost[h];
+    var hhex = hexFrom(hr.raw || [hr.code, hr.link, hr.enc, hr.pass]);
+    hubLinks.push({ to: 'lost-' + h, kind: CORRUPT_CODES[hhex] === 'SYS3000' ? 'live' : 'broken' });
+  }
   if (prog) hubLinks.push({ to: 'SYS10000', kind: 'broken' });
 
   GRAPH.nodes.push({
@@ -1244,6 +1397,17 @@ function buildGraph() {
       : (P.lost[n] || P.lost[P.lost.length - 1]);
     var hex = hexFrom(r.raw || [r.code, r.link, r.enc, r.pass]);
     var name = CORRUPT_CODES[hex] || null;
+    if (name === 'SYS3000') {
+      GRAPH.nodes.push({
+        id: 'lost-' + n, kind: 'record', status: 'found', code: 'SYS3000', name: 'SYS3000', row: r,
+        series: 'SYS3000', seq: 1, entry: true,
+        sub: 'मूल · ROOT RECORD', label: 'SYS3000', aria: 'SYS3000 root record',
+        html: cardHtml('SYS3000', 'मूल · ROOT RECORD', { seq: '01', entry: true }),
+        pos: { x: p.x, y: p.y }, size: { w: 200, h: 104 },
+        links: [{ to: 'SYS3001', kind: 'broken' }]
+      });
+      continue;
+    }
     GRAPH.nodes.push({
       id: 'lost-' + n, kind: 'corrupt', status: 'lost', code: name || 'CORRUPTED', name: name, hex: hex, row: r,
       parent: isNew ? NEW_CORRUPT[n - newCorruptStart].parent : null,
@@ -1254,6 +1418,15 @@ function buildGraph() {
       links: []
     });
   }
+
+  GRAPH.nodes.push({
+    id: 'SYS3001', kind: 'corrupt', status: 'lost', code: 'SYS3001', name: 'SYS3001',
+    hex: '0x5C7A90E2', row: null, parent: 'SYS3000',
+    label: 'SYS3001 · corrupted', aria: 'SYS3001 corrupted child of SYS3000',
+    html: corrHtml('0x5C7A90E2', 'SYS3001'),
+    pos: { x: P.lost[1].x, y: P.lost[1].y }, size: { w: 184, h: 100 },
+    links: []
+  });
 
   /* materialize nodes first, then wire the links each one declared */
   for (var a = 0; a < GRAPH.nodes.length; a++) addNode(GRAPH.nodes[a]);
@@ -1735,6 +1908,7 @@ function openDrawer(n, source) {
   clearHintPulse();
   applyReadState(n);
   dismissHint();
+  if (n.name === 'SYS3000') { openSysNotebook(n, source); return; }
   try {
     clearInterval(scrambleTimer); scrambleTimer = null;
     lastFocused = document.activeElement;
@@ -1775,14 +1949,110 @@ function closeDrawer() {
   updateOffArrows();
   if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
 }
+
+/* ---------- SYS3000 recovered notebook ---------- */
+var sysNbState = { index: 0, pages: [] };
+var sysNotebookMd = null;
+
+function sysNbCorrupt(s) {
+  return s
+    .replace(/(▓+)/g, '<span class="sys-nb-redact">$1</span>')
+    .replace(/\[[^\]]*(?:ERR|CORRUPT|PURGED|FRAGMENTED)[^\]]*\]/g, '<span class="sys-nb-err">$&</span>');
+}
+function sysNbInline(s) {
+  var out = s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  out = out.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  return sysNbCorrupt(out);
+}
+function sysNbMdToHtml(md) {
+  var blocks = md.replace(/\r/g, '').trim().split(/\n\s*\n/);
+  var out = '';
+  for (var i = 0; i < blocks.length; i++) {
+    var b = blocks[i].trim();
+    if (!b) continue;
+    if (/^#\s+/.test(b)) continue;
+    var meta = b.charAt(0) === '>';
+    if (meta) b = b.replace(/^>\s?/, '');
+    out += '<p' + (meta ? ' class="sys-nb-meta"' : '') + '>' + sysNbInline(b) + '</p>';
+  }
+  return out;
+}
+function showSysNbPage(i) {
+  var pages = document.getElementById('sysNbPages').children;
+  if (i < 0 || i >= pages.length) return;
+  sysNbState.index = i;
+  for (var k = 0; k < pages.length; k++) {
+    if (k === i) pages[k].removeAttribute('hidden');
+    else pages[k].setAttribute('hidden', '');
+  }
+  document.getElementById('sysNbIndicator').textContent = (i + 1) + ' / ' + pages.length;
+  document.getElementById('sysNbPrev').disabled = (i === 0);
+  document.getElementById('sysNbNext').disabled = (i === pages.length - 1);
+}
+function renderSysNotebook(md) {
+  var inner = '<div class="sys-nb-inner">' + sysNbMdToHtml(md) + '</div>';
+  var pages = [inner];
+  sysNbState.pages = pages;
+  var pagesEl = document.getElementById('sysNbPages');
+  var html = '';
+  for (var i = 0; i < pages.length; i++) {
+    html += '<div class="sys-nb-page' + (pages[i] ? '' : ' blank') + '">' + pages[i] +
+      '<span class="sys-nb-pagenum">' + (i + 1) + ' / ' + pages.length + '</span></div>';
+  }
+  pagesEl.innerHTML = html;
+  pagesEl.scrollTop = 0;
+  document.getElementById('sysNbOwner').textContent = 'Recovered Fragment · SYS3000';
+  document.querySelector('#sysNotebookOverlay .sys-nb-foot').style.display =
+    pages.length > 1 ? '' : 'none';
+  showSysNbPage(0);
+  var overlay = document.getElementById('sysNotebookOverlay');
+  overlay.classList.add('open');
+  overlay.setAttribute('aria-hidden', 'false');
+  document.getElementById('sysNbClose').focus();
+}
+function openSysNotebook(n, source) {
+  selectNode(n);
+  logsOpenId = n.id;
+  trackSyslogClick(n, source);
+  if (sysNotebookMd != null) { renderSysNotebook(sysNotebookMd); return; }
+  fetch('SYS3000.md', { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+    .then(function (md) { sysNotebookMd = md; renderSysNotebook(md); })
+    .catch(function () {
+      sysNotebookMd = '> Fragment unavailable in this channel.';
+      renderSysNotebook(sysNotebookMd);
+    });
+}
+function closeSysNotebook() {
+  var overlay = document.getElementById('sysNotebookOverlay');
+  overlay.classList.remove('open');
+  overlay.setAttribute('aria-hidden', 'true');
+  selectNode(null);
+  logsOpenId = null;
+  fieldOpenId = null;
+  updateOffArrows();
+}
+(function wireSysNotebook() {
+  document.getElementById('sysNbClose').addEventListener('click', closeSysNotebook);
+  document.getElementById('sysNbPrev').addEventListener('click', function () { showSysNbPage(sysNbState.index - 1); });
+  document.getElementById('sysNbNext').addEventListener('click', function () { showSysNbPage(sysNbState.index + 1); });
+  var overlay = document.getElementById('sysNotebookOverlay');
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSysNotebook(); });
+})();
 document.getElementById('close').addEventListener('click', closeDrawer);
 scrim.addEventListener('click', closeDrawer);
 document.addEventListener('keydown', function (e) {
   var embed = document.getElementById('embedOverlay');
   var embedOpen = embed && embed.classList.contains('open');
+  var sysnb = document.getElementById('sysNotebookOverlay');
+  var sysnbOpen = sysnb && sysnb.classList.contains('open');
   if (e.key === 'Escape') {
+    if (sysnbOpen) { closeSysNotebook(); return; }
     if (embedOpen) { closeEmbed(); return; }
     closeDrawer();
+  }
+  if (sysnbOpen && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+    showSysNbPage(sysNbState.index + (e.key === 'ArrowLeft' ? -1 : 1));
   }
   if (e.key === 'Tab' && embedOpen) {
     var ef = embed.querySelectorAll('a[href], button, [tabindex]:not([tabindex="-1"])');
@@ -2571,6 +2841,7 @@ function applyResponsiveLayout() {
       place(byId['lost-' + i], p);
     }
     place(byId['SYS10000'], P.prog);
+    place(byId['SYS3001'], P.lost[1]);
     updateEdges();
     if (mode === 'wide' && revealDepth(3)) render();
     var hintEl = document.getElementById('map-hint');
