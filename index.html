@@ -122,17 +122,22 @@
   .flow { fill: var(--ember); filter: drop-shadow(0 0 5px var(--ember)); }
 
   /* ---------- nodes ---------- */
-  .node { cursor: pointer; transition: opacity .3s ease, filter .2s ease; }
+  .node { cursor: pointer; transition: opacity .3s ease, filter .2s ease, translate .18s ease; }
   .node.dim { opacity: .13; }
   .node.dim .node-hit { pointer-events: none; }
-  .node:hover, .node.selected { filter: drop-shadow(0 0 12px rgba(240,213,138,.55)); }
+  .node:hover, .node.selected {
+    filter: drop-shadow(0 0 14px rgba(240,213,138,.62)) drop-shadow(0 9px 16px rgba(0,0,0,.5));
+    translate: 0 -2px; }
   .node:focus { outline: none; }
   .node:focus-visible .card-bg { stroke: var(--gold2); stroke-width: 3; }
   .node:focus-visible .hub-ring { stroke: var(--gold2); stroke-width: 3.4; }
   .node:focus-visible .corr-bg { stroke: var(--gold2); stroke-width: 3; }
   .node-hit { fill: transparent; }
 
-  .card-bg { fill: rgba(27,20,14,.95); stroke: rgba(201,150,43,.55); stroke-width: 1.4; }
+  .card-bg { fill: rgba(40,29,19,.97); stroke: rgba(201,150,43,.55); stroke-width: 1.4;
+    filter: drop-shadow(0 7px 13px rgba(0,0,0,.45));
+    transition: stroke .16s ease, stroke-width .16s ease; }
+  .card-top { fill: rgba(255,215,140,.16); }
   .card-line { fill: none; stroke: url(#gradBrass); stroke-width: 1.4; }
   .card-code { font-family: var(--mono); font-weight: 700; font-size: 15px; fill: var(--gold2);
     letter-spacing: .05em; }
@@ -144,6 +149,21 @@
   .node:hover .open-cue, .node.selected .open-cue { opacity: .9; }
   .dot { fill: var(--ember); }
   .dot.lost { fill: var(--sindoor); }
+
+  .node:hover .card-bg, .node.selected .card-bg,
+  .node.k-log:hover .card-bg, .node.k-observer:hover .card-bg {
+    stroke: var(--gold); stroke-width: 1.9; }
+  .node:hover .prog-bg, .node.selected .prog-bg { stroke: var(--gold); stroke-width: 1.9; }
+  .node:hover .corr-bg, .node.selected .corr-bg { stroke: var(--gold2); stroke-width: 1.9; }
+
+  @keyframes hintPulse {
+    0%, 100% { stroke: rgba(240,213,138,.5); stroke-width: 1.5;
+      filter: drop-shadow(0 0 0 rgba(240,213,138,0)) drop-shadow(0 7px 13px rgba(0,0,0,.45)); }
+    50% { stroke: var(--gold2); stroke-width: 2.4;
+      filter: drop-shadow(0 0 12px rgba(240,213,138,.65)) drop-shadow(0 7px 13px rgba(0,0,0,.45)); }
+  }
+  .node.hint-pulse .card-bg { animation: hintPulse 2.9s ease-in-out infinite; }
+  .node.hint-pulse .dot { animation: dotPulse 2.9s ease-in-out infinite; }
 
   .node.s-hub .hub-halo { fill: none; stroke: rgba(201,150,43,.28); stroke-width: 1; }
   .node.s-hub .hub-ring { fill: url(#gradVoid); stroke: url(#gradBrass); stroke-width: 2.2; }
@@ -174,7 +194,10 @@
   @keyframes glitchFlick { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 
   /* ---------- progress / clearance node ---------- */
-  .prog-bg { fill: rgba(27,20,14,.95); stroke: rgba(201,150,43,.55); stroke-width: 1.4; }
+  .prog-bg { fill: rgba(40,29,19,.97); stroke: rgba(201,150,43,.55); stroke-width: 1.4;
+    filter: drop-shadow(0 7px 13px rgba(0,0,0,.45));
+    transition: stroke .16s ease, stroke-width .16s ease; }
+  .prog-top { fill: rgba(255,215,140,.16); }
   .prog-line { fill: none; stroke: url(#gradBrass); stroke-width: 1.4; }
   .node:focus-visible .prog-bg { stroke: var(--gold2); stroke-width: 3; }
   .prog-title { font-family: var(--mono); font-size: 10px; fill: var(--gold2); letter-spacing: .05em; }
@@ -235,7 +258,7 @@
   .lg-hub { border: 1.4px solid var(--brass); }
   .lg-sealed { background: var(--sindoor); border-radius: 2px; }
   .lg-lock { border: 1.4px solid var(--brass); border-radius: 2px; }
-  #map-hint { position: fixed; left: 50%; top: 62px; transform: translateX(-50%); z-index: 3;
+  #map-hint { position: fixed; left: 50%; top: 112px; transform: translateX(-50%); z-index: 3;
     font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
     color: var(--oldgold); opacity: .8; pointer-events: none; transition: opacity .6s ease; }
   #map-hint.hide { opacity: 0; }
@@ -406,8 +429,21 @@
   .view-btn:hover, .view-btn:focus-visible { color: var(--ivory); outline: none; }
   .view-btn.active { color: #1b140e; font-weight: 700; }
   .view-btn .vt-short { display: none; }
-  #viewToggle { position: absolute; z-index: 6; transform: translate(-50%, -100%);
+  #viewToggle { position: absolute; z-index: 6; transform: translateX(-50%);
     box-shadow: 0 8px 22px rgba(0,0,0,.5); }
+
+  /* ---------- offscreen node indicators ---------- */
+  #offArrows { position: fixed; z-index: 5; pointer-events: none; }
+  .off-arrow { position: absolute; width: 26px; height: 26px; display: flex;
+    align-items: center; justify-content: center; color: var(--oldgold);
+    opacity: 0; transition: opacity .35s ease; }
+  .off-arrow.on { opacity: .45; animation: offBreath 4s ease-in-out infinite; }
+  .off-arrow svg { width: 18px; height: 18px; display: block; }
+  .off-arrow[data-dir="left"] { left: 3px; transform: translateY(-50%); }
+  .off-arrow[data-dir="right"] { right: 3px; transform: translateY(-50%); }
+  .off-arrow[data-dir="up"] { top: 44px; transform: translateX(-50%); }
+  .off-arrow[data-dir="down"] { bottom: 3px; transform: translateX(-50%); }
+  @keyframes offBreath { 0%, 100% { opacity: .32; } 50% { opacity: .52; } }
 
   /* ---------- field observers stage ---------- */
   #fieldStage { position: absolute; inset: 0; width: 100%; height: 100%; display: block;
@@ -474,7 +510,7 @@
     .footer-main { right: 12px; }
     #changelogPanel { left: 12px; bottom: 100px; width: min(340px, calc(100vw - 24px)); max-height: 260px; }
     #legend { left: 12px; bottom: 44px; gap: 7px 10px; font-size: 8px; max-width: 230px; }
-    #map-hint { top: 60px; font-size: 8px; letter-spacing: .1em; }
+    #map-hint { top: 100px; font-size: 8px; letter-spacing: .1em; }
     #embedOverlay { padding: 8px; }
     .embed-dialog { width: 100%; height: 92vh; max-height: 94vh; }
   }
@@ -489,7 +525,9 @@
     .navlink { padding: 6px 7px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .node.s-lost, .node.is-entry, .node.is-unread .dot, .expand-btn circle, .edge.broken, #symbols .sym { animation: none !important; }
+    .node.s-lost, .node.is-entry, .node.is-unread .dot, .expand-btn circle, .edge.broken, #symbols .sym,
+    .node.hint-pulse .card-bg, .node.hint-pulse .dot { animation: none !important; }
+    .off-arrow.on { animation: none !important; opacity: .45; }
     .vt-thumb { transition: none !important; }
   }
 </style>
@@ -618,6 +656,21 @@
 </div>
 
 <div id="scrim"></div>
+
+<div id="offArrows" aria-hidden="true">
+  <span class="off-arrow" data-dir="left">
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5 L8 13 L15 21"/></svg>
+  </span>
+  <span class="off-arrow" data-dir="right">
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5 L16 13 L9 21"/></svg>
+  </span>
+  <span class="off-arrow" data-dir="up">
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15 L13 8 L21 15"/></svg>
+  </span>
+  <span class="off-arrow" data-dir="down">
+    <svg viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9 L13 16 L21 9"/></svg>
+  </span>
+</div>
 <aside id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" aria-hidden="true">
   <div class="d-head">
     <span class="t" id="drawerTitle">Record Detail</span>
@@ -692,12 +745,24 @@ function markVisited(id) {
   visited[id] = 1;
   try { localStorage.setItem(VISITED_KEY, JSON.stringify(visited)); } catch (e) {}
 }
+function hasVisitedAny() {
+  for (var k in visited) { if (visited[k]) return true; }
+  return false;
+}
 function applyReadState(n) {
   if (!n || !n.el) return;
-  n.el.classList.remove('is-unread', 'is-visited');
+  n.el.classList.remove('is-unread', 'is-visited', 'hint-pulse');
   if (n.kind === 'record') n.el.classList.add(isVisited(n.id) ? 'is-visited' : 'is-unread');
   if (n.entry) n.el.classList.remove('is-entry');
-  if (n.entry && !isVisited(n.id)) n.el.classList.add('is-entry');
+  if (n.entry && !isVisited(n.id)) {
+    n.el.classList.add('is-entry');
+    if (!hasVisitedAny()) n.el.classList.add('hint-pulse');
+  }
+}
+function clearHintPulse() {
+  for (var i = 0; i < nodes.length; i++) {
+    if (nodes[i].el) nodes[i].el.classList.remove('hint-pulse');
+  }
 }
 
 /* ---------- helpers ---------- */
@@ -896,6 +961,7 @@ function cardHtml(code, sub, opts) {
   return '<rect class="node-hit" x="-110" y="-58" width="220" height="116" rx="16"/>' +
     '<rect class="card-bg" x="-100" y="-52" width="200" height="104" rx="14"/>' +
     '<rect class="card-line" x="-100" y="-52" width="200" height="104" rx="14"/>' +
+    '<rect class="card-top" x="-88" y="-49" width="176" height="2" rx="1"/>' +
     '<circle class="dot" cx="-82" cy="-31" r="4"/>' +
     '<text class="card-code" x="-70" y="-26">' + esc(code) + '</text>' +
     '<text class="open-cue" x="92" y="45">OPEN ↗</text>' +
@@ -931,6 +997,7 @@ function progressHtml(done, total) {
   return '<rect class="node-hit" x="-110" y="-66" width="220" height="132" rx="16"/>' +
     '<rect class="prog-bg" x="-100" y="-60" width="200" height="120" rx="14"/>' +
     '<rect class="prog-line" x="-100" y="-60" width="200" height="120" rx="14"/>' +
+    '<rect class="prog-top" x="-88" y="-57" width="176" height="2" rx="1"/>' +
     '<circle class="dot" cx="-82" cy="-37" r="4"/>' +
     '<text class="card-code" x="-70" y="-32">SYS10000</text>' +
     '<text class="open-cue" x="92" y="-34">LOCKED</text>' +
@@ -1282,6 +1349,7 @@ function render() {
   }
 
   updateEdges();
+  updateOffArrows();
 }
 
 /* ---------- view transform ---------- */
@@ -1289,6 +1357,7 @@ var scale = 1, tx = 0, ty = 0;
 function applyTransform() {
   viewport.setAttribute('transform', 'translate(' + tx + ' ' + ty + ') scale(' + scale + ')');
   positionViewToggle();
+  updateOffArrows();
 }
 
 function boundsFor(ids) {
@@ -1477,11 +1546,12 @@ function recenter() {
     }
     updateEdges();
     positionViewToggle();
+    updateOffArrows();
     if (p < 1) requestAnimationFrame(step); else fitView();
   }
   if (reduceMotion) {
     for (var i = 0; i < from.length; i++) { from[i].n.x = from[i].n.x0; from[i].n.y = from[i].n.y0; setNodePos(from[i].n); }
-    updateEdges(); positionViewToggle(); fitView();
+    updateEdges(); positionViewToggle(); updateOffArrows(); fitView();
   } else requestAnimationFrame(step);
 }
 document.getElementById('recenter').addEventListener('click', function () {
@@ -1662,6 +1732,7 @@ function openDrawer(n, source) {
   trackSyslogClick(n, source);
   if (n.kind === 'corrupt') trackCorruptClick(n, source);
   markVisited(n.id);
+  clearHintPulse();
   applyReadState(n);
   dismissHint();
   try {
@@ -1680,11 +1751,14 @@ function openDrawer(n, source) {
     wireNodeOpen(dContent);
     wireRecordLink(dContent, n);
     selectNode(n);
+    logsOpenId = n.id;
+    fieldOpenId = null;
     drawer.classList.add('open');
     scrim.classList.add('on');
     drawer.setAttribute('aria-hidden', 'false');
     var c = document.getElementById('close');
     if (c) c.focus();
+    updateOffArrows();
   } catch (err) {
     console.error('Drawer failed:', err);
     showToast('Could not open record');
@@ -1696,6 +1770,9 @@ function closeDrawer() {
   scrim.classList.remove('on');
   drawer.setAttribute('aria-hidden', 'true');
   selectNode(null);
+  logsOpenId = null;
+  fieldOpenId = null;
+  updateOffArrows();
   if (lastFocused && lastFocused.focus) { try { lastFocused.focus(); } catch (e) {} }
 }
 document.getElementById('close').addEventListener('click', closeDrawer);
@@ -1816,6 +1893,7 @@ document.addEventListener('keydown', function (e) {
 
 /* ---------- field observers view ---------- */
 var currentView = 'logs';
+var logsOpenId = null, fieldOpenId = null;
 var FIELD_HUB_ID = 'field-hub';
 var fieldState = {
   loaded: false, loading: false, error: null, waiters: [],
@@ -1965,11 +2043,76 @@ function renderField() {
     n.el = g;
     fieldNodesLayer.appendChild(g);
   }
+  updateOffArrows();
 }
 
 function applyFieldTransform() {
   fieldViewport.setAttribute('transform', 'translate(' + fieldTx + ' ' + fieldTy + ') scale(' + fieldScale + ')');
   positionViewToggle();
+  updateOffArrows();
+}
+function updateOffArrows() {
+  var wrap = document.getElementById('offArrows');
+  if (!wrap) return;
+  var container = document.querySelector('main');
+  if (!container) return;
+  var r = container.getBoundingClientRect();
+  var arrows = wrap.querySelectorAll('.off-arrow');
+  var i;
+  function clearArrows() {
+    for (var k = 0; k < arrows.length; k++) arrows[k].classList.remove('on');
+  }
+  if (!r.width) { clearArrows(); return; }
+  wrap.style.top = r.top + 'px';
+  wrap.style.left = r.left + 'px';
+  wrap.style.width = r.width + 'px';
+  wrap.style.height = r.height + 'px';
+
+  var isField = currentView === 'field';
+  var openId = isField ? fieldOpenId : logsOpenId;
+  if (!openId) { clearArrows(); return; }
+
+  var sc = isField ? fieldScale : scale;
+  var txv = isField ? fieldTx : tx;
+  var tyv = isField ? fieldTy : ty;
+  var nodesById = isField ? fieldState.byId : byId;
+  var edgeList = isField ? fieldState.edges : edges;
+  var revealedFn = isField ? isFieldRevealed : isRevealed;
+  if (!nodesById[openId]) { clearArrows(); return; }
+
+  var pad = 42;
+  var minX = pad, maxX = r.width - pad, minY = pad, maxY = r.height - pad;
+  var sides = {
+    left: { hit: false, sum: 0, n: 0 }, right: { hit: false, sum: 0, n: 0 },
+    up: { hit: false, sum: 0, n: 0 }, down: { hit: false, sum: 0, n: 0 }
+  };
+
+  for (i = 0; i < edgeList.length; i++) {
+    var e = edgeList[i];
+    var other = null;
+    if (e.from.id === openId) other = e.to;
+    else if (e.to.id === openId) other = e.from;
+    if (!other || other.id === openId || other.kind === 'label' || !revealedFn(other.id)) continue;
+    var x = other.x * sc + txv, y = other.y * sc + tyv;
+    var hw = (other.w / 2) * sc, hh = (other.h / 2) * sc;
+    if (x + hw < minX) { sides.left.hit = true; sides.left.sum += y; sides.left.n++; }
+    if (x - hw > maxX) { sides.right.hit = true; sides.right.sum += y; sides.right.n++; }
+    if (y + hh < minY) { sides.up.hit = true; sides.up.sum += x; sides.up.n++; }
+    if (y - hh > maxY) { sides.down.hit = true; sides.down.sum += x; sides.down.n++; }
+  }
+
+  for (i = 0; i < arrows.length; i++) {
+    var el = arrows[i];
+    var dir = el.getAttribute('data-dir');
+    var s = sides[dir];
+    if (!s || !s.hit) { el.classList.remove('on'); continue; }
+    el.classList.add('on');
+    if (dir === 'left' || dir === 'right') {
+      el.style.top = clamp(s.sum / s.n, minY, maxY) + 'px';
+    } else {
+      el.style.left = clamp(s.sum / s.n, minX, maxX) + 'px';
+    }
+  }
 }
 function positionViewToggle() {
   var el = document.getElementById('viewToggle');
@@ -1978,26 +2121,11 @@ function positionViewToggle() {
   if (!container) return;
   var r = container.getBoundingClientRect();
   if (!r.width) { el.style.display = 'none'; return; }
-  var hub, sc, txv, tyv;
-  if (currentView === 'field') {
-    hub = fieldState.byId[FIELD_HUB_ID]; sc = fieldScale; txv = fieldTx; tyv = fieldTy;
-  } else {
-    hub = byId['rr26']; sc = scale; txv = tx; tyv = ty;
-  }
   el.style.display = '';
-  var w = el.offsetWidth || 1, h = el.offsetHeight || 1;
-  var x, bottom;
-  if (hub) {
-    x = hub.x * sc + txv;
-    bottom = hub.y * sc + tyv - (hub.h / 2) * sc - 18;
-  } else {
-    x = w / 2 + 12;
-    bottom = h + 12;
-  }
-  x = clamp(x, w / 2 + 8, r.width - w / 2 - 8);
-  bottom = clamp(bottom, h + 8, r.height - 8);
+  var w = el.offsetWidth || 1;
+  var x = clamp(r.width / 2, w / 2 + 8, r.width - w / 2 - 8);
   el.style.left = x + 'px';
-  el.style.top = bottom + 'px';
+  el.style.top = '12px';
 }
 function updateViewThumb() {
   var options = document.querySelector('#viewToggle .vt-options');
@@ -2163,12 +2291,15 @@ function openFieldObserver(id, focusEl) {
     '<div class="frag-list">' + rows + '</div></div>';
   wireFieldPosts(o);
   lastFocused = focusEl || document.activeElement;
+  logsOpenId = null;
+  fieldOpenId = o.id;
   drawer.classList.add('open');
   scrim.classList.add('on');
   drawer.setAttribute('aria-hidden', 'false');
   trackFieldEvent('field_observer_open', { observer_id: o.id, log_count: o.posts.length });
   var c = document.getElementById('close');
   if (c) c.focus();
+  updateOffArrows();
 }
 
 function openFieldHub(focusEl) {
@@ -2196,11 +2327,14 @@ function openFieldHub(focusEl) {
     })(links[k]);
   }
   lastFocused = focusEl || document.activeElement;
+  logsOpenId = null;
+  fieldOpenId = FIELD_HUB_ID;
   drawer.classList.add('open');
   scrim.classList.add('on');
   drawer.setAttribute('aria-hidden', 'false');
   var c = document.getElementById('close');
   if (c) c.focus();
+  updateOffArrows();
 }
 
 var embedLastFocused = null;
@@ -2254,6 +2388,8 @@ function setView(mode, persist) {
   }
   updateViewThumb();
   if (drawer.classList.contains('open')) closeDrawer();
+  logsOpenId = null;
+  fieldOpenId = null;
   var embed = document.getElementById('embedOverlay');
   if (embed && embed.classList.contains('open')) closeEmbed();
   if (mode === 'field') {
@@ -2279,6 +2415,7 @@ function setView(mode, persist) {
     requestAnimationFrame(fitView);
   }
   positionViewToggle();
+  updateOffArrows();
   if (persist !== false) { try { localStorage.setItem(VIEW_KEY, mode); } catch (e) {} }
 }
 
