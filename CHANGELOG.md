@@ -3,6 +3,7 @@
 ## 0.3v — 2026-11-21
 
 - Enhanced visual layout for System logs.
+- Added Field Observers view with Instagram log records mapping.
 
 ## 0.2v — 2026-11-20
 
